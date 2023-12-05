@@ -1,9 +1,3 @@
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -18,8 +12,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregate Router)
-# @Author : Dimeji Fayomi
 
 
 try:
@@ -50,7 +42,7 @@ setup(name="Overwatch",
         # replace the setuptools ScanningLoader with a normal TestLoader,
         # otherwise it tries to load every single file in the test directories
         test_loader="unittest:TestLoader",
-        author="Brendon Jones",
-        author_email="brendonj@waikato.ac.nz",
-        url="http://www.wand.net.nz",
+        author="Anon Anon",
+        author_email="anon@anony",
+        url="http://www.anonymous.me",
      )
