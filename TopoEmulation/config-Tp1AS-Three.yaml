@@ -24,14 +24,11 @@ bgpspeakers:
                 type: 'bgp'
                 asn: 100
                 address: '100::2'
-                preference: 150
+                preference: 450
                 enable-par: False
                 dp-grpc: 50055
                 interfaces:
                     - 'Tp1ASr2-eth0'
-                #filters:
-                #    export:
-                #        - 'Filter internal AS100'
                 tables:
                     - 'tab-r2'
 
@@ -39,17 +36,26 @@ bgpspeakers:
                 type: 'bgp'
                 asn: 100
                 address: '100::3'
-                preference: 450
+                preference: 150
                 enable-par: False
                 dp-grpc: 50055
                 interfaces:
                     - 'Tp1ASr3-eth0'
-                #filters:
-                #    export:
-                #        - 'Filter internal AS100'
                 tables:
                     - 'tab-r3'
 
+            Tp1ASr4:  
+                type: 'bgp'
+                asn: 100
+                address: '100::6'
+                preference: 500
+                enable-par: False
+                dp-grpc: 50055
+                interfaces:
+                    - 'Tp1ASr4-eth0'
+                tables:
+                    - 'tab-r4'
+                      
 #### Performance Aware Routing #####
 performance-aware:
         latency:
@@ -61,13 +67,10 @@ performance-aware:
                         - '2001:4521::1/128'
                         - '2001:3320::1/128'
                         - '2001:4521::2/128'
-                        #- '2001:4522::1/48'
                 experiment:
                     protocol: 'udp' 
                     port: 700
                     prefixes:
-                        #- '2001:3321::2/48'
-                        #- '2001:4523::3/48'
                         - '2001:4521::2/128'
                 gaming:
                     protocol: 'udp'
@@ -137,6 +140,8 @@ tables:
         export_peers: 
             - 'Tp1ASr2'
             - 'Tp1ASr3'
+            - 'Tp1ASr4'
+
 
 
     tab-r2:
@@ -148,6 +153,14 @@ tables:
                 - 'Filter linknets'
 
     tab-r3:
+        default_import: True
+        export_peers:
+            - 'Tp1ASr1' 
+        filters:
+            export:
+                - 'Filter linknets'
+
+    tab-r4:
         default_import: True
         export_peers:
             - 'Tp1ASr1' 
@@ -252,5 +265,5 @@ filters:
 local_routes: "internal-Tp1AS.csv"
 
 local_topology:
-    - static_file: "topology-eval.csv"
+    - static_file: "topology-eval-three.csv"
 

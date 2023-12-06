@@ -1,0 +1,14 @@
+# src id, dst id, cost, dst address
+# peerX <---> core
+Tp1ASr1,Tp1ASr2,10,100::2
+Tp1ASr1,Tp1ASr3,10,100::3
+Tp1ASr2,Tp1ASr1,10,100::1
+Tp1ASr2,Tp1ASr3,10,100::3
+Tp1ASr3,Tp1ASr1,10,100::1
+Tp1ASr3,Tp1ASr2,10,100::2
+Tp1ASr1,Tp1ASr4,10,100::6
+Tp1ASr4,Tp1ASr1,10,100::1
+Tp1ASr2,Tp1ASr4,10,100::6
+Tp1ASr4,Tp1ASr2,10,100::2
+Tp1ASr3,Tp1ASr4,10,100::6
+Tp1ASr4,Tp1ASr3,10,100::3
