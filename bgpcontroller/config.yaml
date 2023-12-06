@@ -4,7 +4,7 @@ grpc-address: '127.0.0.1'
 #grpc-address: '192.168.122.43'
 grpc-port: 50051
 bgpspeakers:
-    hlz-uow-1:
+    uow-1:
         address: '2001:df40::1'
         type: 'exabgp'
         peers:
@@ -27,7 +27,7 @@ bgpspeakers:
                     - 'internet-and-sxt'
                     - 'reannz'
                     
-            vuw:
+            wuw:
                 type: 'bgp'
                 asn:  64496
                 #default_import: False
@@ -46,7 +46,6 @@ bgpspeakers:
                     - 'internet-and-sxt'
                     - 'reannz'
                 
-                #hlz-uow-2:
             #address: '192.168.122.43'
         #type: 'exabgp'
         #peers:
@@ -63,18 +62,6 @@ bgpspeakers:
                     - 'internet-and-sxt'
                     - 'reannz'
                     - 'slowpath'
-            tait:
-                 type: 'bgp'
-                 asn: 64496
-                 address: '2001:df36::34'
-                 dp-grpc: 50055
-                 interfaces:
-                     - 'eth7'
-                     - 'eth8'
-                 tables:
-                     - 'internet-and-sxt'
-                     - 'reannz'
-                     - 'gigafast'
                  filters:
                      export:
                          - 'Reject cruft'

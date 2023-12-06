@@ -1,8 +1,3 @@
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +13,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregated Router)
-# @Author : Dimeji Fayomi
 
 import logging
 import time
@@ -84,7 +77,6 @@ class RouteTable(PolicyObject):
         return None
 
     def _process_update_message(self, message):
-        #self.log.info("DIMEJI_ROUTETABLE_DEBUG _process_update_message is %s" % message)
         peer = message.get("from")
         #pref = message.get("local-preference")
         # clear all the routes we received from this peer
@@ -98,9 +90,7 @@ class RouteTable(PolicyObject):
             # routes from a table are a dictionary of lists
             for routes in message["routes"].values():
                 self._try_import_routes(self.routes[peer], routes)
-        #self.log.info("DIMEJI_ROUTETABLE_DEBUG _process_update_message print all routes in table:\n")
         #for peer, routes in self.routes.items():
-        #    self.log.info("DIMEJI_ROUTETABLE_ROUTES_XXXX Peer: %s, Route: %s" %(peer, routes))
         # update all the peers with the new routes we received, and flag
         # the peer as the source of the update so the table doesn't send
         # a pointless update back. If multiple peers are updated then all
@@ -128,7 +118,6 @@ class RouteTable(PolicyObject):
             Update all export peers of this table with the table routes
         """
         self.log.debug("%s sending routes to peers", self.name)
-        #self.log.info("DIMEJI_ROUTETABLE_DEBUG _update_peers for table :%s" % self.name)
         mark = time.time()
         for peer in self.export_peers:
             # Send the update to every peer in our table that needs it
@@ -157,12 +146,10 @@ class RouteTable(PolicyObject):
                         if (peer.asn not in route.as_path() and
                                 (route.as_set() is None or
                                  peer.asn not in route.as_set())):
-                            self.log.debug("DIMEJI_ROUTETABLE_DEBUG _update_peer preference for route %s is %s" %(route, pref))
                             combined[route.prefix].append((route, pref))
 
                     except AttributeError:
                         # otherwise just add it to the list
-                        self.log.debug("DIMEJI_ROUTETABLE_DEBUG AttributeError _update_peer preference for route %s is %s" %(route, pref))
                         combined[route.prefix].append((route, pref))
                         #combined[route.prefix].append((route, self.peerPref[source_peer]))
 

@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -20,8 +14,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregated Router)
-# @Author : Dimeji Fayomi
 
 import logging
 
@@ -214,7 +206,6 @@ class BGPPeer(Peer):
         """
         #prefixes = update["withdraw"][family]
         prefixes = update["withdraw"]["nlri"]
-        #self.log.info("DIMEJI_DEBUG_BGPPEER _process_withdraw_prefixes: %s" %prefixes)
 
         empty = []
         for withdrawn in prefixes:
@@ -264,7 +255,6 @@ class BGPPeer(Peer):
 
         #if "attribute" not in update:
         if "attribute" not in announce:
-            #self.log.info("DIMEJI_DEBUG_BGPPEER _process_announce_prefixes where is the route ? %s" % update)
             return False
         
         #as_path = update["attribute"].get("as-path", [])
@@ -282,16 +272,13 @@ class BGPPeer(Peer):
         nexthop = announce["nexthop"]
         preference = announce["attribute"].get("local-preference", self.preference)
         #preference = int(self.preference)
-        self.log.info("dimeji_debug_bgppeer _process_announce_prefixes local preference for %s  is %s" % (self.name, preference))
-        self.log.info("dimeji_debug_bgppeer DEFAULT_LOCAL_PREF is type: %s" %type(DEFAULT_LOCAL_PREF))
-        #self.log.info("dimeji_debug_bgppeer _process_announce_prefixes self.preference for %s  is %s" % (self.name, self.preference))
+        self.log.info("debug_bgppeer _process_announce_prefixes local preference for %s  is %s" % (self.name, preference))
+        self.log.info("debug_bgppeer DEFAULT_LOCAL_PREF is type: %s" %type(DEFAULT_LOCAL_PREF))
 
-        #self.log.info("DIMEJI_DEBUG_BGPPEER _process_announce_prefixes as_path is %s" % as_path)
         for pfx in prefixes:
             route = RouteEntry(origin, self.asn,
                     str(pfx), str(nexthop), as_path, as_set,
                     communities, int(preference))
-            #self.log.info("DIMEJI_DEBUG_BGPPEER _process_announce_prefixes adding route to self.received: %s" % route)
             if self.filter_import_route(route):
                 self.received[str(pfx)] = (route, preference)
         #for nexthop, prefixes in announce.items():
@@ -305,7 +292,7 @@ class BGPPeer(Peer):
         #        if self.filter_import_route(route):
         #            self.received.append(route)
         #return len(announce) > 0
-        self.log.info("DIMEJI_DEBUG_BGPPeer _process_announce_prefixes self.received is %s" % self.received)
+        self.log.info("DEBUG_BGPPeer _process_announce_prefixes self.received is %s" % self.received)
         return len(prefixes) > 0
 
     def _process_bgp_update_section(self, update, section_name, func):
@@ -320,12 +307,10 @@ class BGPPeer(Peer):
         """
         status = False
 
-        #self.log.info("DIMEJI_DEBUGP_PEER _process_bgp_update_section: section_name is %s" %section_name)
 
         if section_name not in update:
             return False
 
-        #self.log.info("DIMEJI_DEBUGP_PEER _process_bgp_update_section: section_name is %s" %section_name)
         # Process the message for negotiated AFI/SAFI values
         section = update[section_name]
         for family in self.afi_safi:
@@ -346,14 +331,9 @@ class BGPPeer(Peer):
         # XXX: If the peer has just started up (no negotiated message) we will
         # not import any prefixes. When the negotiated message is received we
         # will re-ask the tables for routes sending a reload command.
-        #self.log.info("DIMEJI_BGPPEER_DEBUG: _can_import_prefix is %s" % prefix)
         fam = self._afi_safi_to_str(prefix.afi(), prefix.safi())
         family = fam.split(" ")
         for afi, safi in self.afi_safi:
-            #self.log.info("DIMEJI_BGPPEER_DEBUG: _can_import_prefix, prefix.afi is %s" % prefix.afi())
-            #self.log.info("DIMEJI_BGPPEER_DEBUG: _can_import_prefix, prefix.safi is %s" % prefix.safi())
-            #self.log.info("DIMEJI_BGPPEER_DEBUG: _can_import_prefix, afi is %s" % afi)
-            #self.log.info("DIMEJI_BGPPEER_DEBUG: _can_import_prefix, safi is %s" % safi)
 
             #if afi == prefix.afi() and safi == prefix.safi():
             if afi == family[0] and safi == family[1]:
@@ -361,12 +341,9 @@ class BGPPeer(Peer):
         return False
 
     def _process_update_message(self, message):
-        #update = message["neighbor"]["message"].get("update", None)
-        #self.log.info("DIMEJI_DEBUG_BGPPER _process_update_messge message is %s" % message)
         update = message.get("update", None)
         withdrawn = False
         announced = False
-        #self.log.info("DIMEJI_DEBUG_BGPPEER _process_update_message update is %s" % update)
         # Process EoR messages if there is no update
         # XXX: This assumes that we will not get an update and eor in message
         if update is None:

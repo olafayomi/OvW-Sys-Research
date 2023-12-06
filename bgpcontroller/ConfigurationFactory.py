@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +15,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregated Router)
-# @Author : Dimeji Fayomi
 
 import logging
 

@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +15,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregated Router)
-# @Author : Dimeji Fayomi
 
 import csv
 import sys
@@ -116,7 +109,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         for speaker in self.bgpspeakers:
             self.speakerstatus[(speaker.address)] = False
     
-        #self.log.info("DIMEJI TESTING: Speaker status at startup: %s" %self.speakerstatus)
         # listen for commands
         self.control_connection = Thread(
                 target=ControlConnection.ControlConnection,
@@ -269,7 +261,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             table.daemon = True
             table.start()
 
-        #self.log.info("DIMEJI TESTING speaker status are starting: %s" %self.speakerstatus)
         # read local route information, for now this won't change
         self.read_local_routes(self.conf.local_routes)
 
@@ -296,7 +287,7 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
 
         while True:
             msgtype, command = self.internal_command_queue.get()
-            self.log.debug("DIMEJI Received message type %s  on internal_command_queue %s" %(msgtype, command))
+            self.log.debug("Received message type %s  on internal_command_queue %s" %(msgtype, command))
             if msgtype == "bgp":
                 # got a BGP message, pass it off to the appropriate peer process
                 self.process_bgp_message(command)
@@ -313,11 +304,11 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                 # peer processes and pass it off to the appropriate speaker process
                 self.process_encode_message(command)
             elif msgtype == "par-update":
-                self.log.debug("DIMEJI Received par-update message on internal_command_queue %s" %command)
+                self.log.debug("Received par-update message on internal_command_queue %s" %command)
                 self.process_par_message(command)
             elif msgtype == "steer":
                 self.process_update_datapath(command)
-                self.log.debug("DIMEJI CONTROLLER received PAR steer message on internal_command_queue %s" %command)
+                self.log.debug("CONTROLLER received PAR steer message on internal_command_queue %s" %command)
             elif msgtype == "manage-dataplane":
                 self.process_dataplane_mgmt(command)
                 self.log.debug("Controller has received a dataplane request from a peer process on internal_command_queue %s" %command)
@@ -439,7 +430,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             target = self._get_peer(peer_asn, peer_address)
 
         elif "table" in message:
-            #self.log.info("DIMEJI_CONTROLLER_DEBUG process_control_message for table is %s" % message)
             target = self._get_table(message["table"]["name"])
         else:
             target = None
@@ -449,7 +439,7 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             return
 
         if "action" in message:
-            self.log.info("DIMEJI_CONTROLLER_DEBUG process_control_message is %s" % message)
+            self.log.info("CONTROLLER_DEBUG process_control_message is %s" % message)
             target.mailbox.put(
                     (message["action"], message.get("arguments", None))
             )
@@ -567,7 +557,7 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
 
         
     def process_update_datapath(self, message):
-        self.log.info("DIMEJI_CONTROLLER_DEBUG_BEGIN_PROCESSING process_update_datapath message is %s" %message)
+        self.log.info("CONTROLLER_DEBUG_BEGIN_PROCESSING process_update_datapath message is %s" %message)
         peer_addr = message["peer"]["address"]
         if message["action"] == "Replace":
             if peer_addr in self.datapath:
@@ -582,7 +572,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                     path.table = message["path"]["table"]
                     #self.initial_par += 1
                     #if self.initial_par > 1:
-                    #    self.log.info("DIMEJI_CONTROLLER_DEBUG NOT SENDING SEGMENTS TO DP. Count: %s" %self.initial_par)
                     #    return
                 for segs in message["path"]["segments"]:
                     srv6_segment = path.sr_path.add()
@@ -598,9 +587,9 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                     writer = csv.writer(dpreport, delimiter='|')
                     writer.writerow(row)
 
-                self.log.info("DIMEJI_CONTROLLER_DEBUG Controller received response %s after sending updating datapath to add segs on peer %s" %(response, peer_addr))
+                self.log.info("CONTROLLER_DEBUG Controller received response %s after sending updating datapath to add segs on peer %s" %(response, peer_addr))
             else:
-                self.log.info("DIMEJI_CONTROLLER_DEUBG Controller received STEER message from %s which is not PAR-enabled!!!!!!" %peer_addr)
+                self.log.info("CONTROLLER_DEUBG Controller received STEER message from %s which is not PAR-enabled!!!!!!" %peer_addr)
         
         if message["action"] == "Remove":
             if peer_addr in self.datapath:
@@ -628,10 +617,10 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                     writer.writerow(row)
 
 
-                self.log.info("DIMEJI_CONTROLLER_DEBUG Controller received response %s after sending updating datapath to remove segs on peer %s" %(response, peer_addr))
+                self.log.info("CONTROLLER_DEBUG Controller received response %s after sending updating datapath to remove segs on peer %s" %(response, peer_addr))
             else:
-                self.log.info("DIMEJI_CONTROLLER_DEUBG Controller received STEER message from %s which is not PAR-enabled!!!!!!" %peer_addr)
-        self.log.info("DIMEJI_CONTROLLER_DEBUG_END_PROCESSING process_update_datapath")
+                self.log.info("CONTROLLER_DEUBG Controller received STEER message from %s which is not PAR-enabled!!!!!!" %peer_addr)
+        self.log.info("CONTROLLER_DEBUG_END_PROCESSING process_update_datapath")
 
     def process_status_message(self, message):
         # peer status changed, update what we know about them
@@ -661,7 +650,7 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         for peer in self.peers:
             if peer.enable_PAR is False:
                 continue
-            self.log.info("DIMEJI_DEBUG_CONTROLLER: _process_par_message %s" % message)
+            self.log.info("DEBUG_CONTROLLER: _process_par_message %s" % message)
             peer.mailbox.put(("par", message))
         return
 
@@ -692,7 +681,7 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         asn = (message["speaker"]["asn"])
         assert(speaker in self.speakerstatus)
         
-        self.log.debug("DIMEJI TESTING Speaker status after receiving healthcheck %s" %self.speakerstatus)
+        self.log.debug("Speaker status after receiving healthcheck %s" %self.speakerstatus)
         self.log.debug("controller status message: %s / %s" %
                 (message["speaker"]["address"], message["status"]))
 

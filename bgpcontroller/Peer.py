@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +15,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Brendon Jones (Original Disaggregated Router)
-# @Author : Dimeji Fayomi
 
 from collections import defaultdict
 from abc import abstractmethod
@@ -151,9 +144,6 @@ class Peer(PolicyObject):
             for (prefix, route, locPref) in self.exported:
                 self._do_announce(prefix, route, locPref)
             return
-        #self.log.info("DIMEJI_DEBUG_PEER _do_export_routes printing self.adj_ribs_in for %s" %self.name)
-        #for table, routes in self.adj_ribs_in.items():
-        #    self.log.info("DIMEJI_DEBUG_PEER_YYYYYYYYYY _do_export_routes TABLE: %s, ROUTES: %s" %(table, routes))
 
         # XXX: Enabling PAR for specific prefixes 20201120
         #if self.enable_PAR is True:
@@ -165,7 +155,6 @@ class Peer(PolicyObject):
         #        if table not in par_table_name:
         #            for prefix in self.PAR_prefixes:
         #                if prefix in routes:
-        #                    #self.log.info("DIMEJI_DEBUG_PEER_JDHGDDH _do_export_routes  %s   Popping %s routes from other tables" %(self.name, str(prefix)))
         #                    routes.pop(prefix)
             
         # XXX massage this to list of tuples because that's what old code wants
@@ -264,7 +253,6 @@ class Peer(PolicyObject):
             #      from the PAR module list
             # XXX:     Could be removed 20201120
             #if prefix in self.PAR_prefixes:
-            #    self.log.info("DIMEJI_DEBUG_PEER _do_export_routes length of pre_adj_ribs_in is %s\n\n\n" %len(self.pre_adj_ribs_in))
             #    rib_len = len(self.pre_adj_ribs_in)
             #    del_route = []
             #    count = 0
@@ -360,7 +348,6 @@ class Peer(PolicyObject):
             #    message = (("add", { "routes": addroute,
             #                         "from": self.name}))
             #    for parmodule in self.PARModules:
-            #        self.log.debug("PEER DIMEJI DEBUG WEIRDNESS XXXXX _do_export peer %s adding routes to PAR" %(self.name))
             #        parmodule.mailbox.put(message)
 
         # record the routes we last exported so we can check for changes
@@ -386,7 +373,6 @@ class Peer(PolicyObject):
         # unpack the routes from different tables
         for table in export_routes.values():
             for prefix, routes in table.items():
-                #self.log.info("DIMEJI_DEBUG_PEER filter_export_routes printing routes in export_routes: %s and length is %s " % (routes, len(routes)))
                 for route in routes:
                     # exclude duplicates - a route might arrive from many tables
                     if route not in filtered_routes[prefix]:
@@ -411,7 +397,6 @@ class Peer(PolicyObject):
 
     def _get_filtered_routes(self):
         filtered_routes = []
-        #self.log.info("DIMEJI_PEER_DEBUG: self.received.values() is %s" % self.received.values())
         # 2023-06-07 pass tuple with local-preference
         for route_tup in self.received.values():
             # work on a copy of the routes so the original unmodified routes
@@ -421,7 +406,6 @@ class Peer(PolicyObject):
             if filtered is not None:
                 # add the new route to the list to be announced
                 filtered_routes.append((filtered, pref))
-        #self.log.info("DIMEJI_PEER_DEBUG: filtered_routes is %s" % filtered_routes)
         return filtered_routes
 
     def _update_tables_with_routes(self):
@@ -441,31 +425,26 @@ class Peer(PolicyObject):
                     "from": self.name
                     }))
 
-        #self.log.info("DIMEJI_PEER_DEBUG _update_tables_with_routes message: %s" % str(message))
         for table in self.export_tables:
-            #self.log.info("DIMEJI_PEER_DEBUG _update_tables_with_routes message: %s" % str(message))
             table.mailbox.put(message)
         
         ### XXX: Added on 20201119
         ### XXX: Testing pushing routes directly to PARModule
         for parmodule in self.PARModules:
-            self.log.debug("PEER DIMEJI WEIRDNESS DEBUG: Peer %s is adding route to parmodule in _update_tables_with_routes " %(self.name))
+            self.log.debug("Peer %s is adding route to parmodule in _update_tables_with_routes " %(self.name))
             parmodule.mailbox.put(par_msg)
                    
     def _process_table_update(self, message):
         # XXX: check if we can export this prefix, otherwise skip checks
         imp_routes = {}
         for prefix in message["routes"]:
-            #self.log.info("DIMEJI_DEBUG_PEER _process_table_update: prefix : %s is type %s" % (prefix,type(prefix)))
 
             if self._can_import_prefix(prefix):
                 imp_routes[prefix] = message["routes"][prefix]
 
-        #self.log.info("DIMEJI_PEER_DEBUG _process_table_update message: %s" % message)
         # No routes can be imported, stop the update process
         if len(imp_routes) == 0:
             return None
-        #self.log.info("DIMEJI_PEER_DEBUG _process_table_update message: %s" % message)
         # clobber the old routes from this table with the new lot
         self.adj_ribs_in[message["from"]] = imp_routes
         ### XXX: Disabling adding of routes to PAR module here
@@ -475,13 +454,10 @@ class Peer(PolicyObject):
         #             "from": self.name
         #             }))
         #for parmodule in self.PARModules:
-        #    self.log.debug("PEER DIMEJI WEIRDNESS DEBUG: Peer %s is adding route to parmodule in _process_table_update " %(self.name))
         #    parmodule.mailbox.put(message)
 
         if self.enable_PAR is True:
-            #self.log.info("DIMEJI_DEBUG_PEER_YYSYDYDSYSYS _process_table_update requesting par-update peer: %s" %self.name)
             for module in self.PARModules:
-                #self.log.info("DIMEJI_DEBUG_PEER_DYDGDSKJHDKHJDDD _do_export_routes      %s          Sending message to PAR Module: %s" %(self.name, module.name))
                 #if module.name not in self.adj_ribs_in:
                 #    self.adj_ribs_in[module.name] = {}
                 message = (("get", {
@@ -489,7 +465,6 @@ class Peer(PolicyObject):
                             "routes": self.adj_ribs_in,
                           }))
                 module.mailbox.put(message)
-                #self.log.info("DIMEJI_DEBUG_PEER_DYDGDSKJHDKHJDDD _process_table_update      %s          Sent message to PAR Module: %s" %(self.name, module.name))
                 
             self.pre_adj_ribs_in = copy.deepcopy(self.adj_ribs_in)
         return self._do_export_routes
@@ -498,43 +473,39 @@ class Peer(PolicyObject):
         # XXX: check if we can export this prefix, otherwise skip checks
         imp_routes = {}
         for prefix in message["routes"]: 
-            self.log.info("DIMEJI_DEBUG_PEER _process_par_update: prefix : %s is type %s" % (prefix,type(prefix)))
+            self.log.info("PEER _process_par_update: prefix : %s is type %s" % (prefix,type(prefix)))
             #stuff = message["routes"][prefix]
-            #self.log.info("DIMEJI_DEBUG_PEER XXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYY _process_par_update: routeprefix is %s and type is: %s\n\n\n" %(stuff, type(stuff)))
             if len(message["routes"][prefix]) != 1:
                 #self.log.info("INSERTING RANDOM PRINT HERE TO DEBUG _PROCESS_PAR_UPDATE")
                 #self.log.info("DEBUG_PEER _PROCESS_PAR_UPDATE LENGTH OF PREFIX %s"  %len(message["routes"][prefix]))
                 #self.log.info("DEBUG_PEER _PROCESS_PAR_UPDATE MESSAGE PREFIX %s" %(message["routes"][prefix]))
                 return None
             route, node = message["routes"][prefix][0]
-            self.log.info("DIMEJI_DEBUG_PEER XXXXXXXXXXXXXXXXXYYYYYY _process_par_update IN PEER %s: %s and route %s\n\n\n" %(self.name,node, route))
+            self.log.info(" _process_par_update IN PEER %s: %s and route %s\n\n\n" %(self.name,node, route))
             
             if self._can_import_prefix(prefix):
                 imp_routes[prefix] = [route]
                 #message["routes"][prefix]
         if len(imp_routes) == 0:
-            self.log.info("DIMEJI_DEBUG_PEER _process_par_update IN PEER %s, CHECKING EACH STEP OF FUNC" %self.name)
+            self.log.info("DEBUG_PEER _process_par_update IN PEER %s, CHECKING EACH STEP OF FUNC" %self.name)
             return None
         
         if node == self.name:
-            self.log.info("DIMEJI_DEBUG_PEER XDNXKASHDNCSHDHGSKDKSCBSBSG _process_par_update: node is the same\n\n\n")
+            self.log.info("DEBUG_PEER XDNXKASHDNCSHDHGSKDKSCBSBSG _process_par_update: node is the same\n\n\n")
             return None
 
        
-        #self.log.info("DIMEJI_PEER_DEBUG _process_par_update message: %s" % message)
         self.par_ribs_in[message["type"]] = imp_routes
         #### Segment routing experiments
         segments = self.routing.topology.get_segments_list(self.name, node)
-        #self.log.info("DIMEJI_PEER_DEBUG _PROCESS_PAR_UPDATE PRINT SEGMENTS: %s" % segments)
 
         #no_of_nodes, list_nodes = self.routing.topology.returnGraph()
-        #self.log.info("DIMEJI_DEBUG_PEER XVSGDGSDSSYXNXNXFDF _process_par_update: number of nodes from graph is %s and list of nodes in graph is %s", no_of_nodes, list_nodes)
 
         if segments is None:
-            self.log.info("DIMEJI_DEBUG_PEER No segments returned from network _process_par_update!!!")
+            self.log.info("DEBUG_PEER No segments returned from network _process_par_update!!!")
             return None
         else:
-            self.log.info("DIMEJI_DEBUG_PEER: SEGMENT %s RETURNED to node %s for _process_par_update in PEER %s", segments, node, self.name)
+            self.log.info("DEBUG_PEER: SEGMENT %s RETURNED to node %s for _process_par_update in PEER %s", segments, node, self.name)
 
 
         # XXX: Set routing table for PAR in LINUX to 201
@@ -542,9 +513,8 @@ class Peer(PolicyObject):
         for prefix, routes in imp_routes.items():
             for route in routes:
                 nexthop = route.nexthop
-                #self.log.info("DIMEJI_PEER_DEBUG _process_par_update NEXTHOP value in route: %s" % nexthop)
             if len(routes) > 1:
-                self.log.info("DIMEJI_DEBUG_PEER: LENGTH ROUTES IS GREATER THAN ONE")
+                self.log.info("DEBUG_PEER: LENGTH ROUTES IS GREATER THAN ONE")
                 return None
 
             seg_iface = self._iface_to_segments(segments)

@@ -2,7 +2,7 @@ asn: 64496
 grpc-address: '127.0.0.1'
 grpc-port: 50051
 bgpspeakers:
-    hlz-uow-1:
+    uow-1:
         address: '192.168.122.43'
         type: 'exabgp'
         peers:
