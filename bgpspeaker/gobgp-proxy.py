@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2020, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +15,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
 #
-# @Author : Dimeji Fayomi
 
 import json
 import grpc
@@ -110,17 +104,6 @@ def run():
                 peer_dict = MessageToDict(peer)
                 print("Peer: %s\n" %peer_dict)
                                                          
-            #PeerMon = goStub.MonitorPeer(gobgp.MonitorPeerRequest(
-            #            address=addr,
-            #            current=True), metadata=gobgp_metadata)
-            #for peer in PeerMon:
-            #    peerdict = MessageToDict(peer)
-            #    session_state = peerdict['peer']['state']['sessionState']
-            #    if session_state != 'ESTABLISHED':
-            #        print("Peer %s is not available\n")
-            #        print("Peer withdrawing routes\n")
-        # Get paths sent by peers
-        # Using ListPath
         listpathreq = gobgp.ListPathRequest()
         listpathreq.table_type = 0
         listpathreq.family.MergeFrom(gobgp.Family(
@@ -134,19 +117,6 @@ def run():
 
             
 
-        #monitortablereq = gobgp.MonitorTableRequest()
-        #monitortablereq.table_type = 0
-        #monitortablereq.family.MergeFrom(gobgp.Family(
-        #                                   afi=gobgp.Family.AFI_IP,
-        #                                   safi=gobgp.Family.SAFI_UNICAST))
-        #monitortablereq.current = True
-        #table = goStub.MonitorTable(monitortablereq, metadata=gobgp_metadata)
-        #for path in table:
-        #    path_var = MessageToDict(path)
-        #    print("Table paths")
-        #    for key, value in path_var.items():
-        #        print("Key: %s" % key)
-        #        print("Value: %s\n" %value)
 
 
         
