@@ -1,0 +1,290 @@
+asn: 100
+grpc-address: '127.0.0.1'
+grpc-port: 50051
+bgpspeakers:
+    hlz-uow-1:
+        address: '100::4'
+        type: 'exabgp'
+        peers:
+            Tp1ASr1:
+                type: 'bgp'
+                asn: 100
+                address: '100::1'
+                preference: 160
+                enable-par: True
+                dp-grpc: 50055
+                interfaces:
+                    - 'Tp1ASr1-eth0'
+                filters:
+                    export:
+                        - 'Filter linknets'
+                tables:
+                    - 'tab-r1'
+            Tp1ASr2:  
+                type: 'bgp'
+                asn: 100
+                address: '100::2'
+                preference: 450
+                enable-par: False
+                dp-grpc: 50055
+                interfaces:
+                    - 'Tp1ASr2-eth0'
+                #filters:
+                #    export:
+                #        - 'Filter internal AS100'
+                tables:
+                    - 'tab-r2'
+
+            Tp1ASr3:  
+                type: 'bgp'
+                asn: 100
+                address: '100::3'
+                preference: 150
+                enable-par: False
+                dp-grpc: 50055
+                interfaces:
+                    - 'Tp1ASr3-eth0'
+                #filters:
+                #    export:
+                #        - 'Filter internal AS100'
+                tables:
+                    - 'tab-r3'
+
+            Tp1ASr4:  
+                type: 'bgp'
+                asn: 100
+                address: '100::6'
+                preference: 500
+                enable-par: False
+                dp-grpc: 50055
+                interfaces:
+                    - 'Tp1ASr4-eth0'
+                #filters:
+                #    export:
+                #        - 'Filter internal AS100'
+                tables:
+                    - 'tab-r4'
+                      
+#### Performance Aware Routing #####
+performance-aware:
+        latency:
+            flows:
+                livestream:
+                    protocol: 'udp'
+                    port: 465
+                    prefixes:
+                        - '2001:4521::1/128'
+                        - '2001:3320::1/128'
+                        - '2001:4521::2/128'
+                        #- '2001:4522::1/48'
+                experiment:
+                    protocol: 'udp' 
+                    port: 700
+                    prefixes:
+                        #- '2001:3321::2/48'
+                        #- '2001:4523::3/48'
+                        - '2001:4521::2/128'
+                gaming:
+                    protocol: 'udp'
+                    port: 12345
+                    threshold: 60
+                    prefixes:
+                        - '2001:df01::1/128'
+                        - '2001:df02::1/128'
+                        - '2001:df03::1/128'
+                        - '2001:df04::1/128'
+                        - '2001:df05::1/128'
+                        - '2001:df06::1/128'
+                        - '2001:df07::1/128'
+                        - '2001:df08::1/128'
+                        - '2001:df09::1/128'
+                        - '2001:df10::1/128'
+                        - '2001:df11::1/128'
+                        - '2001:df12::1/128'
+                        - '2001:df13::1/128'
+                        - '2001:df14::1/128'
+                        - '2001:df15::1/128'
+                        - '2001:df16::1/128'
+                        - '2001:df17::1/128'
+                        - '2001:df18::1/128'
+                        - '2001:df19::1/128'
+                        - '2001:df20::1/128'
+                        - '2001:df21::1/128'
+                        - '2001:df22::1/128'
+                        - '2001:df23::1/128'
+                        - '2001:df24::1/128'
+                        - '2001:df25::1/128'
+                        - '2001:df26::1/128'
+                        - '2001:df27::1/128'
+                        - '2001:df28::1/128'
+                        - '2001:df29::1/128'
+                        - '2001:df30::1/128'
+                        - '2001:df31::1/128'
+                        - '2001:df32::1/128'
+                        - '2001:df33::1/128'
+                        - '2001:df34::1/128'
+                        - '2001:df35::1/128'
+                        - '2001:df36::1/128'
+                        - '2001:df37::1/128'
+                        - '2001:df38::1/128'
+                        - '2001:df39::1/128'
+                        - '2001:df40::1/128'
+                        - '2001:df41::1/128'
+                        - '2001:df42::1/128'
+                        - '2001:df43::1/128'
+                        - '2001:df44::1/128'
+                        - '2001:df45::1/128'
+                        - '2001:df46::1/128'
+                        - '2001:df50::1/128'
+                        - '2001:df49::1/128'
+                        - '2001:df48::1/128'
+                        - '2001:df47::1/128'
+                iperf:
+                    protocol: 'udp'
+                    port: 5201
+                    prefixes:
+                        - '2001:4521::2/128'
+
+#### INTERNET TABLES ####
+tables:
+    tab-r1:
+        default_import: True
+        export_peers: 
+            - 'Tp1ASr2'
+            - 'Tp1ASr3'
+            - 'Tp1ASr4'
+
+        #filters:
+        #    export:
+        #        - 'Filter linknets'
+                #- 'AS prepend OUT filter'
+
+
+    tab-r2:
+        default_import: True
+        export_peers:
+            - 'Tp1ASr1' 
+        filters:
+            export:
+                - 'Filter linknets'
+                #- 'Filter 2nd half of clients'
+                #- 'AS prepend OUT filter'
+
+    tab-r3:
+        default_import: True
+        export_peers:
+            - 'Tp1ASr1' 
+        filters:
+            export:
+                - 'Filter linknets'
+                #- 'Filter 1st half of clients'
+        #        - 'AS prepend OUT filter'
+
+    tab-r4:
+        default_import: True
+        export_peers:
+            - 'Tp1ASr1' 
+        filters:
+            export:
+                - 'Filter linknets'
+                #- 'Filter 2nd half of clients'
+
+filters:
+
+    - name: 'AS prepend OUT filter'
+      rules:
+          - type: 'AlwaysMatch'
+      actions:
+          - action: 'PREPEND_ASPATH'
+            value: 'self.asn'
+
+
+    - name: 'Filter linknets'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - 'fc00::/16+'
+
+    - name: 'Filter 1st half of clients'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '2001:df01::/48'
+                - '2001:df02::/48'
+                - '2001:df03::/48'
+                - '2001:df04::/48'
+                - '2001:df05::/48'
+                - '2001:df06::/48'
+                - '2001:df07::/48'
+                - '2001:df08::/48'
+                - '2001:df09::/48'
+                - '2001:df10::/48'
+                - '2001:df11::/48'
+                - '2001:df12::/48'
+                - '2001:df13::/48'
+                - '2001:df14::/48'
+                - '2001:df15::/48'
+                - '2001:df16::/48'
+                - '2001:df17::/48'
+                - '2001:df18::/48'
+                - '2001:df19::/48'
+                - '2001:df20::/48'
+                - '2001:df21::/48'
+                - '2001:df22::/48'
+                - '2001:df23::/48'
+                - '2001:df24::/48'
+                - '2001:df25::/48'
+
+    - name: 'Filter 2nd half of clients'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '2001:df26::/48'
+                - '2001:df27::/48'
+                - '2001:df28::/48'
+                - '2001:df29::/48'
+                - '2001:df30::/48'
+                - '2001:df31::/48'
+                - '2001:df32::/48'
+                - '2001:df33::/48'
+                - '2001:df34::/48'
+                - '2001:df35::/48'
+                - '2001:df36::/48'
+                - '2001:df37::/48'
+                - '2001:df38::/48'
+                - '2001:df39::/48'
+                - '2001:df40::/48'
+                - '2001:df41::/48'
+                - '2001:df42::/48'
+                - '2001:df43::/48'
+                - '2001:df44::/48'
+                - '2001:df45::/48'
+                - '2001:df46::/48'
+                - '2001:df47::/48'
+                - '2001:df48::/48'
+                - '2001:df49::/48'
+                - '2001:df50::/48'
+
+
+    - name: 'Filter AS5' 
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PeerFilter'
+            match:
+                - 5
+
+    - name: 'Reject cruft'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '2001:df8::/48+'
+
+local_routes: "internal-Tp1AS.csv"
+
+local_topology:
+    - static_file: "topology-eval-three.csv"
+
