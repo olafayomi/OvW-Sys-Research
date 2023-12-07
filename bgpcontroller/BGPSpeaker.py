@@ -534,7 +534,6 @@ class BGPSpeaker(Process):
             nh.self = False
             nh.address = message["route"]["nexthop"]
         bgpmsg.nexthop.MergeFrom(nh)
-        #self.outgoing_queue.put(msg.SerializeToString())
         self.outgoing_queue.put(bgpmsg)
         return
 

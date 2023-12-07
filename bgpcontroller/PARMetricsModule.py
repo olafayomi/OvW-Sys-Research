@@ -70,8 +70,6 @@ class BasePARModule(Process):
             self.flows.append(flow)
             for prefix in desc['prefixes']:
                 self.prefixes.add(Prefix(prefix))
-            #print("Threshold: %s" % self.thresholds)
-        #self.routes = {prefix: set() for prefix in self.prefixes}
         self.routes = {}
         self.daemon = True
         self.enabled_peers = peer_addrs
@@ -103,7 +101,6 @@ class BasePARModule(Process):
             writer.writerow(["Time", "Prefix"])
 
 
-        #'/home/ubuntu/perf.sock'
         os.mkfifo(self.unixsock)
 
     def __str__(self):
@@ -124,38 +121,19 @@ class BasePARModule(Process):
                 poll.register(perfpipe, select.POLLIN)
                 try:
                     while True:
-                        #curr_time = time.time()
-                        #if self.last_performed != 0:
-                        #    time_diff = curr_time - self.last_performed
-                        #    if time_diff > 120:
-                        #        best_routes = self._send_latest_best_route()
-                        #        self.command_queue.put(("par-update", {
-                        #            "routes": best_routes,
-                        #            "type": self.name,
-                        #        }))
                         if (perfpipe, select.POLLIN) in poll.poll(100):
-                            #self.log.info("PARMetricsModule %s received message from IPMininet!!!" % self.name)
                             msg_size_bytes = os.read(perfpipe, 4)
                             msg_size = decode_msg_size(msg_size_bytes)
                             msg_content = os.read(perfpipe, msg_size)
-                            #perfnode = perfmsg.ExitNode()
-                            #exitnode = perfnode.FromString(msg_content)
-                            #node = exitnode.name
-                            #nexthop = exitnode.address
                             # Compare paths and make decision to switch here:
                             msmMsg = perfmsg.DstMsmMsgs()
                             msms = msmMsg.FromString(msg_content)
-                            #if len(self.clients) == 0:
-                            #    self.client_dst_msm['time'] = time.monotonic()
                             for dstPerfMsg in msms.dstMsm:
                                 dstAddr = dstPerfMsg.DstAddr
-                                #delay_l = []
                                 nodes_m = []
                                 for exitnode in dstPerfMsg.node:
                                     node = exitnode.name
                                     nexthop = exitnode.address
-                                    #delay = round(exitnode.delay, 4)
-                                    #delay_l.append(delay)
                                     estDelay = round(exitnode.estDelay, 4)
                                     devDelay = round(exitnode.devDelay, 4)
                                     nodes_m.append((node, nexthop, estDelay, devDelay))
@@ -175,9 +153,7 @@ class BasePARModule(Process):
                                         self.client_dst_msm[dstAddr][name]['estDelay'] = estD
                                         self.client_dst_msm[dstAddr][name]['PrvEstDelay'] = estD
                                         self.client_dst_msm[dstAddr][name]['devDelay'] = devD
-                                        #self.client_dst_msm[dstAddr][name]['delay'] = [d]
                                         self.client_dst_msm[dstAddr][name]['nexthop'] = nh
-                                    #self.log.info("PARMetricsModule self.client_dst_msm: %s" % self.client_dst_msm)
                                 else:
                                     self.client_dst_msm[dstAddr]['msm_sample'] += 1
                                     if self.client_dst_msm[dstAddr]['time'] == 0:
@@ -188,27 +164,16 @@ class BasePARModule(Process):
                                         self.client_dst_msm[dstAddr][name]['estDelay'] = estD
                                         self.client_dst_msm[dstAddr][name]['devDelay'] = devD
 
-                                #self.log.info("PARMetricsModule received measurements for DST:%s from nodes: %s" % (dstAddr, nodes_m))
                                 pname, pnextop, pestDelay, pdevDelay = nodes_m[0]
-                                #self.log.info("PARMetricsModule number of measurements stored for DST:%s for %s is %s" %(dstAddr, pname, self.client_dst_msm[dstAddr][pname]['estDelay']))
 
-                            #self.log.info("PARMetricsModule Routing Period Cycle for is: %s" %self.period)
                             for dstAddr in self.clients:
-                            #if (time.monotonic() - self.client_dst_msm['time']) >= self.period:
-                                #self.log.info("PARMetricsModule Routing Period Cycle is: %s" %self.period)
-                                ## Full algorithm here:
-                                ## Get current path
-                                #for dstAddr in self.clients:
-                                #if (self.client_dst_msm[dstAddr]['msm_sample'] * self.mperiod) >= self.period:
                                 if (time.perf_counter() - self.client_dst_msm[dstAddr]['time']) >= (self.period - 1):
                                 
                                     self.log.info("PARMetricsModule Routing Period Cycle, Measurement Period Cycle and Samples collected for DST:%s is: %s, %s, %s" % (dstAddr, self.period, self.mperiod, self.client_dst_msm[dstAddr]['msm_sample']))
                                     if Prefix(dstAddr) not in self.preferred_routes:
-                                        #curr_route, current_node = self.current_routes[Prefix(dstAddr)]
                                         curr_route, current_node = self._fetch_current_route(Prefix(dstAddr))
                                         self.log.info("PARMetricsModule PICKING ROUTE via %s with NEXTHOP: %s for DST:%s from self.current_routes"
                                                       %(current_node, curr_route.nexthop, dstAddr))
-                                        #self.preferred_routes[Prefix(dstAddr)] = self.current_routes[Prefix(dstAddr)]
                                         self.preferred_routes[Prefix(dstAddr)] = self._fetch_current_route(Prefix(dstAddr))
                                         init_route = {}
                                         init_route[Prefix(dstAddr)] = [(curr_route, current_node)]
@@ -222,8 +187,6 @@ class BasePARModule(Process):
                                         
                                     lower_th_node = []
                                     lower_th_node_d = []
-                                    #good_nodes = []
-                                    #good_nodes_d = []
                                     best_route = {}
                                     nodes = []
                                     delay_l = []
@@ -250,8 +213,6 @@ class BasePARModule(Process):
                                         devDelay = self.client_dst_msm[dstAddr][e_node]['devDelay']
                                         n_delay = estDelay + (4.0 * devDelay)
                                         if e_node == current_node:
-                                            #if (n_delay >= (self.thresholds['gaming'] - 0.05)) or (n_delay == 0.0):
-                                            #if (n_delay >= (self.thresholds['gaming'] - 0.5)) or (n_delay == 0.0):
                                             if  (n_delay >= self.thresholds['gaming']) or (estDelay == 0.0):
                                                 self.log.info("PARMetricsModule REPORTING n_delay on current path for  DST:%s as %sms using a devRTT of %s" % (dstAddr, n_delay, devDelay))
 
@@ -263,11 +224,6 @@ class BasePARModule(Process):
                                                             self.log.info("PARMetricsModule should update path for DST:%s to a better one" % dstAddr)
                                                             best_route = self._fetch_route_for_prefix(lt_name, lt_nh, dstAddr)
                                                             self.preferred_routes[Prefix(dstAddr)] = best_route[Prefix(dstAddr)][0]
-                                                            # XXX 2023-08-16 self.preferred_routes is set here based on measurements
-                                                            #if Prefix(dstAddr) in self.preferred_routes:
-                                                            #    self.preferred_routes[Prefix(dstAddr)] = best_route[Prefix(dstAddr)][0]
-                                                            #else:
-                                                            #    self.log.info("PARMetricsModule NO_CURRENT_ROUTE for %s" % dstAddr)
 
                             
                                     if len(best_route) != 0:
@@ -284,63 +240,6 @@ class BasePARModule(Process):
                                         self.log.info("PARMetricsModule RUN RECEIVED PERFOMANCE UPDATE for PREFIX %s AND NOTIFIED CONTROLLER TO UPDATE DATAPLANE WITH: %s" % (dstAddr, best_route))
                                     self.client_dst_msm[dstAddr]['msm_sample'] = 0
                                     self.client_dst_msm[dstAddr]['time'] = 0
-                                ###### 2023-03-06 Disabled this
-                                #min_d = min(delay_l)
-                                #max_d = max(delay_l)
-                                #pct_change = ((max_d - min_d)/min_d) * 100
-                                #self.log.info("PARMetricsModule percentage difference in paths for DST:%s is %s" %(dstAddr, pct_change))
-                                #if pct_change > 10:
-                                #    for e_node in nodes:
-                                #        n_name, n_nh, n_delay = e_node
-                                #        if n_delay == min_d:
-                                #            self.log.info("PARMetricsModule should update path for DST:%s to a better one" % dstAddr)
-                                #            #self.best_routes = self._fetch_route(n_name, n_nh)
-                                #            best_route = self._fetch_route_for_prefix(n_name, n_nh, dstAddr)
-                                #            break
-                                #else:
-                                #    best_route = {}
-                                #self.log.info("PARMetricsModule DISABLED _fetch_route function, show self.best_routes: %s" %self.best_routes)
-                                #if len(best_route) != 0:
-                                #    self.command_queue.put(("par-update", {
-                                #        "routes": best_route,
-                                #        "type": self.name,
-                                #    }))
-                                #    self.log.info("PARMetricsModule RUN RECEIVED PERFOMANCE UPDATE for PREFIX %s AND NOTIFIED CONTROLLER TO UPDATE DATAPLANE WITH: %s" %(dstAddr,best_route))
-                            
-            
-                            ###### 2023-03-03
-                            #nodes = []
-                            #delay_l = []
-                            #perf_msg = perfmsg.PerformanceMsg()
-                            #perf = perf_msg.FromString(msg_content)
-                            #for exitnode in perf.node:
-                            #    node= exitnode.name
-                            #    nexthop = exitnode.address 
-                            #    delay = exitnode.delay
-                            #    delay_l.append(delay)
-                            #    nodes.append((node, nexthop, delay))
-                            #self.log.info("PARMetricsModule received nodes: %s" %nodes)
-                            #min_d = min(delay_l)
-                            #max_d = max(delay_l)
-                            #pct_change = ((max_d - min_d)/min_d) * 100
-                            #self.log.info("PARMetricsModule percentage difference in paths is %s" %pct_change)
-                            #if pct_change > 10: 
-                            #    for e_node in nodes: 
-                            #        n_name, n_nh, n_delay = e_node
-                            #        if n_delay == min_d:
-                            #            self.best_routes = self._fetch_route(n_name, n_nh)
-                            #            break
-                            ##### 2023-03-03
-                            #self.best_routes = self._fetch_route(node, nexthop)
-
-                            ###### 2023-03-04
-                            #if len(self.best_routes) != 0: 
-                            #    self.command_queue.put(("par-update", {
-                            #        "routes": self.best_routes,
-                            #        "type": self.name,
-                            #    }))
-                            #    self.log.info("PARMetricsModule RUN RECEIVED PERFOMANCE UPDATE AND NOTIFIED CONTROLLER TO UPDATE DATAPLANE WITH: %s" %self.best_routes)
-                            ##### 2023-03-04 
                         else:
                             pass
 
@@ -354,17 +253,12 @@ class BasePARModule(Process):
                             callbacks.clear()
                             continue
 
-                        # if it's been too long since we added a callback, deal with it
-                        # now before continuing to process messages
                         while len(callbacks) > 0 and callbacks[0][1] < time.time():
                             self.log.debug("Triggering overdue callback %s" % callback)
                             callback, timeout = callbacks.pop(0)
                             callback()
 
                         if msgtype in self.actions:
-                            # actions may trigger a callback (e.g. advertising routes) but
-                            # we don't want to repeatedly perform these actions, so delay
-                            # briefly in case we get more messages
                             callback = self.actions[msgtype](message)
                             if callback and not any(callback == x for x, y in callbacks):
                                 callbacks.append((callback, time.time() + 10))
@@ -384,21 +278,9 @@ class BasePARModule(Process):
             pfx = route.prefix
             self.log.info("BANDWIDTH_CHECKING PFX is %s" %pfx)
             self.log.info("BANDWIDTH__CHECKING PFX TYPE is %s" %type(pfx))
-            #addr_family = get_address_family(str(pfx))
             if pfx not in self.routes:
                 self.routes[pfx] = set()
             self.routes[pfx].add((route, message["from"]))
-            #if addr_family == AF_INET6:
-            #    for dest in self.prefixes:
-            #        if ipv6_addr_is_subset(str(dest),str(pfx)):
-            #            self.routes[dest].add((route, message["from"]))
-
-            #if addr_family == AF_INET:
-            #    for dest in self.prefixes:
-            #        if ipv4_addr_is_subset(str(dest),str(pfx)):
-            #            self.routes[dest].add((route, message["from"]))
-            #for route in message["routes"][prefix]:
-            #    self.routes[prefix].add((route, message["from"]))
         self.log.info("BANDWIDTH _process_add_route: %s" %self.routes)
         return
 
@@ -409,16 +291,6 @@ class BasePARModule(Process):
             if pfx in self.routes:
                 self.routes[pfx].remove((route, message["from"]))
 
-        #for dest in self.prefixes:
-        #    pfx = str(message["prefix"])
-        #    addr_family = get_address_family(str(pfx))
-        #    if addr_family == AF_INET6:
-        #        if ipv6_addr_is_subset(str(dest), pfx):
-        #            self.routes[dest].remove((message["route"],message["from"]))
-
-        #        if ipv4_addr_is_subset(str(dest), pfx):
-        #            self.routes[dest].remove((message["route"],message["from"]))
-        #        self.counter = 0
 
     # Initialise current routes with routes selected by Peer process
     def _process_initial_route(self, message):
@@ -438,48 +310,6 @@ class BasePARModule(Process):
                                         "type": self.name,
                                        }))
             
-            #addr_family = get_address_family(str(pfx))
-            #if addr_family == AF_INET6:
-            #    for dest in self.prefixes:
-            #        if ipv6_addr_is_subset(str(dest), str(pfx)):
-            #            self.current_routes[dest] = (route, exitnode)
-            #            if (dest not in self.preferred_routes) and self.flag is False:
-            #                best_route = self._fetch_route_for_prefix(exitnode,
-            #                                                          route.nexthop,
-            #                                                          str(dest))
-            #                if len(best_route) != 0:
-            #                    self.command_queue.put(("par-update", {
-            #                                            "routes": best_route,
-            #                                            "type": self.name,
-            #                                            }))
-
-            #            #if dest not in self.preferred_routes:
-            #            #    self.preferred_routes[dest] = (route, exitnode)
-            #            #else:
-            #            #    pref_route, pref_exitnode = self.preferred_routes[dest]
-            #            #    if pref_exitnode != exitnode:
-            #            #        self.preferred_routes[dest] = (route, exitnode)
-
-
-            #if addr_family == AF_INET:
-            #    for dest in self.prefixes:
-            #        if ipv4_addr_is_subset(str(dest), str(pfx)):
-            #            self.current_routes[dest] = (route, exitnode)
-            #            if (dest not in self.preferred_routes) and self.flag is False:
-            #                best_route = self._fetch_route_for_prefix(exitnode,
-            #                                                          route.nexthop,
-            #                                                          dest)
-            #                if len(best_route) != 0:
-            #                    self.command_queue.put(("par-update", {
-            #                                            "routes": best_route,
-            #                                            "type": self.name,
-            #                                            }))
-            #            #if dest not in self.preferred_routes:
-            #            #    self.preferred_routes[dest] = (route, exitnode)
-            #            #else:
-            #            #    pref_route, pref_exitnode = self.preferred_routes[dest]
-            #            #    if pref_exitnode != exitnode:
-            #            #        self.preferred_routes[dest] = (route, exitnode)
 
         for dest, route in self.current_routes.items():
             self.log.info("PARModule will use %s initially for %s" %(route, dest))
@@ -537,9 +367,6 @@ class Bandwidth(BasePARModule):
     def __init__(self, name, command_queue, prefixes, peer_addrs, period, m_period, datadir):
         super(Bandwidth, self).__init__(name, command_queue, flows, peer_addrs, period, m_period, datadir)
         self.log = logging.getLogger("BANDWIDTH")
-        #self.actions = {
-        #    "get": self._process_send_best_route,
-        #}
         self.command_queue = command_queue
 
 
@@ -557,7 +384,6 @@ class Bandwidth(BasePARModule):
     def _fetch_route_for_prefix(self, exitpeer, nexthop, pfx):
         pfx_route = {}
         for prefix, routes_desc in self.routes.items():
-            #self.log.info("PARMetricsModul _fetch_route_for_prefix Prefix:%s, pfx:%s" %(prefix, pfx))
 
             if (Prefix(pfx) == prefix) or (ipv6_addr_is_subset(pfx, str(prefix))):
                 for desc in routes_desc:
@@ -596,9 +422,6 @@ class TrafficModule(BasePARModule):
     def __init__(self, name, command_queue, flows, peer_addrs, period, m_period, datadir):
         super(TrafficModule, self).__init__(name, command_queue, flows, peer_addrs, period, m_period, datadir)
         self.log = logging.getLogger(self.name)
-        #self.actions = {
-        #    "get": self._process_send_best_route,
-        #}
         self.command_queue = command_queue
 
 
@@ -616,7 +439,6 @@ class TrafficModule(BasePARModule):
     def _fetch_route_for_prefix(self, exitpeer, nexthop, pfx):
         pfx_route = {}
         for prefix, routes_desc in self.routes.items():
-            #self.log.info("PARMetricsModul _fetch_route_for_prefix Prefix:%s, pfx:%s" %(prefix, pfx))
             if (Prefix(pfx) == prefix) or (ipv6_addr_is_subset(pfx, str(prefix))):
                 for desc in routes_desc:
                     route, exitnode = desc
@@ -624,7 +446,6 @@ class TrafficModule(BasePARModule):
                         self.best_routes[Prefix(pfx)] = [desc]
                         pfx_route[Prefix(pfx)] = [desc]
                 break
-        #self.log.info("PARMetricsModule Individual PFX FETCH_ROUTE returning: %s" %pfx_route)
         return pfx_route
 
 
@@ -642,26 +463,11 @@ class TrafficModule(BasePARModule):
         if message["from"] not in self.enabled_peers:
             return
 
-        ### 2023-03-28 No need sending best_routes anymore.
-        # Default route should initially forwarding
         best_routes = {}
         self.command_queue.put(("par-update", {
             "routes": best_routes,
             "type": self.name,
         }))
 
-        #if len(self.best_routes) == 0:
-        #    best_routes = self._send_latest_best_route()
-        #    self.command_queue.put(("par-update", {
-        #        "routes": best_routes,
-        #        "type": self.name,
-        #    }))
-        #else:
-        #    self.command_queue.put(("par-update", {
-        #        "routes": self.best_routes,
-        #        "type": self.name,
-        #    }))
         self.log.info("BANDWIDTH _Process_send_best_route message sent !!!")
         return
-
-    

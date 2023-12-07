@@ -111,7 +111,6 @@ class BGPPeer(Peer):
                     prefix, route.nexthop, route.get_announce_as_path_string(),
                     route.get_announce_communities_string())
         # this queue is just raw bytes, not packed inside a protobuf message
-        # 2023-05-26 Include 'local-preference' route attribute 
         self.command_queue.put(("encode", {
             "peer": self.address,
             "asn": self.asn,
@@ -126,7 +125,6 @@ class BGPPeer(Peer):
             "type": "advertise",
         }))
 
-        #self.out_queue.put(bytes(announce, "utf-8"))
 
     def _do_withdraw(self, prefix, route, locPref):
         self.log.debug("Peer process %s withdrawing %s with nexthop %s and local preference %s", 
@@ -142,7 +140,6 @@ class BGPPeer(Peer):
             },
             "type": "withdraw",
         }))
-        #self.out_queue.put(bytes(withdraw, "utf-8"))
 
     def _process_bgp_message(self, message):
         #assert(message["neighbor"]["address"]["peer"] == self.address)
@@ -177,13 +174,6 @@ class BGPPeer(Peer):
         self.log.debug("Peer %s state change: %s", self.name,
                 message["state"])
         # TODO deal with graceful restart
-        # tell the controller that we have changed state so that it can alert
-        # other peers about it
-        #if message["neighbor"]["state"] == "up":
-        #    self._state_change(True)
-        #elif message["neighbor"]["state"] == "down":
-        #    self._state_change(False)
-        #return None
         if message["state"] == "up":
             self._state_change(True)
         elif message["state"] == "down":
@@ -209,7 +199,6 @@ class BGPPeer(Peer):
 
         empty = []
         for withdrawn in prefixes:
-            #withdrawn = withdrawn["nlri"]
             withdrawn_prefix = Prefix(withdrawn)
             # a peer can remove supernets that don't explicitly exist, so we
             # need to check if a prefix is contained within the withdrawn one
@@ -257,11 +246,6 @@ class BGPPeer(Peer):
         if "attribute" not in announce:
             return False
         
-        #as_path = update["attribute"].get("as-path", [])
-        #as_set = update["attribute"].get("as-set", [])
-        #communities = update["attribute"].get("community", [])
-        #origin = update["attribute"].get("origin", ORIGIN_EGP)
-        #prefixes = announce["nlri"]
 
      
         as_path = announce["attribute"].get("as-path", [])
@@ -281,17 +265,6 @@ class BGPPeer(Peer):
                     communities, int(preference))
             if self.filter_import_route(route):
                 self.received[str(pfx)] = (route, preference)
-        #for nexthop, prefixes in announce.items():
-        #    # XXX nexthop is currently just a string
-        #    for prefix in prefixes:
-        #        prefix = prefix["nlri"]
-        #        route = RouteEntry(ORIGIN_EGP, self.asn,
-        #                str(prefix), str(nexthop), as_path, as_set,
-        #                communities, self.preference)
-        #        # check if the route passes filters before we store it
-        #        if self.filter_import_route(route):
-        #            self.received.append(route)
-        #return len(announce) > 0
         self.log.info("DEBUG_BGPPeer _process_announce_prefixes self.received is %s" % self.received)
         return len(prefixes) > 0
 
@@ -369,9 +342,6 @@ class BGPPeer(Peer):
         return None
 
     def _process_open_message(self, message):
-        # if the EoR is not one form our peer ignore it
-        #if message["neighbor"]["direction"] != "receive":
-        #    return None
         if message["direction"] != "receive":
             return None
 

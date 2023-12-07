@@ -177,20 +177,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         server.start()
 
 
-        #dpchannel = grpc.insecure_channel(target='192.168.122.172:50055')
-        #dpstub = srv6_explicit_path_pb2_grpc.SRv6ExplicitPathStub(dpchannel)
-        #path_request = srv6_explicit_path_pb2.SRv6EPRequest()
-        #path = path_request.path.add()
-        ### Set destination, device, encapmode
-        #path.destination = "2001:df15::/48"
-        #path.device = "veth0"
-        #path.encapmode = "inline"
-        #srv6_segment = path.sr_path.add()
-        #srv6_segment.segment = "2001:df9::1"
-        #srv6_segment = path.sr_path.add()
-        #srv6_segment.segment = "2001:df8::1"
-        #response = dpstub.Create(path_request, metadata=([('ip', "192.168.122.43")]))
-        #self.log.debug("Response from dp: %s" %response)
 
         self.log.info("Starting PAR modules")
         for parmodule in self.PARModules:
@@ -214,31 +200,11 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             peer.PARModules = self.PARModules
             parprefixes = []
             self.log.debug("CONTROLLER PAR WEIRDNESS: Peer: %s is enable_PAR: %s" %(peer.name, peer.enable_PAR))
-            ### XXX: Pass PAR_prefixes to all peers (20201119)
-            ### XXX: To disable, uncomment if statement below
-            ### XXX: and indent for statement
             #if peer.enable_PAR is True:
             for module in self.PARModules:
                 parprefixes += module.prefixes
                     #module.dpstub = dpstub
             peer.PAR_prefixes = parprefixes
-                #if peer.address == "192.168.122.172":
-                #    dpchannel = grpc.insecure_channel(target='192.168.122.172:50055')
-                #    dpstub = srv6_explicit_path_pb2_grpc.SRv6ExplicitPathStub(dpchannel)
-                #    path_request = srv6_explicit_path_pb2.SRv6EPRequest()
-                ## Create a new path
-                #    path = path_request.path.add()
-                ## Set destination, device, encapmode
-                #    path.destination = "2001:df15::/48"
-                #    path.device = "veth0"
-                #    path.encapmode = "inline"
-
-                #    srv6_segment = path.sr_path.add()
-                #    srv6_segment.segment = "2001:df9::1"
-                #    srv6_segment = path.sr_path.add()
-                #    srv6_segment.segment = "2001:df8::1"
-                #    response = dpstub.Create(path_request, metadata=([('ip',"192.168.122.43")]))
-                #    self.log.debug("PEER: %s sending dp message response : %s" %(peer.name,response))
 
             peer.start()
             for module in peer.PARModules:
@@ -264,25 +230,10 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         # read local route information, for now this won't change
         self.read_local_routes(self.conf.local_routes)
 
-        #self.log.info("Starting listener for ExaBGP messages")
-        #self.bgp_connection.start()
 
         self.log.info("Starting listener for command messages")
         self.control_connection.start()
 
-        #self.log.debug("Everything should be setup hopefully by now, invite Peer processes to send requests!!!!!!!!!")
-        #self.log.debug("Nudging Peer processes for Interface request!!!")
-        #for peer in self.peers:
-        #    message = "interface"
-        #    peer.mailbox.put(("interface-init", message))
-
-        #for peer in self.peers:
-        #    message = "rtables"
-        #    peer.mailbox.put(("rtable-init", message))
-
-        #for peer in self.peers:
-        #    message = "flowmarks"
-        #    peer.mailbox.put(("req-flowmark", message))
 
 
         while True:
@@ -359,8 +310,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             self.log.debug("Nudging process for Peer %s  for Interface request!!!" %peer.name )
             message = "interface"
             peer.mailbox.put(("interface-init", message))
-            #message = "rtables"
-            #peer.mailbox.put(("rtable-init", message))
         return Empty()
 
     def SendPeerKeepalive(self, request, context):
@@ -385,8 +334,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                 self.log.debug("Nudging process for Peer %s  for Interface request!!!" %peer.name )
                 message = "interface"
                 peer.mailbox.put(("interface-init", message))
-                #message = "rtables"
-                #peer.mailbox.put(("rtable-init", message))
             
         return Empty()
 
@@ -412,9 +359,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
         return message
 
     def process_bgp_message(self, message):
-        #peer_as = int(message["neighbor"]["asn"]["peer"])
-        #peer_address = message["neighbor"]["address"]["peer"]
-        #peer = self._get_peer(peer_as, peer_address)
         peer_as = int(message["peer"]["asn"])
         peer_address = message["peer"]["address"]
         peer = self._get_peer(peer_as, peer_address)
@@ -466,7 +410,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                     peer.mailbox.put(("interfaces", response_dict))
                     self.datapath[peer_addr][3] = 'CONNECTED'
 
-        #if message["action"] == 
 
 
     def process_config_dataplane(self, message): 
@@ -570,13 +513,9 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
                 path.encapmode = message["path"]["encapmode"]
                 if 'table' in message["path"]:
                     path.table = message["path"]["table"]
-                    #self.initial_par += 1
-                    #if self.initial_par > 1:
-                    #    return
                 for segs in message["path"]["segments"]:
                     srv6_segment = path.sr_path.add()
                     srv6_segment.segment = segs
-                #response = stub.Replace(path_request, metadata=([('ip','192.168.122.43')]))
                 response = stub.Replace(path_request, metadata=([('ip','2001:df23::1')]))
                 with open(self.dpUpdateReportFile, 'a') as dpreport:
                     if 'table' in message["path"]:
@@ -645,8 +584,6 @@ class Controller(exaBGPChannel.ControllerInterfaceServicer,
             peer.mailbox.put(("status", degraded))
             
     def process_par_message(self, message):
-        # Inform PAR enabled peers that a better route
-        # is available for the prefixe monitored.
         for peer in self.peers:
             if peer.enable_PAR is False:
                 continue
