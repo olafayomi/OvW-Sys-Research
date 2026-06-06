@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -14,7 +13,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import os.path
 import yaml
@@ -64,11 +62,19 @@ class ConfigLoader(object):
         # Get the local route import file, peers, tables and filters sections
         self.local_routes = self.relative_path(config["local_routes"]) if "local_routes" in config else ""
 
+        # Get the local_SID_maps
+        if "local_SID_maps" in config:
+            self.local_SID_maps = self.relative_path(config["local_SID_maps"])
+
         if "bgpspeakers" in config:
             self.bgpspeakers = config["bgpspeakers"]
         else:
             raise Exception("Config: No bgpspeakers defined in file %s" % conf_file)
 
+        if "headends" in config:
+            self.headends = config["headends"]
+        else:
+            raise Exception("Config: No headend nodes (game servers) defined in file %s" % conf_file)
         #if "peers" in config:
         #    self.peers = config["peers"]
         #else:
@@ -113,6 +119,7 @@ class ConfigLoader(object):
         del self.tables
         del self.filters
         del self.bgpspeakers
+        del self.headends
         del self.local_topology
         if hasattr(self, 'PARTrafficTypes'):
             del self.PARTrafficTypes

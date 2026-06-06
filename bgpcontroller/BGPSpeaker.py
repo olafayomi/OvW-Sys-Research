@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -14,7 +13,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import logging
 import json
@@ -115,7 +113,7 @@ class BGPSpeaker(Process):
         update_type = message["messages"]["received"]
         afi, safi = "ipv4", "unicast"
         family = []
-        nlri = []
+        #nlri = []
         self.command_queue.put(("healthcheck", {
             "speaker": {
                 "address": speaker_addr,
@@ -125,7 +123,8 @@ class BGPSpeaker(Process):
         }))
         if ('update' in update_type) and ('nlri' in message):
             nexthop = message["nexthop"]["address"]
-            pfxs = message["nlri"]["prefix"]
+            #pfxs = message["nlri"]["prefix"]
+            nlris = message["nlri"]
             attribute = {}
             pattrs = message["pattrs"]
             fam = message["family"]
@@ -145,8 +144,12 @@ class BGPSpeaker(Process):
                         as_set = as_set + as_seg['numbers']
                     attribute["as-path"] = as_set
         
-            for pfx in pfxs:
-                nlri.append(pfx)
+            #for pfx in pfxs:
+            for nlri in nlris:
+                #nlri.append(pfx)
+                if 'path_information' in nlri:
+                    self.log.info("DEBUG_BGPSPEAKER _process_receive_update path-information for prefix is %s" %nlri['path_information'])
+
             # XXX: Remove 2001:df8::/48 for now
             #if len(nlri) == 1:
             #    if nlri[0] == '2001:df8::/48':
@@ -186,7 +189,7 @@ class BGPSpeaker(Process):
                 },
                 "update": {
                     "announce": {
-                        "nlri": nlri,
+                        "nlri": nlris,
                         "family": family,
                         "attribute": attribute,
                         "nexthop": nexthop,
@@ -235,10 +238,11 @@ class BGPSpeaker(Process):
             return
 
         if 'withdrawUpdate' in update_type:
-            pfxs = message["nlri"]["prefix"]
+            #pfxs = message["nlri"]["prefix"]
+            nlris = message["nlri"]
             fam = message["family"]
-            for pfx in pfxs:
-                nlri.append(pfx)
+            #for pfx in pfxs:
+            #    nlri.append(pfx)
 
             # XXX: Remove 2001:df8::/48 for now
             #if len(nlri) == 1:
@@ -279,7 +283,7 @@ class BGPSpeaker(Process):
                 },
                 "update": {
                     "withdraw": {
-                        "nlri": nlri,
+                        "nlri": nlris,
                         "family": family,
                     },
                 },
@@ -437,7 +441,8 @@ class BGPSpeaker(Process):
         bgpmsg.msgtype = 0
         nh = gobgp.NexthopAction()
         nlri = exabgp.ExaNLRI()
-        nlri.prefix.append(str(message["route"]["nlri"]))
+        nlri.prefix = str(message["route"]["nlri"])
+        #nlri.prefix.append(str(message["route"]["nlri"]))
         bgpmsg.nlri.MergeFrom(nlri)
         if message["route"]["nexthop"] == self.address:
             nh.self = True
@@ -447,14 +452,12 @@ class BGPSpeaker(Process):
             nh.address = message["route"]["nexthop"]
         bgpmsg.nexthop.MergeFrom(nh)
 
-        self.log.info("DEBUG_BGPSPEAKER _process_send_announcement BGP message received from Peer %s is %s"  %(message["peer"], message))
 
         # 2023-05-26 Handle local-preference attribute in announcement
         if "local-preference" in message["route"]:
             any_attrs = Any()
             localPrefAttr = attrs.LocalPrefAttribute()
             locPrefVal = message["route"]["local-preference"]
-            self.log.info("DEBUG_BGPSPEAKER local-preference attribute in message from Peer %s is %s"  %(message["peer"], locPrefVal))
 
             if not isinstance(locPrefVal, int):
                 try:
@@ -492,8 +495,6 @@ class BGPSpeaker(Process):
             as_seg.type = int(1)
             paths = message["route"]["aspath"]
             
-            self.log.info("DEBUG_BGPSPEAKER _process_send_announcement paths is %s" % paths)
-            self.log.info("DEBUG_BGPSPEAKER _process_send_announcemnt paths is type %s" % type(paths))
           
             for asn in paths:
                 as_seg.numbers.append(int(asn))
@@ -505,8 +506,6 @@ class BGPSpeaker(Process):
             anycomm = Any()
             commattr = attrs.CommunitiesAttribute()
             communities = message["route"]["communities"]
-            self.log.info("DEBUG_BGPSPEAKER _process_send_announcement communities is %s" % communities)
-            self.log.info("DEBUG_BGPSPEAKER _process_send_announcement communities is type %s" % type(communities))
             if communities is not None:
                 for community in communities:
                     for num in community:
@@ -525,7 +524,7 @@ class BGPSpeaker(Process):
         bgpmsg.msgtype = 1
         nh = gobgp.NexthopAction()
         nlri = exabgp.ExaNLRI()
-        nlri.prefix.append(str(message["route"]["nlri"]))
+        nlri.prefix = str(message["route"]["nlri"])
         bgpmsg.nlri.MergeFrom(nlri)
         if message["route"]["nexthop"] == self.address:
             nh.self = True
@@ -534,6 +533,7 @@ class BGPSpeaker(Process):
             nh.self = False
             nh.address = message["route"]["nexthop"]
         bgpmsg.nexthop.MergeFrom(nh)
+        #self.outgoing_queue.put(msg.SerializeToString())
         self.outgoing_queue.put(bgpmsg)
         return
 

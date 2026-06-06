@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -14,12 +13,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import logging
 
 from BGPPeer import BGPPeer
 from SDNPeer import SDNPeer
+from Headend import Headend
 from BGPSpeaker import BGPSpeaker
 from RouteTable import RouteTable
 from PolicyObject import ACCEPT
@@ -27,6 +26,7 @@ from RouteEntry import DEFAULT_LOCAL_PREF
 from Configuration import ConfigLoader, ConfigValidator
 from ConfigurationFilterFactory import FilterFactory
 import PARMetricsModule
+
 
 
 class ConfigFactory(object):
@@ -42,9 +42,11 @@ class ConfigFactory(object):
 
         self.filters = []
         self.peers = []
+        self.headends = []
         self.tables = []
         self.bgpspeakers = []
         self.local_topology = []
+        self.localSIDMap = None
         self.PARModules = []
         self.datapathID = []
 
@@ -71,6 +73,14 @@ class ConfigFactory(object):
             self._build_traffic_modules(internal_command_queue,
                                         outgoing_control_queue,
                                         r_period, m_period, datadir)
+
+        if hasattr(self.config_loader, 'headends'):
+            self._headend_config(internal_command_queue,
+                                  outgoing_control_queue, datadir)
+
+        if hasattr(self.config_loader, 'local_SID_maps'):
+            self.localSIDMap = self.config_loader.local_SID_maps
+
         # Build the filters, tables and peers objects from the config file
         self._build_filters()
         self._build_tables(outgoing_control_queue)
@@ -134,6 +144,22 @@ class ConfigFactory(object):
 
         # free up memory
         self.config_loader.clean()
+
+    def _headend_config(self, internal_command_queue,
+                         outgoing_control_queue, datadir):
+        """
+           Configure the headend nodes datapath
+        """
+        for headend in self.config_loader.headends:
+            headend_cfg = self.config_loader.headends[headend]
+            if headend_cfg["enable-par"]:
+                obj = Headend(headend, headend_cfg["address"],
+                              outgoing_control_queue,
+                              internal_command_queue, datadir)
+            
+                self.datapathID.append((headend_cfg["address"],
+                                        headend_cfg["dp-grpc"]))
+                self.headends.append(obj)
 
     def _build_filters(self):
         """
@@ -203,7 +229,7 @@ class ConfigFactory(object):
                         outgoing_exabgp_queue, outgoing_control_queue,
                         internal_command_queue, datadir, preference=pref,
                         default_import=def_imp, default_export=def_exp,
-                        par=enable_par)
+                        par=enable_par, internal_ifaces=peer_cfg["interfaces"])
             elif peer_cfg["type"].lower() == "sdn":
                 obj = SDNPeer(peer_name, peerASN, peer_cfg["address"],
                         None, outgoing_control_queue, internal_command_queue,

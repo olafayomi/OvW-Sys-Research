@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0f\x64\x61taplane.proto\x12\x10\x44\x61taplaneService\"G\n\x11RoutesInAllTables\x12\x32\n\tAllTables\x18\x01 \x03(\x0b\x32\x1f.DataplaneService.RoutesInTable\"s\n\rRoutesInTable\x12\r\n\x05table\x18\x01 \x01(\r\x12&\n\x05route\x18\x02 \x03(\x0b\x32\x17.DataplaneService.Route\x12+\n\x06SRoute\x18\x03 \x03(\x0b\x32\x1b.DataplaneService.SRv6Route\"^\n\x05Route\x12\x13\n\x0b\x64\x65stination\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x03 \x01(\t\x12\x0f\n\x07nexthop\x18\x04 \x01(\t\x12\x10\n\x08priority\x18\x05 \x01(\r\x12\r\n\x05table\x18\x06 \x01(\r\"\xac\x01\n\tSRv6Route\x12\x13\n\x0b\x64\x65stination\x18\x01 \x01(\t\x12\x38\n\x07sr_path\x18\x02 \x03(\x0b\x32\'.DataplaneService.SRv6Route.SRv6Segment\x12\x11\n\tencapmode\x18\x03 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x04 \x01(\t\x12\r\n\x05table\x18\x05 \x01(\r\x1a\x1e\n\x0bSRv6Segment\x12\x0f\n\x07segment\x18\x01 \x01(\t\"#\n\rRequestIfaces\x12\x12\n\nNeighbours\x18\x01 \x03(\t\"\xaf\x01\n\tInterface\x12\x0e\n\x06IfName\x18\x01 \x01(\t\x12\x0f\n\x07IfIndex\x18\x02 \x01(\r\x12\x32\n\x07IfState\x18\x03 \x01(\x0e\x32!.DataplaneService.Interface.State\x12\x12\n\nNeighbours\x18\x04 \x03(\t\x12\x11\n\tAddresses\x18\x05 \x03(\t\"&\n\x05State\x12\x08\n\x04\x44OWN\x10\x00\x12\x06\n\x02UP\x10\x01\x12\x0b\n\x07UNKNOWN\x10\x02\"9\n\x0bReplyIfaces\x12*\n\x05iface\x18\x01 \x03(\x0b\x32\x1b.DataplaneService.Interface\"\'\n\x06IPRule\x12\x0e\n\x06\x66wmark\x18\x01 \x01(\r\x12\r\n\x05table\x18\x02 \x01(\r\"9\n\x0fRequestFlowMark\x12&\n\x04rule\x18\x01 \x03(\x0b\x32\x18.DataplaneService.IPRule\"x\n\rReplyFlowMark\x12\x0f\n\x07\x61pplied\x18\x01 \x01(\x08\x12(\n\x06\x66\x61iled\x18\x02 \x03(\x0b\x32\x18.DataplaneService.IPRule\x12,\n\nsuccessful\x18\x03 \x03(\x0b\x32\x18.DataplaneService.IPRule\"\x18\n\x08PARFlows\x12\x0c\n\x04\x66low\x18\x01 \x03(\t\"-\n\x07RTables\x12\x11\n\ttableName\x18\x01 \x01(\t\x12\x0f\n\x07tableNo\x18\x02 \x01(\r\"]\n\rReplyPARFlows\x12\x12\n\nCreatedAll\x18\x01 \x01(\x08\x12*\n\x07\x63reated\x18\x02 \x03(\x0b\x32\x19.DataplaneService.RTables\x12\x0c\n\x04\x66low\x18\x03 \x03(\t\"R\n\x0cIP6TableRule\x12\x0f\n\x07intName\x18\x01 \x01(\t\x12\x10\n\x08protocol\x18\x02 \x01(\t\x12\r\n\x05\x44Port\x18\x03 \x01(\r\x12\x10\n\x08\x46wmarkNo\x18\x04 \x01(\r\"D\n\x13RequestIP6TableRule\x12-\n\x05rules\x18\x01 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRule\"\x90\x01\n\x11ReplyIP6TableRule\x12\x17\n\x0fip6tablecreated\x18\x01 \x01(\x08\x12\x32\n\nsuccessful\x18\x02 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRule\x12.\n\x06\x66\x61iled\x18\x03 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRuleb\x06proto3'
+  serialized_pb=b'\n\x0f\x64\x61taplane.proto\x12\x10\x44\x61taplaneService\"G\n\x11RoutesInAllTables\x12\x32\n\tAllTables\x18\x01 \x03(\x0b\x32\x1f.DataplaneService.RoutesInTable\"s\n\rRoutesInTable\x12\r\n\x05table\x18\x01 \x01(\r\x12&\n\x05route\x18\x02 \x03(\x0b\x32\x17.DataplaneService.Route\x12+\n\x06SRoute\x18\x03 \x03(\x0b\x32\x1b.DataplaneService.SRv6Route\"^\n\x05Route\x12\x13\n\x0b\x64\x65stination\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x03 \x01(\t\x12\x0f\n\x07nexthop\x18\x04 \x01(\t\x12\x10\n\x08priority\x18\x05 \x01(\r\x12\r\n\x05table\x18\x06 \x01(\r\"\xac\x01\n\tSRv6Route\x12\x13\n\x0b\x64\x65stination\x18\x01 \x01(\t\x12\x38\n\x07sr_path\x18\x02 \x03(\x0b\x32\'.DataplaneService.SRv6Route.SRv6Segment\x12\x11\n\tencapmode\x18\x03 \x01(\t\x12\x0e\n\x06\x64\x65vice\x18\x04 \x01(\t\x12\r\n\x05table\x18\x05 \x01(\r\x1a\x1e\n\x0bSRv6Segment\x12\x0f\n\x07segment\x18\x01 \x01(\t\"#\n\rRequestIfaces\x12\x12\n\nNeighbours\x18\x01 \x03(\t\"\xaf\x01\n\tInterface\x12\x0e\n\x06IfName\x18\x01 \x01(\t\x12\x0f\n\x07IfIndex\x18\x02 \x01(\r\x12\x32\n\x07IfState\x18\x03 \x01(\x0e\x32!.DataplaneService.Interface.State\x12\x12\n\nNeighbours\x18\x04 \x03(\t\x12\x11\n\tAddresses\x18\x05 \x03(\t\"&\n\x05State\x12\x08\n\x04\x44OWN\x10\x00\x12\x06\n\x02UP\x10\x01\x12\x0b\n\x07UNKNOWN\x10\x02\"9\n\x0bReplyIfaces\x12*\n\x05iface\x18\x01 \x03(\x0b\x32\x1b.DataplaneService.Interface\"\'\n\x06IPRule\x12\x0e\n\x06\x66wmark\x18\x01 \x01(\r\x12\r\n\x05table\x18\x02 \x01(\r\"9\n\x0fRequestFlowMark\x12&\n\x04rule\x18\x01 \x03(\x0b\x32\x18.DataplaneService.IPRule\"x\n\rReplyFlowMark\x12\x0f\n\x07\x61pplied\x18\x01 \x01(\x08\x12(\n\x06\x66\x61iled\x18\x02 \x03(\x0b\x32\x18.DataplaneService.IPRule\x12,\n\nsuccessful\x18\x03 \x03(\x0b\x32\x18.DataplaneService.IPRule\"\x18\n\x08PARFlows\x12\x0c\n\x04\x66low\x18\x01 \x03(\t\"-\n\x07RTables\x12\x11\n\ttableName\x18\x01 \x01(\t\x12\x0f\n\x07tableNo\x18\x02 \x01(\r\"]\n\rReplyPARFlows\x12\x12\n\nCreatedAll\x18\x01 \x01(\x08\x12*\n\x07\x63reated\x18\x02 \x03(\x0b\x32\x19.DataplaneService.RTables\x12\x0c\n\x04\x66low\x18\x03 \x03(\t\"d\n\x0cIP6TableRule\x12\x0f\n\x07intName\x18\x01 \x01(\t\x12\x10\n\x08protocol\x18\x02 \x01(\t\x12\r\n\x05\x44Port\x18\x03 \x01(\r\x12\x10\n\x08\x46wmarkNo\x18\x04 \x01(\r\x12\x10\n\x08IsRouter\x18\x05 \x01(\x08\"D\n\x13RequestIP6TableRule\x12-\n\x05rules\x18\x01 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRule\"\x90\x01\n\x11ReplyIP6TableRule\x12\x17\n\x0fip6tablecreated\x18\x01 \x01(\x08\x12\x32\n\nsuccessful\x18\x02 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRule\x12.\n\x06\x66\x61iled\x18\x03 \x03(\x0b\x32\x1e.DataplaneService.IP6TableRuleb\x06proto3'
 )
 
 
@@ -679,6 +679,13 @@ _IP6TABLERULE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='IsRouter', full_name='DataplaneService.IP6TableRule.IsRouter', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -692,7 +699,7 @@ _IP6TABLERULE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1162,
-  serialized_end=1244,
+  serialized_end=1262,
 )
 
 
@@ -723,8 +730,8 @@ _REQUESTIP6TABLERULE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1246,
-  serialized_end=1314,
+  serialized_start=1264,
+  serialized_end=1332,
 )
 
 
@@ -769,8 +776,8 @@ _REPLYIP6TABLERULE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1317,
-  serialized_end=1461,
+  serialized_start=1335,
+  serialized_end=1479,
 )
 
 _ROUTESINALLTABLES.fields_by_name['AllTables'].message_type = _ROUTESINTABLE

@@ -1,161 +1,266 @@
-asn: 100
+#asn: 38022
+asn: 64496
 grpc-address: '127.0.0.1'
+#grpc-address: '192.168.122.43'
 grpc-port: 50051
 bgpspeakers:
-    speaker-1:
-        address: '100::4'
+    hlz-uow-1:
+        address: '2001:df40::1'
         type: 'exabgp'
         peers:
-            Tp1ASr1:
+            uow:
                 type: 'bgp'
-                asn: 100
-                address: '100::1'
-                preference: 160
+                asn: 64496
+                address: '2001:df40::2'
+                preference: 300
                 enable-par: True
                 dp-grpc: 50055
                 interfaces:
-                    - 'Tp1ASr1-eth0'
-                filters:
-                    export:
-                        - 'Filter linknets'
+                    - 'eth0'
+                    - 'eth1'
+                #default_import: False
+                #default_export: True
+                #filters:
+                #    import:
+                #        - 'UOW import'
                 tables:
-                    - 'tab-r1'
-            Tp1ASr2:  
+                    - 'internet-and-sxt'
+                    - 'reannz'
+                    
+            vuw:
                 type: 'bgp'
-                asn: 100
-                address: '100::2'
-                preference: 150
-                enable-par: False
+                asn:  64496
+                #default_import: False
+                #default_export: True
+                address: '2001:df40::3'
+                #enable-par: True
+                dp-grpc: 50055
+                preference: 200
+                interfaces:
+                    - 'eth2'
+                    - 'eth4'
+                #filters:
+                #    import:
+                #        - 'Filter AS64498'
+                tables:
+                    - 'internet-and-sxt'
+                    - 'reannz'
+                
+                #hlz-uow-2:
+            #address: '192.168.122.43'
+        #type: 'exabgp'
+        #peers:
+            uoa:
+                type: 'bgp'
+                asn: 64496
+                address: '2001:df23::32'
                 dp-grpc: 50055
                 interfaces:
-                    - 'Tp1ASr2-eth0'
-                #filters:
-                #    export:
-                #        - 'Filter internal AS100'
+                    - 'eth5'
+                    - 'eth6'
                 tables:
-                    - 'tab-r2'
-
-            Tp1ASr3:  
-                type: 'bgp'
-                asn: 100
-                address: '100::3'
-                preference: 450
-                enable-par: False
-                dp-grpc: 50055
-                interfaces:
-                    - 'Tp1ASr3-eth0'
-                #filters:
-                #    export:
-                #        - 'Filter internal AS100'
-                tables:
-                    - 'tab-r3'
-
+                    - 'domestic'
+                    - 'internet-and-sxt'
+                    - 'reannz'
+                    - 'slowpath'
+            tait:
+                 type: 'bgp'
+                 asn: 64496
+                 address: '2001:df36::34'
+                 dp-grpc: 50055
+                 interfaces:
+                     - 'eth7'
+                     - 'eth8'
+                 tables:
+                     - 'internet-and-sxt'
+                     - 'reannz'
+                     - 'gigafast'
+                 filters:
+                     export:
+                         - 'Reject cruft'
+            vocus:
+              type: 'bgp'
+              asn: 64496
+              address: '2001:df35::36'
+              dp-grpc: 50055
+              interfaces:
+                  - 'eth9'
+                  - 'eth10'
+              tables:
+                  - 'internet-and-sxt'
+                  - 'internet'
+                  - 'reannz'
+                    #- 'gigafast'
 #### Performance Aware Routing #####
 performance-aware:
-        latency:
-            flows:
-                livestream:
-                    protocol: 'udp'
-                    port: 465
-                    prefixes:
-                        - '2001:4521::1/128'
-                        - '2001:3320::1/128'
-                        - '2001:4521::2/128'
-                        #- '2001:4522::1/48'
-                experiment:
-                    protocol: 'udp' 
-                    port: 700
-                    prefixes:
-                        #- '2001:3321::2/48'
-                        #- '2001:4523::3/48'
-                        - '2001:4521::2/128'
-                gaming:
-                    protocol: 'udp'
-                    port: 12345
-                    threshold: 60
-                    prefixes:
-                        - '2001:df01::1/128'
-                        - '2001:df02::1/128'
-                        - '2001:df03::1/128'
-                        - '2001:df04::1/128'
-                        - '2001:df05::1/128'
-                        - '2001:df06::1/128'
-                        - '2001:df07::1/128'
-                        - '2001:df08::1/128'
-                        - '2001:df09::1/128'
-                        - '2001:df10::1/128'
-                        - '2001:df11::1/128'
-                        - '2001:df12::1/128'
-                        - '2001:df13::1/128'
-                        - '2001:df14::1/128'
-                        - '2001:df15::1/128'
-                        - '2001:df16::1/128'
-                        - '2001:df17::1/128'
-                        - '2001:df18::1/128'
-                        - '2001:df19::1/128'
-                        - '2001:df20::1/128'
-                        - '2001:df21::1/128'
-                        - '2001:df22::1/128'
-                        - '2001:df23::1/128'
-                        - '2001:df24::1/128'
-                        - '2001:df25::1/128'
-                        - '2001:df26::1/128'
-                        - '2001:df27::1/128'
-                        - '2001:df28::1/128'
-                        - '2001:df29::1/128'
-                        - '2001:df30::1/128'
-                        - '2001:df31::1/128'
-                        - '2001:df32::1/128'
-                        - '2001:df33::1/128'
-                        - '2001:df34::1/128'
-                        - '2001:df35::1/128'
-                        - '2001:df36::1/128'
-                        - '2001:df37::1/128'
-                        - '2001:df38::1/128'
-                        - '2001:df39::1/128'
-                        - '2001:df40::1/128'
-                        - '2001:df41::1/128'
-                        - '2001:df42::1/128'
-                        - '2001:df43::1/128'
-                        - '2001:df44::1/128'
-                        - '2001:df45::1/128'
-                        - '2001:df46::1/128'
-                        - '2001:df50::1/128'
-                        - '2001:df49::1/128'
-                        - '2001:df48::1/128'
-                        - '2001:df47::1/128'
-                iperf:
-                    protocol: 'udp'
-                    port: 5201
-                    prefixes:
-                        - '2001:4521::2/128'
-
+        #latency:
+            #- '45.2.1.0/24'
+        bandwidth:
+            #- '100.1.0.0/24'
+            #- '45.2.1.0/24'
+            - '2001:4521::/48'
 #### INTERNET TABLES ####
 tables:
-    tab-r1:
+    gigafast:
         default_import: True
-        export_peers: 
-            - 'Tp1ASr2'
-            - 'Tp1ASr3'
-
-
-    tab-r2:
-        default_import: True
+        aggregate_prefix:
+            - '170.7.128.0/17'
         export_peers:
-            - 'Tp1ASr1' 
+            - 'vuw'
         filters:
+            import:
+                - 'Filter AS64497'
+                - 'Filter AS64497 prefix'
             export:
-                - 'Filter linknets'
+                - 'AS prepend OUT filter'
 
-    tab-r3:
+    slowpath:
         default_import: True
+        aggregate_prefix:
+            - '180.7.128.0/17'
         export_peers:
-            - 'Tp1ASr1' 
+            - 'uow'
         filters:
+            import:
+                - 'Filter AS64498'
             export:
-                - 'Filter linknets'
+                - 'AS prepend OUT filter'
 
+    internet:
+        #default_import: False
+        default_import: True
+        #default_export: True
+        aggregate_prefix:
+                #- '163.7.128.0/17'
+            - '2001:df28::/48'
+        export_peers:
+            - 'vuw'
+            - 'uow'
+            - 'tait'
+            - 'uoa'
+        filters:
+            import:
+                - 'Internet IN filter'
+            export:
+                - 'AS prepend OUT filter'
+
+    internet-and-sxt:
+        #default_import: False
+        default_import: True
+        #default_export: True
+        aggregate_prefix:
+                #- '163.7.128.0/17'
+            - '2001:df28::/48'
+        export_peers:
+            - 'uow'
+            - 'uoa'
+            - 'vuw'
+            - 'tait'
+            - 'vocus'
+        filters:
+            import:
+                - 'Internet/SXT IN filter'
+            export:
+                - 'AS prepend OUT filter'
+
+    reannz:
+        #default_import: False
+        default_import: True
+        #default_export: True
+        aggregate_prefix:
+                #- '163.7.128.0/17'
+            - '2001:df28::/48'
+        export_peers:
+            - 'vocus'
+              #- 'ape'
+              #- 'aarnet'
+            - 'vuw'
+            - 'uow'
+            - 'uoa'
+            - 'tait'
+        filters:
+            import:
+                - 'REANNZ IN filter'
+            export:
+                - 'AS prepend OUT filter'
+
+    domestic:
+        #default_import: False
+        default_import: True
+        #default_export: True
+        aggregate_prefix:
+                #- '163.7.128.0/17'
+            - '2001:df28::/48'
+        export_peers:
+            - 'uow'
+                  #- 'vocus'
+        filters:
+            import:
+                - 'Domestic IN filter'
+            export:
+                - 'AS prepend OUT filter'
+    
 filters:
+    - name: 'UOW import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                #- '130.217.0.0/16+'
+                - '0.0.0.0/0+'
+    - name: 'TOIT import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '0.0.0.0/0+'
+
+    - name: 'TAIT import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '0.0.0.0/0+'
+
+    - name: 'VUW import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '130.195.0.0/16+'
+                - '120.0.0.0/16+'
+                - '0.0.0.0/0+'
+
+    - name: 'UOA import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '130.216.0.0/16+'
+
+    - name: 'VOCUS import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '175.45.64.0/18+'
+          - type: 'PrefixFilter'
+            match:
+                - '222.152.0.0/19+'
+
+    - name: 'APE import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '13.64.0.0/11+'
+
+    - name: 'AARNET import'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '0.0.0.0/0+'
 
     - name: 'AS prepend OUT filter'
       rules:
@@ -164,93 +269,106 @@ filters:
           - action: 'PREPEND_ASPATH'
             value: 'self.asn'
 
-
-    - name: 'Filter linknets'
-      onmatch: 'REJECT'
+    - name: 'Internet IN filter'
       rules:
-          - type: 'PrefixFilter'
+          - type: 'PeerFilter'
             match:
-                - 'fc00::/16+'
-
-    - name: 'Filter 1st half of clients'
-      onmatch: 'REJECT'
-      rules:
-          - type: 'PrefixFilter'
-            match:
-                - '2001:df01::/48'
-                - '2001:df02::/48'
-                - '2001:df03::/48'
-                - '2001:df04::/48'
-                - '2001:df05::/48'
-                - '2001:df06::/48'
-                - '2001:df07::/48'
-                - '2001:df08::/48'
-                - '2001:df09::/48'
-                - '2001:df10::/48'
-                - '2001:df11::/48'
-                - '2001:df12::/48'
-                - '2001:df13::/48'
-                - '2001:df14::/48'
-                - '2001:df15::/48'
-                - '2001:df16::/48'
-                - '2001:df17::/48'
-                - '2001:df18::/48'
-                - '2001:df19::/48'
-                - '2001:df20::/48'
-                - '2001:df21::/48'
-                - '2001:df22::/48'
-                - '2001:df23::/48'
-                - '2001:df24::/48'
-                - '2001:df25::/48'
-
-    - name: 'Filter 2nd half of clients'
-      onmatch: 'REJECT'
-      rules:
-          - type: 'PrefixFilter'
-            match:
-                - '2001:df26::/48'
-                - '2001:df27::/48'
-                - '2001:df28::/48'
-                - '2001:df29::/48'
-                - '2001:df30::/48'
-                - '2001:df31::/48'
-                - '2001:df32::/48'
-                - '2001:df33::/48'
-                - '2001:df34::/48'
-                - '2001:df35::/48'
-                - '2001:df36::/48'
-                - '2001:df37::/48'
-                - '2001:df38::/48'
-                - '2001:df39::/48'
-                - '2001:df40::/48'
-                - '2001:df41::/48'
-                - '2001:df42::/48'
-                - '2001:df43::/48'
-                - '2001:df44::/48'
-                - '2001:df45::/48'
-                - '2001:df46::/48'
-                - '2001:df47::/48'
-                - '2001:df48::/48'
-                - '2001:df49::/48'
-                - '2001:df50::/48'
-
-
-    - name: 'Filter AS5' 
+                - 38022
+                - 4826
+                - 9560
+                - 7575
+                  #- 64496
+     
+    - name: 'Filter AS64497'
       onmatch: 'REJECT'
       rules:
           - type: 'PeerFilter'
             match:
-                - 5
+                - 64497
 
+    - name: 'Filter AS64498'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PeerFilter'
+            match:
+                - 64498
+
+    - name: 'Filter AS64497 prefix'
+      onmatch: 'REJECT'
+      rules:
+          - type: 'PrefixFilter'
+            match:
+                - '100.1.1.0/24'
+                - '12.64.4.96/30+'
+                - '14.64.4.96/30+'
+
+    - name: 'Internet/SXT IN filter'
+      rules:
+          - type: 'PeerFilter'
+            match:
+                - 38022
+                - 681
+                - 23905
+                - 9431
+                - 55524
+                - 4826
+                - 9560
+                - 7575
+                  #- 64498
+                  #- 64496
+
+    - name: 'REANNZ IN filter'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PeerFilter'
+            match:
+                - 38022
+                - 681
+                - 23905
+                - 9431
+                - 55524
+                - 64496
+
+    - name: 'Domestic IN filter'
+      onmatch: 'ACCEPT'
+      rules:
+          - type: 'PeerFilter'
+            match:
+                - 38022
+                - 4826
+                - 9560
+                - 64496
     - name: 'Reject cruft'
       onmatch: 'REJECT'
       rules:
           - type: 'PrefixFilter'
             match:
-                - '2001:df8::/48+'
+                - '2001:df8::/48'
 
-local_routes: "internal-Tp1AS.csv"
+local_routes: "internal.csv"
 
 local_topology:
-    - static_file: "topology-eval.csv"
+    #
+    # ====== EXAMPLE FULL OSPF CONFIG WITH ALL FIELDS ===
+    #
+    #- protocol: ospf
+    #  config:
+    #      router_id: 1.1.1.1
+    #      area: 0.0.0.0
+    #      interface: Target1-eth1
+    #      ip: 10.1.255.2
+    #      mask: 255.255.255.0
+    #      hello_interval: 10
+    #      link_type: Broadcast
+    #      options: E,O
+    #      mtu: 1500
+    #      rxmt_interval: 5
 
+    #- protocol: ospf
+    #  config:
+    #      router_id: 1.1.1.1
+    #      interface: Target1-eth1
+    #      ip: 10.1.255.2
+    #      mask: 255.255.255.0
+
+    - static_file: "topology.csv"

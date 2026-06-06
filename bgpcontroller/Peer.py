@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-#
-# This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
 #
@@ -38,7 +36,8 @@ class Peer(PolicyObject):
             preference=DEFAULT_LOCAL_PREF,
             default_import=ACCEPT,
             default_export=ACCEPT,
-            par=False):
+            par=False,
+            internal_ifaces=None):
 
         super(Peer, self).__init__(name, control_queue, default_import,
                 default_export)
@@ -61,6 +60,8 @@ class Peer(PolicyObject):
         self.interfaces = []
         self.flowobj = []
         self.DPRouteTable = []
+        self.localSIDMap = []
+        self.internal_ifaces = internal_ifaces
         self.steering_inst_file = datadir+'/'+str(self.name)+'PeerSteerInstFile.csv'
         with open(self.steering_inst_file, 'w') as steering:
             writer = csv.writer(steering, delimiter='|')
@@ -144,7 +145,33 @@ class Peer(PolicyObject):
             for (prefix, route, locPref) in self.exported:
                 self._do_announce(prefix, route, locPref)
             return
+        #for table, routes in self.adj_ribs_in.items():
 
+        # XXX: Enabling PAR for specific prefixes 20201120
+        #if self.enable_PAR is True:
+        #    par_table_name = []
+        #    for module in self.PARModules:
+        #        par_table_name.append(module.name)
+        #    self.pre_adj_ribs_in = copy.deepcopy(self.adj_ribs_in)
+        #    for table, routes in self.adj_ribs_in.items():
+        #        if table not in par_table_name:
+        #            for prefix in self.PAR_prefixes:
+        #                if prefix in routes:
+        #                    routes.pop(prefix)
+            
+        # XXX massage this to list of tuples because that's what old code wants
+        # XXX removing this would save a ton of memory!
+        # XXX what is this actually doing and why? going from dict of
+        # prefix:routes to tuple prefix,route?
+
+        
+        # XXX: Remove this because now we hide paths. 20201120
+
+        #if self.enable_PAR is True:
+        #    adj_export_routes = self.filter_export_routes(self.adj_ribs_in)
+        #    par_export_routes = self.filter_export_routes(self.par_ribs_in)
+        #    export_routes = {**par_export_routes, **adj_export_routes}
+        #else:
         export_routes = self.filter_export_routes(self.adj_ribs_in)
 
         # at this point we have all the routes that might be relevant to us
@@ -156,15 +183,18 @@ class Peer(PolicyObject):
             # WITHDRAW ALL ROUTES, IF ANY, BEFORE CLEARING THE EXPOTED
             # ROUTES.
             self.exported.clear()
+            self.log.info("export_routes is zero, clearing self.exported: %s" %(self.name))
             return
 
         full_routes = []
         full_routes_pfxs = set()
         for prefix, routes in export_routes.items():
+            self.log.info("Export Routes on Peer Process %s: prefix: %s, routes: %s" %(self.name, prefix, routes))
             for route_t in routes:
                 route, pref = route_t
                 if self.degraded:
                     # add communities if we are degraded in some way
+                    self.log.info("Are we adding a degraded community to route: %s by %s" %(route, self.name))
                     route.add_communities([(self.asn, self.degraded)])
                 
                 full_routes.append((prefix, route, pref))
@@ -172,6 +202,8 @@ class Peer(PolicyObject):
         full_routes = set(full_routes)
         del export_routes
 
+        # withdraw all the routes that were previously advertised in self.exported  but are 
+        # not in `full_routes` to prevent advertising invalid routes and blackholing traffic.
         self.log.debug("For Peer Process %s Number of routes in full_routes and self.exported are %s and %s", self.name, len(full_routes), len(self.exported))
         self.log.debug("For Peer Process %s The following routes in are self.exported", self.name)
         for  (prefix, route, pref) in self.exported:
@@ -181,8 +213,10 @@ class Peer(PolicyObject):
             self.log.debug("                   Peer Process %s full_routes Prefix: %s, Route: %s, Pref: %s", self.name, prefix, route, pref)
         
         for (prefix, route, pref) in self.exported.difference(full_routes):
-            if prefix in full_routes_pfxs:
-                continue
+            ### 2024-08-25
+            ### This is confusing add-path and making it behave weirdly.
+            #if prefix in full_routes_pfxs:
+            #    continue
             self._do_withdraw(prefix, route, pref)
             edges = list(self.routing.topology.graph.edges)
             dest_node = ""
@@ -195,34 +229,66 @@ class Peer(PolicyObject):
             if dest_node:
                 segments = self.routing.topology.get_segments_list(self.name, dest_node)
                 self.log.info("TESTING FOR FULL SRV6 FOR ALL ROUTES XXXXXXX: SEGMENT %s RETURNED to node %s for _process_par_update in PEER %s", segments, dest_node, self.name)
-                seg_iface = self._iface_to_segments(segments) 
-                datapath = [
-                            {
-                              "paths": [
+                if self.enable_PAR:
+                    seg_iface = self._iface_to_segments(segments) 
+                    if self.localSIDMap:
+                        for localSID in self.localSIDMap:
+                            if localSID[0] == dest_node:
+                                for community in route.communities():
+                                    if int(localSID[3]) in community:
+                                        segments.insert(0, localSID[2])
+                    datapath = [
                                 {
-                                  "device": seg_iface.ifindex,
-                                  "destination": str(prefix),
-                                  "encapmode": "encap",
-                                  "segments": segments,
+                                  "paths": [
+                                    {
+                                        "device": seg_iface.ifindex,
+                                        "destination": str(prefix),
+                                        "encapmode": "encap",
+                                        "segments": segments,
+                                    }
+                                  ]
                                 }
-                              ]
-                            }
-                           ]
-                self.internal_command_queue.put(("steer", {
-                    "path": datapath[0]["paths"][0],
-                    "peer": {
-                              "address": self.address,
-                              "asn": self.asn,
-                            },
-                    "action": "Remove"
-                }))
-                with open(self.steering_inst_file, 'a') as steering:
-                    row =[time.time(), str(prefix), dest_node, str(segments), 254, 'Remove']
-                    writer = csv.writer(steering, delimiter='|')
-                    writer.writerow(row)
+                               ]
+                    self.internal_command_queue.put(("steer", {
+                        "path": datapath[0]["paths"][0],
+                            "peer": {
+                                "address": self.address,
+                                "asn": self.asn,
+                                },
+                        "action": "Remove"
+                    }))
+                    with open(self.steering_inst_file, 'a') as steering:
+                        row =[time.time(), str(prefix), dest_node, str(segments), 254, 'Remove']
+                        writer = csv.writer(steering, delimiter='|')
+                        writer.writerow(row)
                     
 
+            # XXX: I need to fix this... Routes that are still valid should not be removed
+            #      from the PAR module list
+            # XXX:     Could be removed 20201120
+            #if prefix in self.PAR_prefixes:
+            #    rib_len = len(self.pre_adj_ribs_in)
+            #    del_route = []
+            #    count = 0
+            #    for table, routes in self.pre_adj_ribs_in.items():
+            #        if prefix not in routes:
+            #            rib_len -= 1
+            #            continue
+
+            #        if route not in routes[prefix]:
+            #            count += 1
+            #            del_route.append(count)
+            #    if rib_len != len(del_route):
+            #        message = (("remove", {
+            #                    "route": route,
+            #                    "prefix": prefix,
+            #                    "from": self.name
+            #                  }))
+            #        for parmodule in self.PARModules:
+            #            self.log.debug("PEER WEIRDNESS DEBUG PAR route delete XXXX Peer %s removing route: %s in _do_export_routes\n\n" %(self.name, route))
+            #            parmodule.mailbox.put(message)
         
+        # 2023-08-15 Send default/initial routes to PAR module at once as a batch
         initial_msgs = []
         # announce all the routes that haven't been advertised before
         for (prefix, route, pref) in full_routes.difference(self.exported):
@@ -241,38 +307,56 @@ class Peer(PolicyObject):
             if dest_node:
                 segments = self.routing.topology.get_segments_list(self.name, dest_node)
                 #self.log.info("TESTING FOR FULL SRV6 FOR ALL ROUTES XXXXXXX: SEGMENT %s RETURNED to node %s for _process_par_update in PEER %s", segments, dest_node, self.name)
-                seg_iface = self._iface_to_segments(segments) 
-                #self.log.info("PRINTING IFACE INDEX PEERXXXX in %s: %s" % (self.name,seg_iface))
-                datapath = [
-                            {
-                              "paths": [
+                if self.enable_PAR:
+                    seg_iface = self._iface_to_segments(segments) 
+                    #self.log.info("PRINTING IFACE INDEX PEERXXXX in %s: %s" % (self.name,seg_iface))
+                    if self.localSIDMap:
+                        for localSID in self.localSIDMap:
+                            if localSID[0] == dest_node:
+                                for community in route.communities():
+                                    if int(localSID[3]) in community:
+                                        segments.insert(0, localSID[2])
+
+                    datapath = [
                                 {
-                                  "device": seg_iface.ifindex,
-                                  "destination": str(prefix),
-                                  "encapmode": "encap",
-                                  "segments": segments,
+                                    "paths": [
+                                      {
+                                        "device": seg_iface.ifindex,
+                                        "destination": str(prefix),
+                                        "encapmode": "encap",
+                                        "segments": segments,
+                                     }
+                                    ]
                                 }
-                              ]
-                            }
-                           ]
-                self.internal_command_queue.put(("steer", {
-                    "path": datapath[0]["paths"][0],
-                    "peer": {
-                              "address": self.address,
-                              "asn": self.asn,
-                            },
-                    "action": "Replace"
-                }))
-                with open(self.steering_inst_file, 'a') as steering:
-                    row =[time.time(), str(prefix), dest_node, str(segments), 254, 'Replace']
-                    writer = csv.writer(steering, delimiter='|')
-                    writer.writerow(row)
+                               ]
+                    self.internal_command_queue.put(("steer", {
+                        "path": datapath[0]["paths"][0],
+                        "peer": {
+                                  "address": self.address,
+                                  "asn": self.asn,
+                                },
+                        "action": "Replace"
+                    }))
+                    with open(self.steering_inst_file, 'a') as steering:
+                        row =[time.time(), str(prefix), dest_node, str(segments), 254, 'Replace']
+                        writer = csv.writer(steering, delimiter='|')
+                        writer.writerow(row)
 
                 ###: Add initial routes
+                ### XXX: 20230306
+                ### XXX: 20230815 Send all routes and prefixes to PAR modules at once instead of bit by by
+                ### XXX: 20240701 Send all routes and prefixes to PARM modules regardless of whether the peer does PAR or not.
                 initial_msgs.append({ prefix: (route, dest_node),
-                                     "segments": segments})
+                                    "segments": segments})
 
+                #message = (("set-initial", { prefix: (route, dest_node),
+                #                            "segments": segments,
+                #                            "from": self.name }))
+                #for parmodule in self.PARModules:
+                #    self.log.debug("PEER %s sending DEFAULT/INITIAL route for PREFIX:%s to PAR module" %(self.name, prefix))
+                #    parmodule.mailbox.put(message)
 
+        ### XXX: 20230815 Update PAR modules with all default/initial routes for prefixes at once instead of bit by bit.
         if len(initial_msgs) != 0:
             message = (("set-initial", {"prefixes" : initial_msgs,
                                         "from": self.name}))
@@ -281,6 +365,13 @@ class Peer(PolicyObject):
                 parmodule.mailbox.put(message)
                 
             ### XXX: Disable adding routes to PAR modules
+            ### XXX: Done 20201119
+            #if prefix in self.PAR_prefixes:
+            #    addroute = { prefix: [route] }
+            #    message = (("add", { "routes": addroute,
+            #                         "from": self.name}))
+            #    for parmodule in self.PARModules:
+            #        parmodule.mailbox.put(message)
 
         # record the routes we last exported so we can check for changes
         self.exported = full_routes
@@ -315,6 +406,8 @@ class Peer(PolicyObject):
         filtered_routes = super(Peer,self).filter_export_routes(filtered_routes)
 
         # fix the nexthop value which will be pointing to a router
+        # id rather than an address, and may not even be directly
+        # adjacent to this peer
         if self.routing.topology:
             for prefix, routes in filtered_routes.items():
                 for route_t in routes:
@@ -328,24 +421,35 @@ class Peer(PolicyObject):
     def _get_filtered_routes(self):
         filtered_routes = []
         # 2023-06-07 pass tuple with local-preference
-        for route_tup in self.received.values():
+        for route_vals in self.received.values():
             # work on a copy of the routes so the original unmodified routes
             # can be run through filters again later if required
-            route, pref = route_tup
-            filtered = self.filter_import_route(route, copy=True)
-            if filtered is not None:
+            if isinstance(route_vals, tuple):
+                route, pref = route_vals
+                filtered = self.filter_import_route(route, copy=True)
+                if filtered is not None:
                 # add the new route to the list to be announced
-                filtered_routes.append((filtered, pref))
+                    filtered_routes.append((filtered, pref))
+            else:
+                for route_tup in route_vals:
+                    route, pref, PInfo = route_tup
+                    filtered = self.filter_import_route(route, copy=True)
+                    if filtered is not None:
+                        filtered_routes.append((filtered, pref))
         return filtered_routes
 
     def _update_tables_with_routes(self):
         # run the received routes through filters and send to the tables
+        # 2023-05-26 Add local-preference of Peer to message sent to table
         message = (("update", {
                     "routes": self._get_filtered_routes(),
                     "from": self.name,
                     "asn": self.asn,
                     "address": self.address,
+                    #"local-preference": self.preference,
                     }))
+        ### XXX: Added on 20201119
+        ### XXX: Testing pushing routes directly to PARModule
         par_msg = (("add", {
                     "routes": self._get_filtered_routes(),
                     "from": self.name
@@ -353,9 +457,11 @@ class Peer(PolicyObject):
 
         for table in self.export_tables:
             table.mailbox.put(message)
+
         
+        ### XXX: Added on 20201119
+        ### XXX: Testing pushing routes directly to PARModule
         for parmodule in self.PARModules:
-            self.log.debug("Peer %s is adding route to parmodule in _update_tables_with_routes " %(self.name))
             parmodule.mailbox.put(par_msg)
                    
     def _process_table_update(self, message):
@@ -371,6 +477,14 @@ class Peer(PolicyObject):
             return None
         # clobber the old routes from this table with the new lot
         self.adj_ribs_in[message["from"]] = imp_routes
+        ### XXX: Disabling adding of routes to PAR module here
+        ### XXX: Done 20201119
+        #message = (("add", {
+        #             "routes": imp_routes,
+        #             "from": self.name
+        #             }))
+        #for parmodule in self.PARModules:
+        #    parmodule.mailbox.put(message)
 
         if self.enable_PAR is True:
             for module in self.PARModules:
@@ -389,20 +503,21 @@ class Peer(PolicyObject):
         # XXX: check if we can export this prefix, otherwise skip checks
         imp_routes = {}
         for prefix in message["routes"]: 
-            self.log.info("PEER _process_par_update: prefix : %s is type %s" % (prefix,type(prefix)))
+            #stuff = message["routes"][prefix]
             if len(message["routes"][prefix]) != 1:
+                #self.log.info("INSERTING RANDOM PRINT HERE TO DEBUG _PROCESS_PAR_UPDATE")
+                #self.log.info("DEBUG_PEER _PROCESS_PAR_UPDATE LENGTH OF PREFIX %s"  %len(message["routes"][prefix]))
+                #self.log.info("DEBUG_PEER _PROCESS_PAR_UPDATE MESSAGE PREFIX %s" %(message["routes"][prefix]))
                 return None
             route, node = message["routes"][prefix][0]
-            self.log.info(" _process_par_update IN PEER %s: %s and route %s\n\n\n" %(self.name,node, route))
             
             if self._can_import_prefix(prefix):
                 imp_routes[prefix] = [route]
+                #message["routes"][prefix]
         if len(imp_routes) == 0:
-            self.log.info("DEBUG_PEER _process_par_update IN PEER %s, CHECKING EACH STEP OF FUNC" %self.name)
             return None
         
         if node == self.name:
-            self.log.info("DEBUG_PEER XDNXKASHDNCSHDHGSKDKSCBSBSG _process_par_update: node is the same\n\n\n")
             return None
 
        
@@ -410,9 +525,9 @@ class Peer(PolicyObject):
         #### Segment routing experiments
         segments = self.routing.topology.get_segments_list(self.name, node)
 
+        #no_of_nodes, list_nodes = self.routing.topology.returnGraph()
 
         if segments is None:
-            self.log.info("DEBUG_PEER No segments returned from network _process_par_update!!!")
             return None
         else:
             self.log.info("DEBUG_PEER: SEGMENT %s RETURNED to node %s for _process_par_update in PEER %s", segments, node, self.name)
@@ -424,14 +539,21 @@ class Peer(PolicyObject):
             for route in routes:
                 nexthop = route.nexthop
             if len(routes) > 1:
-                self.log.info("DEBUG_PEER: LENGTH ROUTES IS GREATER THAN ONE")
                 return None
 
             seg_iface = self._iface_to_segments(segments)
+            if self.localSIDMap:
+                for localSID in self.localSIDMap:
+                    if localSID[0] == node:
+                        for community in route.communities():
+                            if int(localSID[3]) in community:
+                                segments.insert(0, localSID[2])
+
             datapath = [
                         {
                           "paths": [
                             {
+                               #"device": "as3r2-eth1",
                                "device": seg_iface.ifindex,
                                "destination": str(prefix),
                                "encapmode": "encap",
@@ -460,14 +582,18 @@ class Peer(PolicyObject):
 
     def _iface_to_segments(self, segs):
         for iface in self.interfaces:
+            #self.log.debug("LISTING IFACES in _iface_to_segments function for peer:%s Interface:%s" %(self.name, iface))
             if iface.internal:
                 if bool(set(iface.neighbours).intersection(segs)):
                     return iface
                 # XXX Check if first address in segment could be in the
+                # same subnet as any of the IP addresses of an each interface
+                # get last address in segment list
                 nhop = segs[-1]
                 for addr in iface.addresses:
                     check = ipv6_addrs_in_subnet(nhop, addr)
                     if check:
+                        #self.log.debug("COMPARING SUBNET FOR IFACE ADDRESS and FIRST SEGMENT RETURNED A MATCH for NH %s on IFACE %s on Peer %s" %(nhop, iface.ifname, self.name))
                         return iface
 
     def _fetch_iface_by_name(self, name):
@@ -480,10 +606,14 @@ class Peer(PolicyObject):
         self.log.debug("TRYING SOMETHING XXXX %s" % message)
         ifaces = message['iface']
         internal_neighbours = self.routing.topology.getNeighbourAddr(self.name)
+        # XXX: Add OSPF IPv6 multicast addresses. All internal interfaces 
+        #      should have these addresses in their neighbour list
         internal_neighbours.append('ff02::5')
         internal_neighbours.append('ff02::6')
+        ## Add this to for Eval debug
         internal_neighbours.append('100::4')
         self.log.debug("PRINTING INTERNAL NEIGHBOURS for %s %s" %(self.name, internal_neighbours))
+        self.log.debug("PRINTING INTERNAL IFACES for %s %s" %(self.name, self.internal_ifaces))
         for iface in ifaces:
             name = iface['IfName']
             ind  = iface['IfIndex']
@@ -500,10 +630,15 @@ class Peer(PolicyObject):
             intf = Interface(name, ind, state, neighs, addrs)
             if name == 'lo':
                 val = True
+            elif name in self.internal_ifaces:
+                val = True
             else:
-                val = bool(set(neighs).intersection(internal_neighbours))
+                self.log.debug("Neighbours of %s on interface %s: %s" %(self.name, name, neighs))
+                val = False
+                #val = bool(set(neighs).intersection(internal_neighbours))
             intf.set_internal(val)
             fetch_if = self._fetch_iface_by_name(name)
+            # XXX: Only add interface if it doesn't already exist!!!!
             if fetch_if is not None:
                 fetch_if.set_internal(val)
             else:
@@ -604,6 +739,9 @@ class Peer(PolicyObject):
         }))
         return
 
+    # XXX topology messages are a pickled data structure wrapped in a protobuf
+    # to make the transition easier. They should probably be made into proper
+    # protobuf messages sometime.
     def _process_topology_message(self, message):
         self.log.debug("Topology update received by %s" % self.name)
 
@@ -650,10 +788,17 @@ class Peer(PolicyObject):
     def _state_change(self, status):
         if self.active != status:
             self.active = status
+            # Make sure we remove routes that have been received from this peer
+            # so they don't linger around
             if self.active is False:
+                self.log.debug("%s self.active is %s so clearing self.exported and  self.received" %(self.name, self.active))
                 self.received.clear()
+                #for prefix, route in self.exported:
+                #    self._do_withdraw(prefix, route)
+                # Check if this makes the withdrawal of routes any faster!!!
                 self.exported.clear()
                 self._update_tables_with_routes()
+            # tell the controller the new status of this peer
             self.log.debug("%s signalling controller new status: %s" %
                     (self.name, status))
             self.internal_command_queue.put(("status", {

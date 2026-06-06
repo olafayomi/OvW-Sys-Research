@@ -135,6 +135,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -143,7 +144,7 @@ class ControllerInterface(object):
             exabgp__pb2.ExaPeerState.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SendPeerOpen(request,
@@ -151,6 +152,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -159,7 +161,7 @@ class ControllerInterface(object):
             exabgp__pb2.ExaPeerOpen.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SendPeerKeepalive(request,
@@ -167,6 +169,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -175,7 +178,7 @@ class ControllerInterface(object):
             exabgp__pb2.ExaKeepalive.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SendUpdateEoR(request,
@@ -183,6 +186,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -191,7 +195,7 @@ class ControllerInterface(object):
             exabgp__pb2.ExaUpdateEoR.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SendUpdate(request,
@@ -199,6 +203,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -207,7 +212,7 @@ class ControllerInterface(object):
             exabgp__pb2.ExaUpdate.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetPeerAddr(request,
@@ -215,6 +220,7 @@ class ControllerInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -223,7 +229,7 @@ class ControllerInterface(object):
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             exabgp__pb2.GoBGPAddPeer.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
 class ExabgpInterfaceStub(object):
@@ -275,6 +281,7 @@ class ExabgpInterface(object):
             options=(),
             channel_credentials=None,
             call_credentials=None,
+            insecure=False,
             compression=None,
             wait_for_ready=None,
             timeout=None,
@@ -283,4 +290,4 @@ class ExabgpInterface(object):
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             exabgp__pb2.ControllerToBGP.FromString,
             options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

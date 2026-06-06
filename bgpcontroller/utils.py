@@ -2,6 +2,8 @@
 
 ##########################################################################
 # Copyright (C) 2020 Carmine Scarpitta
+# (Consortium GARR and University of Rome "Tor Vergata")
+# www.garr.it - www.uniroma2.it/netgroup
 #
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
@@ -18,6 +20,7 @@
 #
 # Utils for node manager
 #
+# @author Carmine Scarpitta <carmine.scarpitta@uniroma2.it>
 #
 
 

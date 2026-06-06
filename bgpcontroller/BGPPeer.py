@@ -16,11 +16,13 @@
 #
 
 import logging
+import time
 
 from Peer import Peer
 from PolicyObject import ACCEPT
 from Prefix import Prefix
 from RouteEntry import RouteEntry, DEFAULT_LOCAL_PREF, ORIGIN_EGP
+
 
 class BGPPeer(Peer):
     def __init__(self, name, asn, address, outgoing_queue, control_queue,
@@ -29,17 +31,19 @@ class BGPPeer(Peer):
             #preference,
             preference=DEFAULT_LOCAL_PREF,
             default_import=ACCEPT,
-            default_export=ACCEPT,par=False):
+            default_export=ACCEPT,par=False,
+            internal_ifaces=None):
 
         super(BGPPeer, self).__init__(name, asn, address, control_queue,
                 internal_command_queue, datadir, preference, default_import,
-                default_export,par)
+                default_export,par,internal_ifaces)
 
         self.log = logging.getLogger("BGPPeer")
         self.out_queue = outgoing_queue
         self.command_queue = internal_command_queue
 
         self.seen_eor = False
+        self.eor_true = None
         self.actions.update({
             "bgp": self._process_bgp_message,
         })
@@ -111,6 +115,7 @@ class BGPPeer(Peer):
                     prefix, route.nexthop, route.get_announce_as_path_string(),
                     route.get_announce_communities_string())
         # this queue is just raw bytes, not packed inside a protobuf message
+        # 2023-05-26 Include 'local-preference' route attribute 
         self.command_queue.put(("encode", {
             "peer": self.address,
             "asn": self.asn,
@@ -125,6 +130,7 @@ class BGPPeer(Peer):
             "type": "advertise",
         }))
 
+        #self.out_queue.put(bytes(announce, "utf-8"))
 
     def _do_withdraw(self, prefix, route, locPref):
         self.log.debug("Peer process %s withdrawing %s with nexthop %s and local preference %s", 
@@ -140,6 +146,7 @@ class BGPPeer(Peer):
             },
             "type": "withdraw",
         }))
+        #self.out_queue.put(bytes(withdraw, "utf-8"))
 
     def _process_bgp_message(self, message):
         #assert(message["neighbor"]["address"]["peer"] == self.address)
@@ -174,6 +181,13 @@ class BGPPeer(Peer):
         self.log.debug("Peer %s state change: %s", self.name,
                 message["state"])
         # TODO deal with graceful restart
+        # tell the controller that we have changed state so that it can alert
+        # other peers about it
+        #if message["neighbor"]["state"] == "up":
+        #    self._state_change(True)
+        #elif message["neighbor"]["state"] == "down":
+        #    self._state_change(False)
+        #return None
         if message["state"] == "up":
             self._state_change(True)
         elif message["state"] == "down":
@@ -194,37 +208,58 @@ class BGPPeer(Peer):
             as the caller should have already done this. Return true if
             prefix changes occurred.
         """
-        #prefixes = update["withdraw"][family]
-        prefixes = update["withdraw"]["nlri"]
+        #prefixes = update["withdraw"]["nlri"]
+        nlris = update["withdraw"]["nlri"]
 
         empty = []
-        for withdrawn in prefixes:
-            withdrawn_prefix = Prefix(withdrawn)
+        for withdrawn in nlris:
+            #withdrawn = withdrawn["nlri"]
+            withdrawn_prefix = Prefix(withdrawn["prefix"])
             # a peer can remove supernets that don't explicitly exist, so we
             # need to check if a prefix is contained within the withdrawn one
             for prefix in self.received.keys():
                 if withdrawn_prefix.contains(Prefix(prefix)):
                     # remove any routes that fall within the prefix
-                    empty.append(prefix)
+                    if "pathInformation" in withdrawn:
+                        empty.append((prefix, withdrawn['pathInformation']))
+                    else:
+                        empty.append(prefix)
 
         # remove prefixes that no longer have routes
-        for prefix in empty:
-            #del self.received[prefix]
-            pfx = Prefix(prefix)
-            if pfx in self.PAR_prefixes:
-                route, pref = self.received[prefix]
-                message = (("remove", {
-                            "route": route,
-                            "prefix": pfx,
-                            "from": self.name,
-                          }))
-                for parmodule in self.PARModules:
-                    self.log.debug("BGPPEER DEBUG par route delete XXXXCXCSCSJSDSJD Peer %s removing routes: %s in _process_withdraw_prefixes\n\n\n\n" %(self.name, route))
-                    parmodule.mailbox.put(message)
-            del self.received[prefix]    
-                
+        for nlri_prefix in empty:
+            if isinstance(nlri_prefix, tuple):
+                prefix, pathInfo = nlri_prefix
+                pfx = Prefix(prefix)
+                if pfx in self.PAR_prefixes:
+                    for pfx_tup in self.received[prefix]:
+                        route, pref, pathInformation = pfx_tup
+                        if pathInformation == pathInfo:
+                            message = (("remove", {
+                                        "route": route,
+                                        "prefix": pfx,
+                                        "from": self.name,
+                                      }))
+                            for parmodule in self.PARModules:
+                                self.log.debug("BGPPEER DEBUG par route delete Peer %s removing routes: %s PathInfo %s  in _process_withdraw_prefixes\n\n\n" %(self.name, route, pathInformation))
+                                parmodule.mailbox.put(message)
+                            self.received[prefix].discard(pfx_tup)
 
-        return len(prefixes) > 0
+            #del self.received[prefix]
+            else:
+                pfx = Prefix(nlri_prefix)
+                if pfx in self.PAR_prefixes:
+                    route, pref = self.received[nlri_prefix]
+                    message = (("remove", {
+                                "route": route,
+                                "prefix": pfx,
+                                "from": self.name,
+                              }))
+                    for parmodule in self.PARModules:
+                        self.log.debug("BGPPEER DEBUG par route delete XXXXCXCSCSJSDSJD Peer %s removing routes: %s in _process_withdraw_prefixes\n\n\n\n" %(self.name, route))
+                        parmodule.mailbox.put(message)
+                del self.received[nlri_prefix]    
+                
+        return len(nlris) > 0
 
     def _process_announce_prefixes(self, family, update):
         """
@@ -240,33 +275,56 @@ class BGPPeer(Peer):
             "eor" in announce["null"]:
             # TODO see also restart flags that say not to wait for EOR
             self.seen_eor = True
+            self.eor_true = time.monotonic()
             return True
 
         #if "attribute" not in update:
         if "attribute" not in announce:
             return False
         
+        #as_path = update["attribute"].get("as-path", [])
+        #as_set = update["attribute"].get("as-set", [])
+        #communities = update["attribute"].get("community", [])
+        #origin = update["attribute"].get("origin", ORIGIN_EGP)
+        #prefixes = announce["nlri"]
 
      
         as_path = announce["attribute"].get("as-path", [])
         as_set = announce["attribute"].get("as-set", [])
         communities = announce["attribute"].get("community", [])
         origin = announce["attribute"].get("origin", ORIGIN_EGP)
-        prefixes = announce["nlri"]
+        #prefixes = announce["nlri"]
+        
         nexthop = announce["nexthop"]
         preference = announce["attribute"].get("local-preference", self.preference)
         #preference = int(self.preference)
-        self.log.info("debug_bgppeer _process_announce_prefixes local preference for %s  is %s" % (self.name, preference))
-        self.log.info("debug_bgppeer DEFAULT_LOCAL_PREF is type: %s" %type(DEFAULT_LOCAL_PREF))
 
-        for pfx in prefixes:
+        for nlri in announce["nlri"]:
+
             route = RouteEntry(origin, self.asn,
-                    str(pfx), str(nexthop), as_path, as_set,
+                    str(nlri["prefix"]), str(nexthop), as_path, as_set,
                     communities, int(preference))
             if self.filter_import_route(route):
-                self.received[str(pfx)] = (route, preference)
-        self.log.info("DEBUG_BGPPeer _process_announce_prefixes self.received is %s" % self.received)
-        return len(prefixes) > 0
+                if "pathInformation" in nlri:
+                    route_info = (route, preference, nlri["pathInformation"])
+                    if str(nlri["prefix"]) not in self.received:
+                        self.received[str(nlri["prefix"])] = {route_info}
+                    else:
+                        self.received[str(nlri["prefix"])].add(route_info)
+                else:
+                    self.received[str(nlri["prefix"])] = (route, preference)
+        #for nexthop, prefixes in announce.items():
+        #    # XXX nexthop is currently just a string
+        #    for prefix in prefixes:
+        #        prefix = prefix["nlri"]
+        #        route = RouteEntry(ORIGIN_EGP, self.asn,
+        #                str(prefix), str(nexthop), as_path, as_set,
+        #                communities, self.preference)
+        #        # check if the route passes filters before we store it
+        #        if self.filter_import_route(route):
+        #            self.received.append(route)
+        #return len(announce) > 0
+        return len(announce["nlri"]) > 0
 
     def _process_bgp_update_section(self, update, section_name, func):
         """
@@ -308,12 +366,12 @@ class BGPPeer(Peer):
         family = fam.split(" ")
         for afi, safi in self.afi_safi:
 
-            #if afi == prefix.afi() and safi == prefix.safi():
             if afi == family[0] and safi == family[1]:
                 return True
         return False
 
     def _process_update_message(self, message):
+        #update = message["neighbor"]["message"].get("update", None)
         update = message.get("update", None)
         withdrawn = False
         announced = False
@@ -324,6 +382,7 @@ class BGPPeer(Peer):
             eor_section = message.get("eor", None)
             if not eor_section is None:
                 self.seen_eor = True
+                self.eor_true = time.monotonic()
                 announced = True
                 self.log.debug("%s seen eor for AFI %s and SAFI %s" % (self.name,
                         eor_section["family"][0][0], eor_section["family"][0][1]))
@@ -342,6 +401,9 @@ class BGPPeer(Peer):
         return None
 
     def _process_open_message(self, message):
+        # if the EoR is not one form our peer ignore it
+        #if message["neighbor"]["direction"] != "receive":
+        #    return None
         if message["direction"] != "receive":
             return None
 
@@ -350,9 +412,14 @@ class BGPPeer(Peer):
         # Check if the GR capability is advertised
         #if "64" in message["neighbor"]["open"]["capabilities"]:
         if "gracefulrestart" in message["capabilities"]:
-            self.seen_eor = False
-            self.log.debug("Peer %s advertised GR capability, waiting for EoR",
-                    self.name)
+            if self.eor_true is None:
+                self.seen_eor = False
+                self.log.debug("Peer %s advertised GR capability, waiting for EoR",
+                               self.name)
+            else:
+                if time.monotonic() > self.eor_true:
+                    self.log.debug("Peer %s is known to have GR capability, do not change self.seen_eor which is %s"
+                                   %(self.name, self.seen_eor))
         else:
             self.seen_eor = True
             self.log.debug("Peer %s lacks GR capability, disabling EoR wait",

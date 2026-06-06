@@ -1,4 +1,3 @@
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -12,7 +11,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import csv
 import sys
@@ -213,6 +211,7 @@ class NetworkManager(Process):
             "build_topology": self._build_topo
         }
         self.peers = []
+        self.headends = []
         self.mailbox = Queue()
         self.daemon = True
 
@@ -369,6 +368,10 @@ class NetworkManager(Process):
         for peer in self.peers:
             peer.mailbox.put(("topology", self._network.topology))
             peer.mailbox.put(("topolinks", self._network.links))
+
+        for headend in self.headends:
+            headend.mailbox.put(("topology", self._network.topology))
+            headend.mailbox.put(("topolinks", self._network.links))
 
     #def __str__(self):
         #return "\n".join([str(x) for x in self.nodes])

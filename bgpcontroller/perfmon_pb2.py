@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rperfmon.proto\x12\x07perfmon\"j\n\x08\x45xitNode\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\r\n\x05\x64\x65lay\x18\x03 \x01(\x02\x12\x10\n\x08\x65stDelay\x18\x04 \x01(\x02\x12\x0c\n\x04loss\x18\x05 \x01(\x02\x12\x10\n\x08\x64\x65vDelay\x18\x06 \x01(\x02\"1\n\x0ePerformanceMsg\x12\x1f\n\x04node\x18\x01 \x03(\x0b\x32\x11.perfmon.ExitNode\"=\n\tDstMsmMsg\x12\x0f\n\x07\x44stAddr\x18\x01 \x01(\t\x12\x1f\n\x04node\x18\x02 \x03(\x0b\x32\x11.perfmon.ExitNode\"0\n\nDstMsmMsgs\x12\"\n\x06\x64stMsm\x18\x01 \x03(\x0b\x32\x12.perfmon.DstMsmMsg\"\x1f\n\x0c\x44\x65stinations\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x03(\t\"&\n\x06\x44stRTT\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0b\n\x03rtt\x18\x02 \x03(\x02\"-\n\nDstRTTMsgs\x12\x1f\n\x06\x64strtt\x18\x01 \x03(\x0b\x32\x0f.perfmon.DstRTT\"E\n\tClientRTT\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04\x65rtt\x18\x02 \x01(\x02\x12\x0b\n\x03rtt\x18\x03 \x01(\x02\x12\x0c\n\x04\x64rtt\x18\x04 \x01(\x02\"/\n\tClRTTMsgs\x12\"\n\x06\x63l_rtt\x18\x01 \x03(\x0b\x32\x12.perfmon.ClientRTTb\x06proto3'
+  serialized_pb=b'\n\rperfmon.proto\x12\x07perfmon\"}\n\x08\x45xitNode\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\r\n\x05\x64\x65lay\x18\x03 \x01(\x02\x12\x10\n\x08\x65stDelay\x18\x04 \x01(\x02\x12\x0c\n\x04loss\x18\x05 \x01(\x02\x12\x10\n\x08\x64\x65vDelay\x18\x06 \x01(\x02\x12\x11\n\tcommunity\x18\x07 \x01(\r\"1\n\x0ePerformanceMsg\x12\x1f\n\x04node\x18\x01 \x03(\x0b\x32\x11.perfmon.ExitNode\"=\n\tDstMsmMsg\x12\x0f\n\x07\x44stAddr\x18\x01 \x01(\t\x12\x1f\n\x04node\x18\x02 \x03(\x0b\x32\x11.perfmon.ExitNode\"0\n\nDstMsmMsgs\x12\"\n\x06\x64stMsm\x18\x01 \x03(\x0b\x32\x12.perfmon.DstMsmMsg\"\x1f\n\x0c\x44\x65stinations\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x03(\t\"&\n\x06\x44stRTT\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0b\n\x03rtt\x18\x02 \x03(\x02\"-\n\nDstRTTMsgs\x12\x1f\n\x06\x64strtt\x18\x01 \x03(\x0b\x32\x0f.perfmon.DstRTT\"E\n\tClientRTT\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04\x65rtt\x18\x02 \x01(\x02\x12\x0b\n\x03rtt\x18\x03 \x01(\x02\x12\x0c\n\x04\x64rtt\x18\x04 \x01(\x02\"/\n\tClRTTMsgs\x12\"\n\x06\x63l_rtt\x18\x01 \x03(\x0b\x32\x12.perfmon.ClientRTTb\x06proto3'
 )
 
 
@@ -75,6 +75,13 @@ _EXITNODE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='community', full_name='perfmon.ExitNode.community', index=6,
+      number=7, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -88,7 +95,7 @@ _EXITNODE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=26,
-  serialized_end=132,
+  serialized_end=151,
 )
 
 
@@ -119,8 +126,8 @@ _PERFORMANCEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=134,
-  serialized_end=183,
+  serialized_start=153,
+  serialized_end=202,
 )
 
 
@@ -158,8 +165,8 @@ _DSTMSMMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=185,
-  serialized_end=246,
+  serialized_start=204,
+  serialized_end=265,
 )
 
 
@@ -190,8 +197,8 @@ _DSTMSMMSGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=248,
-  serialized_end=296,
+  serialized_start=267,
+  serialized_end=315,
 )
 
 
@@ -222,8 +229,8 @@ _DESTINATIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=298,
-  serialized_end=329,
+  serialized_start=317,
+  serialized_end=348,
 )
 
 
@@ -261,8 +268,8 @@ _DSTRTT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=331,
-  serialized_end=369,
+  serialized_start=350,
+  serialized_end=388,
 )
 
 
@@ -293,8 +300,8 @@ _DSTRTTMSGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=371,
-  serialized_end=416,
+  serialized_start=390,
+  serialized_end=435,
 )
 
 
@@ -346,8 +353,8 @@ _CLIENTRTT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=418,
-  serialized_end=487,
+  serialized_start=437,
+  serialized_end=506,
 )
 
 
@@ -378,8 +385,8 @@ _CLRTTMSGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=489,
-  serialized_end=536,
+  serialized_start=508,
+  serialized_end=555,
 )
 
 _PERFORMANCEMSG.fields_by_name['node'].message_type = _EXITNODE

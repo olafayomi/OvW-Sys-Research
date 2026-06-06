@@ -1,4 +1,3 @@
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -12,7 +11,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import logging
 import time
@@ -78,13 +76,25 @@ class RouteTable(PolicyObject):
 
     def _process_update_message(self, message):
         peer = message.get("from")
+        #pref = message.get("local-preference")
+        # clear all the routes we received from this peer
         self.routes[peer] = []
+        #self.peerPref[peer] = pref
+        # update routes from this peer by running through the filters.
         if isinstance(message["routes"], list):
+            # routes from a peer are just a list
             self._try_import_routes(self.routes[peer], message["routes"])
         elif isinstance(message["routes"], dict):
             # routes from a table are a dictionary of lists
             for routes in message["routes"].values():
                 self._try_import_routes(self.routes[peer], routes)
+        #for peer, routes in self.routes.items():
+        # update all the peers with the new routes we received, and flag
+        # the peer as the source of the update so the table doesn't send
+        # a pointless update back. If multiple peers are updated then all
+        # peers will need updates. We save the source peer rather than
+        # passing it as an argument because we don't know what will happen
+        # between now and the update callback triggering
         self.update_source = peer if self.update_source is None else None
         return self._update_peers
 
@@ -137,11 +147,13 @@ class RouteTable(PolicyObject):
                             combined[route.prefix].append((route, pref))
 
                     except AttributeError:
+                        # otherwise just add it to the list
                         combined[route.prefix].append((route, pref))
+                        #combined[route.prefix].append((route, self.peerPref[source_peer]))
 
         filtered_routes = self.filter_export_routes(combined)
         # get the right preference for filtered_routes
-
+        
         self.log.info("Table %s filtered routes for %s in %fs" % (
                 self.name, peer.name, time.time() - mark))
 
@@ -153,5 +165,7 @@ class RouteTable(PolicyObject):
         self.log.info("Table %s sent %d routes to %s in %fs" % (
                 self.name, len(filtered_routes), peer.name,
                 time.time() - mark))
+        self.log.info("Table %s sent filtered routes: %s" % (
+                self.name, filtered_routes))
         del filtered_routes
         del combined
