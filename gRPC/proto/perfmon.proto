@@ -10,6 +10,7 @@ message ExitNode {
   float estDelay = 4;
   float loss = 5;
   float devDelay = 6;
+  uint32  community = 7;
 }
 
 // Performance message to PARMetricsModule containing
