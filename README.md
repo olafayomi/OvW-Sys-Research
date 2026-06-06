@@ -278,39 +278,21 @@ sysctl -w net.ipv6.conf.eth2.seg6_require_hmac=-1
 
 ## Measurement analysis pipeline
 
-The topology TC delay parameters are derived from RIPE Atlas RTT measurements using
-the following pipeline. All scripts are in the project root or `ExperimentTools/`.
+The IPMininet topology TC delay parameters are derived from week-long RIPE 
+Atlas RTT measurements (29 April – 6 May 2025) to three game server targets:
+Blizzard (AS57976), Ubisoft (AS49544), and Valve (AS32590).
 
-### Step 1 — Proximity group identification
+The analysis pipeline produces three configuration files that are required 
+at runtime:
 
-`game-server-probe-analysis.py` clusters RIPE Atlas probes by AS, country, and geographic
-proximity (50 km radius) and identifies groups with path diversity to three game server
-targets (Blizzard AS57976, Ubisoft AS49544, Valve AS32590). Outputs:
+| File | Purpose |
+|------|---------|
+| `as_topology_config_with_variation.json` | 52 AS groups with path delays, variances, and multi-modal switching parameters |
+| `enhanced_tc_distribution_config.json` | TC netem commands per path |
+| `detailed_results.json` | Characterisation of validated proximity groups |
 
-- `diverse_path_groups.csv` — one row per proximity group
-- `probe_details.csv` — one row per probe with RTT and path data
-
-### Step 2 — Per-group RTT characterisation
-
-`probe-group-analyzer-updated2.py` and `analyze_neighbor_probes.py` analyse the RTT
-measurements for each proximity group, identify the best, median, and worst probes on
-each AS path, and produce `detailed_results.json`.
-
-### Step 3 — RTT distribution and stability analysis
-
-`rtt_distribution_analyser_with_correlation.py` fits statistical distributions to each
-path's RTT time series, detects multi-modal behaviour, and generates:
-
-- `distribution_analysis_results.json`
-- `enhanced_tc_distribution_config.json` — TC netem commands per path, including
-  multi-modal switching schedules
-
-### Step 4 — Topology config generation
-
-`as_json_config_gen.py` (with classification variant `as_json_config_gen_with_classification.py`)
-combines the above outputs to produce `as_topology_config_with_variation.json`, which both
-topology scripts consume at runtime.
-
+These files are included in `Measurement-Results/` and consumed directly by 
+the topology scripts in `TopoEmulation/`.
 ---
 
 ## Running experiments
@@ -413,18 +395,31 @@ path analysis.
 
 ## Measurement-Results
 
-`Measurement-Results/` contains RIPE Atlas RTT measurements used to derive the
-TC netem delay distributions for network emulation.
+`Measurement-Results/` contains the derived configuration files needed to 
+reproduce the IPMininet topology used in our experiments.
 
-Results are organised by source AS and game server target (Blizzard, Ubisoft, Valve).
-Each subdirectory contains:
+### Included files
 
-- One or more RIPE Atlas measurement JSON files
-- Per-probe RTT CSVs (one file per probe per AS path)
-- Combined RTT CSVs aggregated across probes per AS path
+| File | Purpose |
+|------|---------|
+| `as_topology_config_with_variation.json` | 52 AS groups with path delays, variances, and multi-modal switching parameters |
+| `enhanced_tc_distribution_config.json` | TC netem commands per path |
+| `detailed_results.json` | Characterisation of validated proximity groups |
+| `probe_details.csv` | Probe metadata: AS, country, coordinates, RTT, path assignments |
+| `diverse_path_groups.csv` | Proximity group definitions with path diversity info |
 
-These measurements informed the TC netem Pareto distribution parameters in the
-IPMininet topologies.
+### Regenerating the dataset
+
+To regenerate the configuration files from scratch:
+
+1. Schedule RIPE Atlas measurements using the probe IDs in `probe_details.csv`
+   - Targets: Blizzard (AS57976), Ubisoft (AS49544), Valve (AS32590)
+   - Measurement type: traceroute + ICMP ping, 3 packets every 15 minutes
+   - Duration: 7 days
+
+2. Process the measurements to produce the configuration files listed above.
+
+Raw RIPE Atlas measurements are available via the RIPE Atlas API.
 
 ---
 
@@ -453,7 +448,7 @@ and SSH southbound interfaces. See `srv6-controller/README.md` for details.
 If you use this code, please cite:
 
 ```
-@inproceedings{overwatch-conext24,
+@inproceedings{overwatch-conext26,
   title     = {Bring 'em on! Pragmatic Egress Routing for Interactive Multiplayer Games},
   booktitle = {Proceedings of CoNEXT '26},
   year      = {2026}
