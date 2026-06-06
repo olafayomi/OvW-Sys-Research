@@ -1,12 +1,4 @@
 #!/usr/bin/env python
-# Copyright (c) 2023, WAND Network Research Group
-#                     Department of Computer Science
-#                     University of Waikato
-#                     Hamilton
-#                     New Zealand
-#
-# Author Dimeji Fayomi (oof1@students.waikato.ac.nz)
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -47,7 +39,7 @@ def decode_msg_size(size_bytes: bytes) -> int:
 
 class Path1Protocol:
     def __init__(self, pathsock, msm_int):
-        self.alpha = 0.125
+        self.alpha = 0.25
         self.beta = 0.25
         self.clients = {}
         self.srcAddr = "55::5"

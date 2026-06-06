@@ -28,6 +28,7 @@ def most_recent_rtts_above_threshold(last_thirty_rtts):
 
 def calc_percentage(rtts):
     total_values = len(rtts)
+    #above_threshold = sum(value > 60.0 for value in list(rtts_deque))
     above_threshold = 0 
     for rtt in rtts:
         if rtt > 60.0:
@@ -66,7 +67,12 @@ if __name__ == "__main__":
     server_address = ('55::1', 12345)
     client_socket = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    #client_socket.connect(server_address)
+    # Set timeout for socket
+    #client_socket.settimeout(0.9)
+    # Set socket to blocking until timeout exceeded
     client_socket.setblocking(False)
+    #client_ipv6_address = client_socket.getsockname()[0]
     client_ipv6_address = get_address(args.hostname)
     message_counter = 0
     # Set up variables for tracking consecutive counts and times
@@ -127,23 +133,28 @@ if __name__ == "__main__":
             writer.writerow([message, receive_time, rtt, received])
             message_counter += 1
 
-            if len(rtt_window) == 180:
-                #p75val = np.percentile(rtt_window, 75)
-                rtt_l = list(rtt_window)
-                p75val = calc_percentage(rtt_l)
-                last_thirty = list(rtt_window)[-30:]
-                bad_recent = most_recent_rtts_above_threshold(last_thirty)
+            #Disable Disconnection For Sensitivity analysis
+            # 2024-12-09
+            #if len(rtt_window) == 180:
+            #    #p75val = np.percentile(rtt_window, 75)
+            #    rtt_l = list(rtt_window)
+            #    p75val = calc_percentage(rtt_l)
+            #    last_thirty = list(rtt_window)[-30:]
+            #    bad_recent = most_recent_rtts_above_threshold(last_thirty)
 
+            #    #if bad_recent:
+            #    #    print(f"High RTT experienced for traffic in the last 30 seconds")
+            #    #    break
 
-                if (p75val >= 25.0):
-                    writer.writerow(['percent-disconnect','percent-disconnect','percent-disconnect','percent-disconnect'])
-                    print(f"Disconnection caused by 25% of traffic in the last 180 seconds")
-                    break
+            #    if (p75val >= 25.0):
+            #        writer.writerow(['percent-disconnect','percent-disconnect','percent-disconnect','percent-disconnect'])
+            #        print(f"Disconnection caused by 25% of traffic in the last 180 seconds")
+            #        break
 
-                if bad_recent:
-                    writer.writerow(['Thirty-High', 'Thirty-High', 'Thirty-High', 'Thirty-High'])
-                    print(f"High RTT experienced for all traffic in the last 30 seconds")
-                    break
+            #    if bad_recent:
+            #        writer.writerow(['Thirty-High', 'Thirty-High', 'Thirty-High', 'Thirty-High'])
+            #        print(f"High RTT experienced for all traffic in the last 30 seconds")
+            #        break
 
             t_delta = time.monotonic() - s_time
             if t_delta < 1.0:

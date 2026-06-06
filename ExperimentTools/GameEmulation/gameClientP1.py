@@ -52,6 +52,10 @@ if __name__ == "__main__":
     server_address = (args.server_addr, args.server_port)
     client_socket = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    #client_socket.connect(server_address)
+    # Set timeout for socket
+    #client_socket.settimeout(1.0)
+    # Set socket to blocking until timeout exceeded
     client_socket.setblocking(False)
     #client_ipv6_address = client_socket.getsockname()[0]
     client_ipv6_address = get_address(args.hostname)
