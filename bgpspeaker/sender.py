@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -14,7 +13,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import time
 import sys
@@ -30,16 +28,55 @@ from concurrent import futures
 metadata = [('ip', '127.0.0.1')]
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
+def wait_for_grpc_server(server_address, max_retries=30, initial_delay=1, max_delay=60):
+    """Wait for gRPC server to become available with exponential backoff"""
+    for attempt in range(max_retries):
+        try:
+            sys.stderr.write(f"Attempt {attempt + 1}: Trying to connect to ExaBGP gRPC server at {server_address}...\n")
+            sys.stderr.flush()
+            
+            channel = grpc.insecure_channel(server_address)
+            
+            # Try to connect with a shorter timeout for faster failure detection
+            grpc.channel_ready_future(channel).result(timeout=5)
+            
+            sys.stderr.write(f"Successfully connected to ExaBGP gRPC server at {server_address}\n")
+            sys.stderr.flush()
+            return channel
+            
+        except grpc.FutureTimeoutError:
+            sys.stderr.write(f"Connection timeout on attempt {attempt + 1}\n")
+            sys.stderr.flush()
+        except Exception as e:
+            sys.stderr.write(f"Connection failed on attempt {attempt + 1}: {e}\n")
+            sys.stderr.flush()
+        
+        if attempt < max_retries - 1:  # Don't sleep on the last attempt
+            # Exponential backoff with jitter and max delay cap
+            delay = min(initial_delay * (2 ** attempt), max_delay)
+            # Add some jitter to prevent thundering herd
+            jitter = delay * 0.1 * (0.5 - abs(hash(str(attempt)) % 1000) / 1000.0)
+            total_delay = delay + jitter
+            
+            sys.stderr.write(f"Waiting {total_delay:.2f} seconds before retry...\n")
+            sys.stderr.flush()
+            time.sleep(total_delay)
+    
+    raise Exception(f"Failed to connect to ExaBGP gRPC server at {server_address} after {max_retries} attempts")
 
 def CreateExaBGPStub():
-    channel = grpc.insecure_channel('127.0.0.1:50051')
+    """Create ExaBGP gRPC stub with retry logic and exponential backoff"""
+    sys.stderr.write("Creating gRPC connection to ExaBGP server...\n")
+    sys.stderr.flush()
     try:
-        grpc.channel_ready_future(channel).result(timeout=10)
-    except grpc.FutureTimeoutError:
-        print("Error connecting to ExaBGP server")
-    else:
+        channel = wait_for_grpc_server('127.0.0.1:50051', max_retries=30, initial_delay=2, max_delay=60)
         stub = exaBGPChannel.ExabgpInterfaceStub(channel)
+        sys.stderr.write("Successfully created ExaBGP gRPC stub\n")
+        sys.stderr.flush()
         return stub
+    except Exception as e:
+        print(f"Failed to create ExaBGP gRPC stub: {e}\n")
+        sys.exit(1)
 
 
 def FetchMsg(stub):
@@ -49,7 +86,8 @@ def FetchMsg(stub):
         neigh = output['neighborAddress']
         nexthop = output['nexthop']['address']
         peer_as = output['peerAs']
-        prefix = output['nlri']['prefix'][0]
+        #prefix = output['nlri']['prefix'][0]
+        prefix = output['nlri']['prefix']
         #sys.stderr.write("DEBUG:::::::Announcing/Withdraw to neighbor %s\n" %neigh)
         #sys.stderr.flush()
         if message.msgtype == 0:

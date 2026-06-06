@@ -1,6 +1,5 @@
 #!/usr/bin/env python 
 
-#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.
@@ -14,7 +13,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330,
 # Boston,  MA 02111-1307  USA
-#
 
 import os
 import sys
@@ -30,6 +28,51 @@ from google.protobuf.timestamp_pb2 import Timestamp
 import time
 
 metadata = [('ip', '127.0.0.1')]
+
+
+def wait_for_grpc_server(server_address, max_retries=30, initial_delay=1, max_delay=60):
+    """Wait for gRPC server to become available with exponential backoff"""
+    for attempt in range(max_retries):
+        try:
+            sys.stderr.write(f"Attempt {attempt + 1}: Trying to connect to gRPC server at {server_address}...\n")
+            sys.stderr.flush()
+            
+            channel = grpc.insecure_channel(target=server_address,
+                                          options=[
+                                              ('grpc.keepalive_time_ms',60000),
+                                              ('grpc.keepalive_timeout_ms',30000),
+                                              ('grpc.keepalive_permit_without_calls',True),
+                                              ('grpc.http2.max_pings_without_data',0),
+                                              ('grpc.http2.min_time_between_pings_ms',60000),
+                                              ('grpc.http2.min_ping_interval_without_data_ms',30000)]
+                                         )
+            
+            # Try to connect with a shorter timeout for faster failure detection
+            grpc.channel_ready_future(channel).result(timeout=5)
+            
+            sys.stderr.write(f"Successfully connected to gRPC server at {server_address}\n")
+            sys.stderr.flush()
+            return channel
+            
+        except grpc.FutureTimeoutError:
+            sys.stderr.write(f"Connection timeout on attempt {attempt + 1}\n")
+            sys.stderr.flush()
+        except Exception as e:
+            sys.stderr.write(f"Connection failed on attempt {attempt + 1}: {e}\n")
+            sys.stderr.flush()
+        
+        if attempt < max_retries - 1:  # Don't sleep on the last attempt
+            # Exponential backoff with jitter and max delay cap
+            delay = min(initial_delay * (2 ** attempt), max_delay)
+            # Add some jitter to prevent thundering herd
+            jitter = delay * 0.1 * (0.5 - abs(hash(str(attempt)) % 1000) / 1000.0)
+            total_delay = delay + jitter
+            
+            sys.stderr.write(f"Waiting {total_delay:.2f} seconds before retry...\n")
+            sys.stderr.flush()
+            time.sleep(total_delay)
+    
+    raise Exception(f"Failed to connect to gRPC server at {server_address} after {max_retries} attempts")
 
 
 def OriginCode(origin):
@@ -329,8 +372,9 @@ def exaBGPParser(jsonline, ctlrStub):
             announce = jsonline["neighbor"]["message"]["update"]["announce"]
             attributes = jsonline["neighbor"]["message"]["update"]["attribute"]
             nexthop = gobgp.NexthopAction()
-            nlri = exabgp.ExaNLRI()
+            #nlri = exabgp.ExaNLRI()
             pattrs = []
+            nlris = []
 
             for fam, nexthopandnlri in announce.items():
                 if fam == "ipv4 unicast":
@@ -348,7 +392,12 @@ def exaBGPParser(jsonline, ctlrStub):
                     nexthop.address = nh
 
                     for dest in NLRI:
-                        nlri.prefix.append(dest['nlri'])
+                        nlri = exabgp.ExaNLRI()
+                        nlri.prefix = dest['nlri']
+                        if 'path-information' in dest:
+                            nlri.path_information = dest['path-information']
+                        nlris.append(nlri)   
+                        #nlri.prefix.append(dest['nlri'])
 
             for rattr, value in attributes.items():
                 if rattr == "origin":
@@ -402,7 +451,7 @@ def exaBGPParser(jsonline, ctlrStub):
                                    messages=encode_msgs,
                                    nexthop=nexthop,
                                    family=family,
-                                   nlri=nlri)
+                                   nlri=nlris)
             ctlrStub.SendUpdate(msg, metadata=metadata)
             return
         else:
@@ -415,7 +464,8 @@ def exaBGPParser(jsonline, ctlrStub):
                     encode_msgs = gobgp.Messages(
                             sent=gobgp.Message(withdraw_update=msgcode))
             withdraw = jsonline["neighbor"]["message"]["update"]["withdraw"]
-            nlri = exabgp.ExaNLRI()
+            nlris = []
+            #nlri = exabgp.ExaNLRI()
             for fam, nlri_info in withdraw.items():
                 if fam == "ipv4 unicast":
                     family = gobgp.Family(afi=gobgp.Family.AFI_IP,
@@ -424,7 +474,12 @@ def exaBGPParser(jsonline, ctlrStub):
                     family = gobgp.Family(afi=gobgp.Family.AFI_IP6,
                                           safi=gobgp.Family.SAFI_UNICAST)
                 for info in nlri_info:
-                    nlri.prefix.append(info["nlri"])
+                    nlri = exabgp.ExaNLRI()
+                    nlri.prefix = info["nlri"]
+                    if 'path-information' in info:
+                        nlri.path_information = info['path-information']
+                    nlris.append(nlri)
+                    #nlri.prefix.append(info["nlri"])
             time = Timestamp()
             ts = time.GetCurrentTime()
             msg = exabgp.ExaUpdate(local_as=local_as, peer_as=peer_as,
@@ -433,29 +488,26 @@ def exaBGPParser(jsonline, ctlrStub):
                                    time=ts,
                                    messages=encode_msgs,
                                    family=family,
-                                   nlri=nlri)
+                                   nlri=nlris)
             ctlrStub.SendUpdate(msg, metadata=metadata)
             return
 
 
 def CreateStub():
-    channel = grpc.insecure_channel(target='127.0.0.1:50051',
-                                    options=[
-                                        ('grpc.keepalive_time_ms',60000),
-                                        ('grpc.keepalive_timeout_ms',30000),
-                                        ('grpc.keepalive_permit_without_calls',True),
-                                        ('grpc.http2.max_pings_without_data',0),
-                                        ('grpc.http2.min_time_between_pings_ms',60000),
-                                        ('grpc.http2.min_ping_interval_without_data_ms',30000)]
-                                   )
+    """Create gRPC stub with retry logic and exponential backoff"""
+    sys.stderr.write("Creating gRPC connection to controller...\n")
+    sys.stderr.flush()
+
     try:
-        grpc.channel_ready_future(channel).result(timeout=10)
-    except grpc.FutureTimeoutError:
-        sys.stderr.write('Error connecting to overwatch controller')
-        sys.stderr.flush()
-    else:
+        channel = wait_for_grpc_server('127.0.0.1:50051', max_retries=30, initial_delay=2, max_delay=60)
         stub = exaBGPChannel.ControllerInterfaceStub(channel)
+        sys.stderr.write("Successfully created gRPC stub\n")
+        sys.stderr.flush()
         return stub
+    except Exception as e:
+        sys.stderr.write(f"Failed to create  gRPC stub: {e}\n")
+        sys.stderr.flush()
+        sys.exit(1)
 
 
 def run():
