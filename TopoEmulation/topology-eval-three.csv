@@ -1,5 +1,7 @@
 # src id, dst id, cost, dst address
 # peerX <---> core
+gameServer,Tp1ASr1,1,55::2
+Tp1ASr1,gameServer,1,55::1
 Tp1ASr1,Tp1ASr2,10,100::2
 Tp1ASr1,Tp1ASr3,10,100::3
 Tp1ASr2,Tp1ASr1,10,100::1

@@ -1,0 +1,1247 @@
+{
+  "Ubisoft AS49544": {
+    "AS3320-1": {
+      "AS2914": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 16.7ms 0.4ms 25% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.024, std=0.4ms) fits normal distribution. Using median RTT (16.7ms) and standard deviation (0.4ms). No significant temporal correlation (p=0.187). Adjustments: +10% (very stable path, CV=0.024); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 13.4ms 0.4ms 25% distribution normal",
+            "weight_percentage": 46.19970193740686,
+            "confidence": "medium",
+            "explanation": "Mode 1 (46.2% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 16.5ms 1.6ms 25% distribution pareto",
+            "weight_percentage": 53.80029806259314,
+            "confidence": "medium",
+            "explanation": "Mode 2 (53.8% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 23.4ms 1.5ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (23.4ms), std dev (1.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.906). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3320-3": {
+      "AS2914": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 23.8ms 0.6ms 25% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=0.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (23.8ms), std dev (0.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.133). Adjustments: +10% (very stable path, CV=0.024); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 28.1ms 0.6ms 25% distribution pareto",
+            "weight_percentage": 25.0,
+            "confidence": "medium",
+            "explanation": "Mode 1 (25.0% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 30.1ms 0.4ms 25% distribution normal",
+            "weight_percentage": 42.410714285714285,
+            "confidence": "medium",
+            "explanation": "Mode 2 (42.4% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 29.2ms 0.3ms 25% distribution normal",
+            "weight_percentage": 32.589285714285715,
+            "confidence": "high",
+            "explanation": "Mode 3 (32.6% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3320-4": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 18.5ms 1.0ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.0ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (18.5ms), std dev (1.0ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.987). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 24.7ms 0.2ms 10% distribution normal",
+        "confidence": "low",
+        "explanation": "High variability (std=12.8ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (24.7ms), std dev (12.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.790). Adjustments: -5% (high variability, CV=0.450); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS2914": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 42.1ms 1.3ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.3ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (42.1ms), std dev (1.3ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.12). Adjustments: +10% (very stable path, CV=0.030); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS34984-1": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 56.6ms 20.3ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=20.3ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (56.6ms), std dev (20.3ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.47). Adjustments: -5% (high variability, CV=0.328); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS2914": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 55.4ms 0.2ms 25% distribution normal",
+            "weight_percentage": 44.49404761904761,
+            "confidence": "high",
+            "explanation": "Mode 1 (44.5% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 52.9ms 0.1ms 25% distribution normal",
+            "weight_percentage": 32.73809523809524,
+            "confidence": "medium",
+            "explanation": "Mode 2 (32.7% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 54.3ms 0.2ms 25% distribution normal",
+            "weight_percentage": 2.083333333333333,
+            "confidence": "high",
+            "explanation": "Mode 3 (2.1% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 53.1ms 0.1ms 25% distribution normal",
+            "weight_percentage": 20.684523809523807,
+            "confidence": "high",
+            "explanation": "Mode 4 (20.7% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS47524-1": {
+      "AS1273": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 60.0ms 5.7ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=5.7ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (60.0ms), std dev (5.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.975). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 51.5ms 0.7ms 25% distribution pareto",
+            "weight_percentage": 18.7125748502994,
+            "confidence": "medium",
+            "explanation": "Mode 1 (18.7% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 45.8ms 1.1ms 25% distribution pareto",
+            "weight_percentage": 71.10778443113772,
+            "confidence": "medium",
+            "explanation": "Mode 2 (71.1% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 64.5ms 2.5ms 25% distribution pareto",
+            "weight_percentage": 10.179640718562874,
+            "confidence": "high",
+            "explanation": "Mode 3 (10.2% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3215-1": {
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 13.1ms 0.3ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.026, std=0.3ms) fits normal distribution. Using median RTT (13.1ms) and standard deviation (0.3ms). No significant temporal correlation (p=0.203). Adjustments: +10% (very stable path, CV=0.026). (statistical fit: p=0.001)"
+      },
+      "AS174": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 18.3ms 1.6ms 30% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (18.3ms), std dev (1.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.44). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.6ms 3.2ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=3.2ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (22.6ms), std dev (3.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.471). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3215-2": {
+      "AS174": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 18.4ms 0.6ms 40% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (18.4ms), std dev (0.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.59). Adjustments: +10% (very stable path, CV=0.031); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 22.5ms 0.2ms 25% distribution normal",
+            "weight_percentage": 34.077380952380956,
+            "confidence": "high",
+            "explanation": "Mode 1 (34.1% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 20.9ms 0.2ms 25% distribution normal",
+            "weight_percentage": 21.875,
+            "confidence": "high",
+            "explanation": "Mode 2 (21.9% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 21.7ms 0.4ms 25% distribution uniform",
+            "weight_percentage": 13.244047619047619,
+            "confidence": "high",
+            "explanation": "Mode 3 (13.2% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 22.9ms 0.4ms 25% distribution normal",
+            "weight_percentage": 30.80357142857143,
+            "confidence": "medium",
+            "explanation": "Mode 4 (30.8% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3215-3": {
+      "AS174": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 20.5ms 3.3ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=3.3ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (20.5ms), std dev (3.3ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.169). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 15.9ms 0.4ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.024, std=0.4ms) fits normal distribution. Using median RTT (15.9ms) and standard deviation (0.4ms). No significant temporal correlation (p=0.905). Adjustments: +10% (very stable path, CV=0.024). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3215-5": {
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 31.3ms 13.6ms 5% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=13.6ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (31.3ms), std dev (13.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.17). Adjustments: -5% (high variability, CV=0.384); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3215-8": {
+      "AS174": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 29.4ms 61.9ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=61.9ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (29.4ms), std dev (61.9ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.58). Adjustments: -5% (high variability, CV=0.900); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 18.8ms 0.4ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.021, std=0.4ms) fits normal distribution. Using median RTT (18.8ms) and standard deviation (0.4ms). No significant temporal correlation (p=0.477). Adjustments: +10% (very stable path, CV=0.021). (statistical fit: p=0.000)"
+      }
+    },
+    "AS6730-1": {
+      "AS6730": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.2ms 2.2ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=2.2ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (22.2ms), std dev (2.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.754). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 29.9ms 2.5ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=2.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (29.9ms), std dev (2.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.859). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS5089-1": {
+      "AS5089": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 28.8ms 0.8ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.8ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (28.8ms), std dev (0.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.09). Adjustments: +10% (very stable path, CV=0.027). (statistical fit: p=0.000)"
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.0ms 1.5ms 20% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (26.0ms), std dev (1.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.149). (statistical fit: p=0.000)"
+      }
+    },
+    "AS28854-1": {
+      "AS1257": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 19.5ms 101.1ms 10% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=101.1ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (19.5ms), std dev (101.1ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.964). Adjustments: -5% (high variability, CV=4.302); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS9498": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 19.3ms 0.1ms 35% distribution normal",
+        "confidence": "high",
+        "explanation": "Moderate variability (CV=0.008, std=0.1ms) fits normal distribution. Using median RTT (19.3ms) and standard deviation (0.1ms). Mild temporal correlation (0.26). Adjustments: +10% (very stable path, CV=0.008). (statistical fit: p=0.226)"
+      }
+    },
+    "AS3209-1": {
+      "AS3209": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 24.5ms 0.5ms 25% distribution pareto",
+            "weight_percentage": 53.37423312883436,
+            "confidence": "high",
+            "explanation": "Mode 1 (53.4% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 26.4ms 0.5ms 25% distribution pareto",
+            "weight_percentage": 38.65030674846626,
+            "confidence": "high",
+            "explanation": "Mode 2 (38.7% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 27.9ms 0.7ms 25% distribution pareto",
+            "weight_percentage": 7.975460122699387,
+            "confidence": "high",
+            "explanation": "Mode 3 (8.0% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 24.3ms 206.7ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=206.7ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (24.3ms), std dev (206.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.57). Adjustments: -5% (high variability, CV=4.168); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3209-2": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 27.3ms 3.7ms 15% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=3.7ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (27.3ms), std dev (3.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.16). (statistical fit: p=0.000)"
+      },
+      "AS3209": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 26.1ms 0.3ms 25% distribution normal",
+            "weight_percentage": 61.698956780924,
+            "confidence": "medium",
+            "explanation": "Mode 1 (61.7% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 29.5ms 0.8ms 25% distribution pareto",
+            "weight_percentage": 37.5558867362146,
+            "confidence": "medium",
+            "explanation": "Mode 2 (37.6% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3209-4": {
+      "AS3209": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 28.5ms 25.7ms 10% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=25.7ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (28.5ms), std dev (25.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.832). Adjustments: -5% (high variability, CV=0.865); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 27.6ms 39.1ms 10% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=39.1ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (27.6ms), std dev (39.1ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.918). Adjustments: -5% (high variability, CV=1.305); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    }
+  },
+  "Valve AS32590": {
+    "AS204471-1": {
+      "AS9002": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 21.7ms 0.4ms 25% distribution normal",
+        "confidence": "low",
+        "explanation": "High variability (std=4.1ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (21.7ms), std dev (0.4ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.989). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS41327": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 40.8ms 7.1ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=7.1ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (40.8ms), std dev (7.1ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.28). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS2860-1": {
+      "AS3320": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 62.3ms 1.3ms 35% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.3ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (62.3ms), std dev (1.3ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.31). Adjustments: +10% (very stable path, CV=0.022). (statistical fit: p=0.000)"
+      },
+      "AS2860": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 62.2ms 0.3ms 35% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.005, std=0.3ms) fits normal distribution. Using median RTT (62.2ms) and standard deviation (0.3ms). No significant temporal correlation (p=0.439). Adjustments: +10% (very stable path, CV=0.005); +5% (stable variance over time). (statistical fit: p=0.004)"
+      }
+    },
+    "AS33915-1": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 17.7ms 0.8ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.8ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (17.7ms), std dev (0.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.09). Adjustments: +10% (very stable path, CV=0.044). (statistical fit: p=0.004)"
+      },
+      "AS33915": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 20.8ms 3.3ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=3.3ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (20.8ms), std dev (3.3ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.050). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS34984-1": {
+      "AS6762": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 46.7ms 23.2ms 10% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=23.2ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (46.7ms), std dev (23.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.12). Adjustments: -5% (high variability, CV=0.384). (statistical fit: p=0.000)"
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 46.4ms 4.4ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=4.4ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (46.4ms), std dev (4.4ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.284). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS1257-1": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 27.4ms 0.2ms 25% distribution normal",
+        "confidence": "high",
+        "explanation": "Moderate variability (CV=0.006, std=0.2ms) fits normal distribution. Using median RTT (27.4ms) and standard deviation (0.2ms). Weak temporal correlation (0.19). Adjustments: +10% (very stable path, CV=0.006). (statistical fit: p=0.108)"
+      },
+      "AS3320": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 40.16ms 1.97ms 20% distribution normal",
+        "confidence": "high",
+        "explanation": "Moderate variability (CV=0.006, std=1.97ms) fits normal distribution. Using median RTT (40.16ms) and standard deviation (1.97ms). Weak temporal correlation (0.19). Adjustments: +10% (very stable path, CV=0.006). (statistical fit: p=0.108)"
+      }
+    },
+    "AS20712-1": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.4ms 2.0ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=2.0ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (22.4ms), std dev (2.0ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.865). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS20712": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 19.5ms 0.6ms 30% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=0.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (19.5ms), std dev (0.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.050). Adjustments: +10% (very stable path, CV=0.030). (statistical fit: p=0.183)"
+      }
+    },
+    "AS20712-2": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.1ms 0.5ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (22.1ms), std dev (0.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.10). Adjustments: +10% (very stable path, CV=0.025); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS20712": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.2ms 1.9ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.9ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (26.2ms), std dev (1.9ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.085). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS15502-1": {
+      "AS6830": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 27.0ms 0.2ms 25% distribution normal",
+            "weight_percentage": 13.77245508982036,
+            "confidence": "medium",
+            "explanation": "Mode 1 (13.8% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 29.4ms 0.2ms 25% distribution normal",
+            "weight_percentage": 33.23353293413174,
+            "confidence": "medium",
+            "explanation": "Mode 2 (33.2% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 29.9ms 0.2ms 25% distribution normal",
+            "weight_percentage": 35.47904191616767,
+            "confidence": "medium",
+            "explanation": "Mode 3 (35.5% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 27.4ms 0.2ms 25% distribution normal",
+            "weight_percentage": 13.17365269461078,
+            "confidence": "high",
+            "explanation": "Mode 4 (13.2% of traffic): Best fit distribution"
+          },
+          "mode_5": {
+            "tc_command": "delay 30.5ms 0.4ms 25% distribution normal",
+            "weight_percentage": 4.341317365269461,
+            "confidence": "medium",
+            "explanation": "Mode 5 (4.3% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 27.9ms 1.5ms 15% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (27.9ms), std dev (1.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.740). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS29518-1": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 32.6ms 7.5ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=7.5ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (32.6ms), std dev (7.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.37). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS29518": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 33.7ms 16.6ms 45% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=16.6ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (33.7ms), std dev (16.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). High temporal correlation (0.93). Adjustments: -5% (high variability, CV=0.453); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS29518-2": {
+      "AS29518": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 30.2ms 0.2ms 45% distribution normal",
+        "confidence": "medium",
+        "explanation": "High variability (std=14.8ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (30.2ms), std dev (14.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). High temporal correlation (0.91). Adjustments: -5% (high variability, CV=0.461); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 37.6ms 1.3ms 60% distribution pareto",
+            "weight_percentage": 13.77245508982036,
+            "confidence": "medium",
+            "explanation": "Mode 1 (13.8% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 32.9ms 0.2ms 35% distribution normal",
+            "weight_percentage": 33.23353293413174,
+            "confidence": "medium",
+            "explanation": "Mode 2 (33.2% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS5378-1": {
+      "AS3320": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 19.4ms 6.2ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=6.2ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (19.4ms), std dev (6.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.27). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS12956": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 20.0ms 2.6ms 30% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=2.6ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (20.0ms), std dev (2.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.58). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS5378-2": {
+      "AS2914": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.3ms 0.3ms 45% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.012, std=0.3ms) fits normal distribution. Using median RTT (26.3ms) and standard deviation (0.3ms). Moderate temporal correlation (0.40). Adjustments: +10% (very stable path, CV=0.012). (statistical fit: p=0.000)"
+      },
+      "AS6762": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 27.9ms 2.0ms 50% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=2.0ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (27.9ms), std dev (2.0ms). Distribution overridden to pareto due to high variability (std > 0.5ms). High temporal correlation (0.75). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS20845-1": {
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 16.7ms 0.4ms 40% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.023, std=0.4ms) fits normal distribution. Using median RTT (16.7ms) and standard deviation (0.4ms). Moderate temporal correlation (0.67). Adjustments: +10% (very stable path, CV=0.023); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS9002": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 18.3ms 1.1ms 25% distribution pareto",
+            "weight_percentage": 73.46326836581709,
+            "confidence": "medium",
+            "explanation": "Mode 1 (73.5% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 23.3ms 1.9ms 25% distribution pareto",
+            "weight_percentage": 26.38680659670165,
+            "confidence": "medium",
+            "explanation": "Mode 2 (26.4% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS29695-1": {
+      "AS2914": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.3ms 0.2ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.006, std=0.2ms) fits normal distribution. Using median RTT (26.3ms) and standard deviation (0.2ms). No significant temporal correlation (p=0.062). Adjustments: +10% (very stable path, CV=0.006). (statistical fit: p=0.187)"
+      },
+      "AS29695": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 32.1ms 0.9ms 25% distribution pareto",
+            "weight_percentage": 92.06586826347305,
+            "confidence": "medium",
+            "explanation": "Mode 1 (92.1% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 28.8ms 0.2ms 25% distribution normal",
+            "weight_percentage": 7.934131736526946,
+            "confidence": "high",
+            "explanation": "Mode 2 (7.9% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3209-1": {
+      "AS3209": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 14.7ms 2.1ms 10% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=2.1ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (14.7ms), std dev (2.1ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.08). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS6830": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 15.8ms 1.3ms 25% distribution pareto",
+            "weight_percentage": 37.96711509715994,
+            "confidence": "medium",
+            "explanation": "Mode 1 (38.0% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 21.8ms 3.9ms 25% distribution pareto",
+            "weight_percentage": 8.669656203288492,
+            "confidence": "medium",
+            "explanation": "Mode 2 (8.7% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 12.7ms 0.9ms 25% distribution pareto",
+            "weight_percentage": 53.36322869955157,
+            "confidence": "high",
+            "explanation": "Mode 3 (53.4% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3209-2": {
+      "AS6830": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 23.3ms 2.6ms 25% distribution pareto",
+            "weight_percentage": 10.762331838565023,
+            "confidence": "high",
+            "explanation": "Mode 1 (10.8% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 15.0ms 1.0ms 25% distribution pareto",
+            "weight_percentage": 49.47683109118087,
+            "confidence": "high",
+            "explanation": "Mode 2 (49.5% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 17.9ms 1.2ms 25% distribution pareto",
+            "weight_percentage": 39.76083707025411,
+            "confidence": "medium",
+            "explanation": "Mode 3 (39.8% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3209": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 15.6ms 0.5ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.5ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (15.6ms), std dev (0.5ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.19). Adjustments: +10% (very stable path, CV=0.033). (statistical fit: p=0.003)"
+      }
+    },
+    "AS3209-4": {
+      "AS3209": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 17.5ms 1.2ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.2ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (17.5ms), std dev (1.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.24). (statistical fit: p=0.039)"
+      },
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 17.1ms 5.6ms 30% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=5.6ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (17.1ms), std dev (5.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.46). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    }
+  },
+  "Blizzard AS57976": {
+    "AS207790-1": {
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 11.1ms 0.4ms 25% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (CV=0.033, std=0.4ms) and right skew suggest Pareto distribution. Using median RTT (11.1ms), std dev (0.4ms). Note: tc uses fixed Pareto shape (~1.2), fitted shape was 50.4. No significant temporal correlation (p=0.167). Adjustments: +10% (very stable path, CV=0.033); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 9.5ms 0.4ms 40% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.038, std=0.4ms) fits normal distribution. Using median RTT (9.5ms) and standard deviation (0.4ms). Moderate temporal correlation (0.41). Adjustments: +10% (very stable path, CV=0.038); -5% (unstable variance). (statistical fit: p=0.001)"
+      }
+    },
+    "AS62336-1": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 21.7ms 4.4ms 10% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=4.4ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (21.7ms), std dev (4.4ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.19). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 15.4ms 0.5ms 25% distribution pareto",
+            "weight_percentage": 53.273809523809526,
+            "confidence": "high",
+            "explanation": "Mode 1 (53.3% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 17.9ms 0.7ms 25% distribution pareto",
+            "weight_percentage": 46.577380952380956,
+            "confidence": "medium",
+            "explanation": "Mode 2 (46.6% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS34984-1": {
+      "AS6762": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 39.7ms 19.9ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=19.9ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (59.7ms), std dev (19.9ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Moderate temporal correlation (0.50). Adjustments: -5% (high variability, CV=0.309); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 49.7ms 0.2ms 25% distribution normal",
+            "weight_percentage": 43.154761904761905,
+            "confidence": "high",
+            "explanation": "Mode 1 (43.2% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 47.1ms 0.2ms 25% distribution normal",
+            "weight_percentage": 55.952380952380956,
+            "confidence": "medium",
+            "explanation": "Mode 2 (56.0% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 52.3ms 0.2ms 25% distribution normal",
+            "weight_percentage": 0.8928571428571428,
+            "confidence": "high",
+            "explanation": "Mode 3 (0.9% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS20712-1": {
+      "AS34984": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 14.5ms 0.7ms 25% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=0.7ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (14.5ms), std dev (0.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.357). Adjustments: +10% (very stable path, CV=0.050); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS20712": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 10.8ms 0.5ms 35% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.043, std=0.5ms) fits normal distribution. Using median RTT (10.8ms) and standard deviation (0.5ms). No significant temporal correlation (p=0.223). Adjustments: +10% (very stable path, CV=0.043); +5% (stable variance over time). (statistical fit: p=0.091)"
+      }
+    },
+    "AS15704-1": {
+      "AS5511": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 33.0ms 0.1ms 25% distribution normal",
+            "weight_percentage": 43.452380952380956,
+            "confidence": "high",
+            "explanation": "Mode 1 (43.5% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 39.4ms 0.1ms 25% distribution normal",
+            "weight_percentage": 49.55357142857143,
+            "confidence": "medium",
+            "explanation": "Mode 2 (49.6% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 39.3ms 1.3ms 25% distribution pareto",
+            "weight_percentage": 6.9940476190476195,
+            "confidence": "medium",
+            "explanation": "Mode 3 (7.0% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 29.4ms 1.0ms 25% distribution pareto",
+            "weight_percentage": 35.728155339805824,
+            "confidence": "medium",
+            "explanation": "Mode 1 (35.7% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 35.8ms 0.4ms 25% distribution normal",
+            "weight_percentage": 5.048543689320388,
+            "confidence": "high",
+            "explanation": "Mode 2 (5.0% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 38.4ms 3.6ms 25% distribution pareto",
+            "weight_percentage": 37.0873786407767,
+            "confidence": "high",
+            "explanation": "Mode 3 (37.1% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 30.1ms 0.3ms 25% distribution normal",
+            "weight_percentage": 43.452380952380956,
+            "confidence": "high",
+            "explanation": "Mode 1 (43.5% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 36.7ms 0.2ms 25% distribution normal",
+            "weight_percentage": 41.81547619047619,
+            "confidence": "high",
+            "explanation": "Mode 2 (41.8% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 36.4ms 0.8ms 25% distribution pareto",
+            "weight_percentage": 14.732142857142858,
+            "confidence": "high",
+            "explanation": "Mode 3 (14.7% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS30764-1": {
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 25.9ms 0.7ms 25% distribution pareto",
+            "weight_percentage": 57.054263565891475,
+            "confidence": "medium",
+            "explanation": "Mode 1 (57.1% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 28.6ms 0.8ms 25% distribution pareto",
+            "weight_percentage": 42.945736434108525,
+            "confidence": "medium",
+            "explanation": "Mode 2 (42.9% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 30.0ms 0.1ms 20% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.004, std=0.1ms) fits normal distribution. Using median RTT (30.0ms) and standard deviation (0.1ms). Weak temporal correlation (0.10). Adjustments: +10% (very stable path, CV=0.004); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS29518-1": {
+      "AS29518": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 40.0ms 0.1ms 25% distribution normal",
+        "confidence": "high",
+        "explanation": "Moderate variability (CV=0.002, std=0.1ms) fits normal distribution. Using median RTT (40.0ms) and standard deviation (0.1ms). Weak temporal correlation (0.18). Adjustments: +10% (very stable path, CV=0.002). (statistical fit: p=0.182)"
+      },
+      "AS12552": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 42.4ms 0.1ms 35% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.003, std=0.1ms) fits normal distribution. Using median RTT (42.4ms) and standard deviation (0.1ms). No significant temporal correlation (p=0.241). Adjustments: +10% (very stable path, CV=0.003); +5% (stable variance over time). (statistical fit: p=0.813)"
+      }
+    },
+    "AS2119-1": {
+      "AS2119": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 28.4ms 0.1ms 35% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.005, std=0.1ms) fits normal distribution. Using median RTT (28.4ms) and standard deviation (0.1ms). No significant temporal correlation (p=0.344). Adjustments: +10% (very stable path, CV=0.005); +5% (stable variance over time). (statistical fit: p=0.950)"
+      },
+      "AS12552": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.1ms 0.3ms 40% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (CV=0.011, std=0.3ms) and right skew suggest Pareto distribution. Using median RTT (26.1ms), std dev (0.3ms). Note: tc uses fixed Pareto shape (~1.2), fitted shape was 73.6. Moderate temporal correlation (0.45). Adjustments: +10% (very stable path, CV=0.011); -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3352-1": {
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 34.8ms 0.2ms 25% distribution normal",
+            "weight_percentage": 4.017857142857143,
+            "confidence": "high",
+            "explanation": "Mode 1 (4.0% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 41.0ms 0.2ms 25% distribution normal",
+            "weight_percentage": 44.345238095238095,
+            "confidence": "high",
+            "explanation": "Mode 2 (44.3% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 38.4ms 0.2ms 25% distribution normal",
+            "weight_percentage": 38.54166666666667,
+            "confidence": "high",
+            "explanation": "Mode 3 (38.5% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 39.1ms 0.2ms 25% distribution normal",
+            "weight_percentage": 13.095238095238097,
+            "confidence": "high",
+            "explanation": "Mode 4 (13.1% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 33.6ms 0.3ms 25% distribution normal",
+            "weight_percentage": 55.80357142857143,
+            "confidence": "medium",
+            "explanation": "Mode 1 (55.8% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 38.0ms 0.2ms 25% distribution normal",
+            "weight_percentage": 18.452380952380953,
+            "confidence": "high",
+            "explanation": "Mode 2 (18.5% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 35.6ms 0.1ms 25% distribution normal",
+            "weight_percentage": 25.744047619047617,
+            "confidence": "high",
+            "explanation": "Mode 3 (25.7% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3352-2": {
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 41.1ms 0.2ms 25% distribution normal",
+            "weight_percentage": 42.92101341281669,
+            "confidence": "high",
+            "explanation": "Mode 1 (42.9% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 65.0ms 0.5ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 2 (9.8% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 41.1ms 0.2ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 3 (9.8% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 65.0ms 0.5ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 4 (9.8% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 47.5ms 0.5ms 15% distribution normal",
+            "weight_percentage": 42.92101341281669,
+            "confidence": "high",
+            "explanation": "Mode 1 (42.9% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 47.5ms 0.5ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 2 (9.8% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 67.5ms 0.2ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 3 (9.8% of traffic): Best fit distribution"
+          },
+          "mode_4": {
+            "tc_command": "delay 47.5ms 0.5ms 25% distribution normal",
+            "weight_percentage": 9.836065573770492,
+            "confidence": "medium",
+            "explanation": "Mode 4 (9.8% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS5089-1": {
+      "AS5089": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.8ms 2.2ms 15% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=2.2ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (22.8ms), std dev (2.2ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.14). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 27.3ms 1.0ms 25% distribution pareto",
+            "weight_percentage": 32.73809523809524,
+            "confidence": "high",
+            "explanation": "Mode 1 (32.7% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 24.4ms 0.9ms 25% distribution pareto",
+            "weight_percentage": 56.547619047619044,
+            "confidence": "medium",
+            "explanation": "Mode 2 (56.5% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 30.6ms 1.9ms 25% distribution pareto",
+            "weight_percentage": 10.267857142857142,
+            "confidence": "medium",
+            "explanation": "Mode 3 (10.3% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS5089-2": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 26.9ms 0.8ms 25% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=0.8ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (26.9ms), std dev (0.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.08). Adjustments: +10% (very stable path, CV=0.029). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 24.6ms 1.6ms 20% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (24.6ms), std dev (1.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.264). (statistical fit: p=0.000)"
+      }
+    },
+    "AS9125-1": {
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 34.2ms 1.0ms 60% distribution pareto",
+            "weight_percentage": 53.720238095238095,
+            "confidence": "high",
+            "explanation": "Mode 1 (53.7% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 36.8ms 0.3ms 25% distribution normal",
+            "weight_percentage": 43.601190476190474,
+            "confidence": "high",
+            "explanation": "Mode 2 (43.6% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 37.3ms 9.4ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=9.4ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (37.3ms), std dev (9.4ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.21). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS28685-1": {
+      "AS28685": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 6.7ms 0.1ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.020, std=0.1ms) fits normal distribution. Using median RTT (6.7ms) and standard deviation (0.1ms). No significant temporal correlation (p=0.881). Adjustments: +10% (very stable path, CV=0.020). (statistical fit: p=0.002)"
+      },
+      "AS8455": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 2.0ms 0.1ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.040, std=0.1ms) fits normal distribution. Using median RTT (2.0ms) and standard deviation (0.1ms). No significant temporal correlation (p=0.093). Adjustments: +10% (very stable path, CV=0.040). (statistical fit: p=0.367)"
+      }
+    },
+    "AS13045-1": {
+      "AS3320": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 13.5ms 1.0ms 50% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.0ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (13.5ms), std dev (1.0ms). Distribution overridden to pareto due to high variability (std > 0.5ms). High temporal correlation (0.93). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 11.3ms 1.0ms 50% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.0ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (11.3ms), std dev (1.0ms). Distribution overridden to pareto due to high variability (std > 0.5ms). High temporal correlation (0.77). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      }
+    },
+    "AS29695-1": {
+      "AS1299": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 23.7ms 0.1ms 25% distribution normal",
+            "weight_percentage": 85.11904761904762,
+            "confidence": "high",
+            "explanation": "Mode 1 (85.1% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 45.9ms 0.1ms 25% distribution normal",
+            "weight_percentage": 14.136904761904761,
+            "confidence": "high",
+            "explanation": "Mode 2 (14.1% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3356": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 25.5ms 0.3ms 30% distribution normal",
+        "confidence": "low",
+        "explanation": "Moderate variability (CV=0.013, std=0.3ms) fits normal distribution. Using median RTT (25.5ms) and standard deviation (0.3ms). Mild temporal correlation (0.33). Adjustments: +10% (very stable path, CV=0.013); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS29695": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 27.5ms 0.1ms 25% distribution normal",
+            "weight_percentage": 85.11904761904762,
+            "confidence": "high",
+            "explanation": "Mode 1 (85.1% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 49.9ms 0.1ms 25% distribution normal",
+            "weight_percentage": 14.136904761904761,
+            "confidence": "high",
+            "explanation": "Mode 2 (14.1% of traffic): Best fit distribution"
+          }
+        }
+      }
+    },
+    "AS3209-1": {
+      "AS6830": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 20.0ms 0.4ms 25% distribution normal",
+            "weight_percentage": 23.958333333333336,
+            "confidence": "high",
+            "explanation": "Mode 1 (24.0% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 21.7ms 1.0ms 25% distribution pareto",
+            "weight_percentage": 13.690476190476192,
+            "confidence": "medium",
+            "explanation": "Mode 2 (13.7% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 18.8ms 0.3ms 25% distribution normal",
+            "weight_percentage": 62.351190476190474,
+            "confidence": "high",
+            "explanation": "Mode 3 (62.4% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS3209": {
+        "type": "multimodal",
+        "modes": {
+          "mode_1": {
+            "tc_command": "delay 18.8ms 0.5ms 25% distribution normal",
+            "weight_percentage": 46.42857142857143,
+            "confidence": "medium",
+            "explanation": "Mode 1 (46.4% of traffic): Best fit distribution"
+          },
+          "mode_2": {
+            "tc_command": "delay 22.4ms 1.9ms 25% distribution pareto",
+            "weight_percentage": 8.779761904761903,
+            "confidence": "medium",
+            "explanation": "Mode 2 (8.8% of traffic): Best fit distribution"
+          },
+          "mode_3": {
+            "tc_command": "delay 19.8ms 0.5ms 25% distribution pareto",
+            "weight_percentage": 44.79166666666667,
+            "confidence": "medium",
+            "explanation": "Mode 3 (44.8% of traffic): Best fit distribution"
+          }
+        }
+      },
+      "AS9498": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 20.4ms 3.6ms 15% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=3.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (20.4ms), std dev (3.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.20). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3209-2": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 22.2ms 1.6ms 20% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.6ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (22.2ms), std dev (1.6ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.117). (statistical fit: p=0.008)"
+      },
+      "AS9498": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 17.3ms 6.4ms 10% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=6.4ms > 0.5ms) overrides to Pareto distribution (original: pareto). Using median RTT (17.3ms), std dev (6.4ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.784). Adjustments: -5% (high variability, CV=0.362); -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS3209": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 18.8ms 1.7ms 15% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=1.7ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (18.8ms), std dev (1.7ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Weak temporal correlation (0.10). (statistical fit: p=0.000)"
+      }
+    },
+    "AS3209-3": {
+      "AS6830": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 21.2ms 2.9ms 20% distribution pareto",
+        "confidence": "medium",
+        "explanation": "High variability (std=2.9ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (21.2ms), std dev (2.9ms). Distribution overridden to pareto due to high variability (std > 0.5ms). Mild temporal correlation (0.21). Adjustments: -5% (unstable variance). (statistical fit: p=0.000)"
+      },
+      "AS9498": {
+        "type": "single_mode",
+        "tc_command": "tc qdisc add dev ethX root netem delay 20.0ms 1.8ms 20% distribution pareto",
+        "confidence": "low",
+        "explanation": "High variability (std=1.8ms > 0.5ms) overrides to Pareto distribution (original: normal). Using median RTT (20.0ms), std dev (1.8ms). Distribution overridden to pareto due to high variability (std > 0.5ms). No significant temporal correlation (p=0.083). (statistical fit: p=0.000)"
+      }
+    }
+  }
+}

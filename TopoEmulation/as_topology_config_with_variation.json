@@ -1,0 +1,2970 @@
+{
+  "AS_CONFIG": {
+    "1": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          23.37,
+          1.47
+        ],
+        [
+          16.68,
+          0.5
+        ],
+        [
+          15.95,
+          2.04
+        ]
+      ]
+    ],
+    "2": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          29.38,
+          0.99
+        ],
+        [
+          23.78,
+          0.56
+        ]
+      ]
+    ],
+    "3": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          42.05,
+          1.26
+        ],
+        [
+          24.72,
+          12.83
+        ],
+        [
+          18.46,
+          0.97
+        ]
+      ]
+    ],
+    "4": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          56.62,
+          20.28
+        ],
+        [
+          53.22,
+          1.24
+        ]
+      ]
+    ],
+    "5": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          59.96,
+          5.72
+        ],
+        [
+          47.91,
+          5.38
+        ]
+      ]
+    ],
+    "6": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          22.55,
+          3.18
+        ],
+        [
+          18.28,
+          1.63
+        ],
+        [
+          13.13,
+          0.5
+        ]
+      ]
+    ],
+    "7": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          22.44,
+          0.83
+        ],
+        [
+          18.44,
+          0.57
+        ]
+      ]
+    ],
+    "8": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          20.46,
+          3.28
+        ],
+        [
+          15.95,
+          0.5
+        ]
+      ]
+    ],
+    "9": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          31.31,
+          13.57
+        ],
+        [
+          29.32,
+          8.55
+        ]
+      ]
+    ],
+    "10": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          29.39,
+          61.9
+        ],
+        [
+          18.82,
+          0.5
+        ]
+      ]
+    ],
+    "11": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          29.87,
+          2.51
+        ],
+        [
+          22.23,
+          2.21
+        ]
+      ]
+    ],
+    "12": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          28.83,
+          0.77
+        ],
+        [
+          25.98,
+          1.52
+        ]
+      ]
+    ],
+    "13": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          19.51,
+          0.5
+        ],
+        [
+          19.3,
+          0.5
+        ]
+      ]
+    ],
+    "14": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          25.28,
+          1.28
+        ],
+        [
+          24.25,
+          54.19
+        ]
+      ]
+    ],
+    "15": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          27.27,
+          3.66
+        ],
+        [
+          26.34,
+          2.66
+        ]
+      ]
+    ],
+    "16": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          28.51,
+          25.66
+        ],
+        [
+          27.63,
+          10.2
+        ]
+      ]
+    ],
+    "17": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          40.81,
+          7.09
+        ],
+        [
+          21.75,
+          4.15
+        ]
+      ]
+    ],
+    "18": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          62.29,
+          1.34
+        ],
+        [
+          62.16,
+          0.5
+        ]
+      ]
+    ],
+    "19": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          20.82,
+          3.34
+        ],
+        [
+          17.65,
+          0.78
+        ]
+      ]
+    ],
+    "20": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          46.65,
+          23.22
+        ],
+        [
+          46.37,
+          4.41
+        ]
+      ]
+    ],
+    "21": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          39.89,
+          3.02
+        ],
+        [
+          27.42,
+          0.5
+        ]
+      ]
+    ],
+    "22": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          22.36,
+          2.02
+        ],
+        [
+          19.48,
+          0.59
+        ]
+      ]
+    ],
+    "23": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          26.25,
+          1.86
+        ],
+        [
+          22.08,
+          0.55
+        ]
+      ]
+    ],
+    "24": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          29.47,
+          1.2
+        ],
+        [
+          27.9,
+          1.53
+        ]
+      ]
+    ],
+    "25": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          33.65,
+          16.56
+        ],
+        [
+          32.56,
+          7.5
+        ]
+      ]
+    ],
+    "26": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          37.4,
+          12.54
+        ],
+        [
+          30.22,
+          14.82
+        ]
+      ]
+    ],
+    "27": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          20.05,
+          2.56
+        ],
+        [
+          19.39,
+          6.18
+        ]
+      ]
+    ],
+    "28": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          27.9,
+          2.03
+        ],
+        [
+          26.32,
+          0.5
+        ]
+      ]
+    ],
+    "29": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          19.73,
+          2.87
+        ],
+        [
+          16.69,
+          0.5
+        ]
+      ]
+    ],
+    "30": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          32.1,
+          1.31
+        ],
+        [
+          26.26,
+          0.5
+        ]
+      ]
+    ],
+    "31": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          14.66,
+          2.06
+        ],
+        [
+          14.2,
+          3.33
+        ]
+      ]
+    ],
+    "32": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          16.59,
+          3.09
+        ],
+        [
+          15.55,
+          0.51
+        ]
+      ]
+    ],
+    "33": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          17.52,
+          1.19
+        ],
+        [
+          17.05,
+          5.58
+        ]
+      ]
+    ],
+    "34": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          11.1,
+          0.5
+        ],
+        [
+          9.53,
+          0.5
+        ]
+      ]
+    ],
+    "35": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          21.65,
+          4.43
+        ],
+        [
+          16.19,
+          1.59
+        ]
+      ]
+    ],
+    "36": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          67.37,
+          1.35
+        ],
+        [
+          59.66,
+          19.87
+        ]
+      ]
+    ],
+    "37": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          14.53,
+          0.73
+        ],
+        [
+          10.79,
+          0.5
+        ]
+      ]
+    ],
+    "38": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          36.86,
+          4.06
+        ],
+        [
+          34.25,
+          5.16
+        ],
+        [
+          33.93,
+          3.04
+        ]
+      ]
+    ],
+    "39": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          29.98,
+          0.5
+        ],
+        [
+          26.11,
+          1.61
+        ]
+      ]
+    ],
+    "40": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          42.4,
+          0.5
+        ],
+        [
+          40.01,
+          0.5
+        ]
+      ]
+    ],
+    "41": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          28.36,
+          0.5
+        ],
+        [
+          26.09,
+          0.5
+        ]
+      ]
+    ],
+    "42": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          39.11,
+          1.54
+        ],
+        [
+          33.88,
+          1.74
+        ]
+      ]
+    ],
+    "43": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          49.59,
+          2.67
+        ],
+        [
+          43.41,
+          2.52
+        ]
+      ]
+    ],
+    "44": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          25.33,
+          2.84
+        ],
+        [
+          22.8,
+          2.17
+        ]
+      ]
+    ],
+    "45": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          26.88,
+          0.79
+        ],
+        [
+          24.55,
+          1.62
+        ]
+      ]
+    ],
+    "46": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          37.34,
+          9.37
+        ],
+        [
+          34.32,
+          1.42
+        ]
+      ]
+    ],
+    "47": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          6.73,
+          0.5
+        ],
+        [
+          2.03,
+          0.5
+        ]
+      ]
+    ],
+    "48": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          13.52,
+          0.98
+        ],
+        [
+          11.29,
+          0.99
+        ]
+      ]
+    ],
+    "49": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          27.56,
+          1.02
+        ],
+        [
+          25.5,
+          0.5
+        ],
+        [
+          23.74,
+          4.34
+        ]
+      ]
+    ],
+    "50": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          20.38,
+          3.61
+        ],
+        [
+          19.37,
+          1.39
+        ],
+        [
+          19.04,
+          1.2
+        ]
+      ]
+    ],
+    "51": [
+      3,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3",
+        "Tp1ASr4"
+      ],
+      [
+        [
+          22.19,
+          1.57
+        ],
+        [
+          18.8,
+          1.72
+        ],
+        [
+          17.34,
+          6.38
+        ]
+      ]
+    ],
+    "52": [
+      2,
+      [
+        "Tp1ASr2",
+        "Tp1ASr3"
+      ],
+      [
+        [
+          21.17,
+          2.93
+        ],
+        [
+          19.99,
+          1.81
+        ]
+      ]
+    ]
+  },
+  "AS_GROUP_MAPPING": {
+    "1": {
+      "group_id": "AS3320-1",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 3,
+      "path_names": [
+        "AS1299",
+        "AS2914",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          23.37,
+          1.47
+        ],
+        [
+          16.68,
+          0.5
+        ],
+        [
+          15.95,
+          2.04
+        ]
+      ]
+    },
+    "2": {
+      "group_id": "AS3320-3",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS2914"
+      ],
+      "delays": [
+        [
+          29.38,
+          0.99
+        ],
+        [
+          23.78,
+          0.56
+        ]
+      ]
+    },
+    "3": {
+      "group_id": "AS3320-4",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "medium_variance",
+      "scenario": "clear_path_advantage",
+      "num_paths": 3,
+      "path_names": [
+        "AS2914",
+        "AS3356",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          42.05,
+          1.26
+        ],
+        [
+          24.72,
+          12.83
+        ],
+        [
+          18.46,
+          0.97
+        ]
+      ]
+    },
+    "4": {
+      "group_id": "AS34984-1",
+      "target": "Ubisoft AS49544",
+      "country": "TR",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS2914"
+      ],
+      "delays": [
+        [
+          56.62,
+          20.28
+        ],
+        [
+          53.22,
+          1.24
+        ]
+      ]
+    },
+    "5": {
+      "group_id": "AS47524-1",
+      "target": "Ubisoft AS49544",
+      "country": "TR",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1273",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          59.96,
+          5.72
+        ],
+        [
+          47.91,
+          5.38
+        ]
+      ]
+    },
+    "6": {
+      "group_id": "AS3215-1",
+      "target": "Ubisoft AS49544",
+      "country": "FR",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 3,
+      "path_names": [
+        "AS1299",
+        "AS174",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          22.55,
+          3.18
+        ],
+        [
+          18.28,
+          1.63
+        ],
+        [
+          13.13,
+          0.5
+        ]
+      ]
+    },
+    "7": {
+      "group_id": "AS3215-2",
+      "target": "Ubisoft AS49544",
+      "country": "FR",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS174"
+      ],
+      "delays": [
+        [
+          22.44,
+          0.83
+        ],
+        [
+          18.44,
+          0.57
+        ]
+      ]
+    },
+    "8": {
+      "group_id": "AS3215-3",
+      "target": "Ubisoft AS49544",
+      "country": "FR",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS174",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          20.46,
+          3.28
+        ],
+        [
+          15.95,
+          0.5
+        ]
+      ]
+    },
+    "9": {
+      "group_id": "AS3215-5",
+      "target": "Ubisoft AS49544",
+      "country": "FR",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS174"
+      ],
+      "delays": [
+        [
+          31.31,
+          13.57
+        ],
+        [
+          29.32,
+          8.55
+        ]
+      ]
+    },
+    "10": {
+      "group_id": "AS3215-8",
+      "target": "Ubisoft AS49544",
+      "country": "FR",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS174",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          29.39,
+          61.9
+        ],
+        [
+          18.82,
+          0.5
+        ]
+      ]
+    },
+    "11": {
+      "group_id": "AS6730-1",
+      "target": "Ubisoft AS49544",
+      "country": "CH",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS6730"
+      ],
+      "delays": [
+        [
+          29.87,
+          2.51
+        ],
+        [
+          22.23,
+          2.21
+        ]
+      ]
+    },
+    "12": {
+      "group_id": "AS5089-1",
+      "target": "Ubisoft AS49544",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS5089",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          28.83,
+          0.77
+        ],
+        [
+          25.98,
+          1.52
+        ]
+      ]
+    },
+    "13": {
+      "group_id": "AS28854-1",
+      "target": "Ubisoft AS49544",
+      "country": "SE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1257",
+        "AS9498"
+      ],
+      "delays": [
+        [
+          19.51,
+          0.5
+        ],
+        [
+          19.3,
+          0.5
+        ]
+      ]
+    },
+    "14": {
+      "group_id": "AS3209-1",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS3209",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          25.28,
+          1.28
+        ],
+        [
+          24.25,
+          54.19
+        ]
+      ]
+    },
+    "15": {
+      "group_id": "AS3209-2",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS3209"
+      ],
+      "delays": [
+        [
+          27.27,
+          3.66
+        ],
+        [
+          26.34,
+          2.66
+        ]
+      ]
+    },
+    "16": {
+      "group_id": "AS3209-4",
+      "target": "Ubisoft AS49544",
+      "country": "DE",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS3209",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          28.51,
+          25.66
+        ],
+        [
+          27.63,
+          10.2
+        ]
+      ]
+    },
+    "17": {
+      "group_id": "AS204471-1",
+      "target": "Valve AS32590",
+      "country": "IT",
+      "classification": "medium_variance",
+      "scenario": "clear_path_advantage",
+      "num_paths": 2,
+      "path_names": [
+        "AS41327",
+        "AS9002"
+      ],
+      "delays": [
+        [
+          40.81,
+          7.09
+        ],
+        [
+          21.75,
+          4.15
+        ]
+      ]
+    },
+    "18": {
+      "group_id": "AS2860-1",
+      "target": "Valve AS32590",
+      "country": "PT",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3320",
+        "AS2860"
+      ],
+      "delays": [
+        [
+          62.29,
+          1.34
+        ],
+        [
+          62.16,
+          0.5
+        ]
+      ]
+    },
+    "19": {
+      "group_id": "AS33915-1",
+      "target": "Valve AS32590",
+      "country": "NL",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS33915",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          20.82,
+          3.34
+        ],
+        [
+          17.65,
+          0.78
+        ]
+      ]
+    },
+    "20": {
+      "group_id": "AS34984-1",
+      "target": "Valve AS32590",
+      "country": "TR",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS6762",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          46.65,
+          23.22
+        ],
+        [
+          46.37,
+          4.41
+        ]
+      ]
+    },
+    "21": {
+      "group_id": "AS1257-1",
+      "target": "Valve AS32590",
+      "country": "SE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3320",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          39.89,
+          3.02
+        ],
+        [
+          27.42,
+          0.5
+        ]
+      ]
+    },
+    "22": {
+      "group_id": "AS20712-1",
+      "target": "Valve AS32590",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS20712"
+      ],
+      "delays": [
+        [
+          22.36,
+          2.02
+        ],
+        [
+          19.48,
+          0.59
+        ]
+      ]
+    },
+    "23": {
+      "group_id": "AS20712-2",
+      "target": "Valve AS32590",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS20712",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          26.25,
+          1.86
+        ],
+        [
+          22.08,
+          0.55
+        ]
+      ]
+    },
+    "24": {
+      "group_id": "AS15502-1",
+      "target": "Valve AS32590",
+      "country": "IE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          29.47,
+          1.2
+        ],
+        [
+          27.9,
+          1.53
+        ]
+      ]
+    },
+    "25": {
+      "group_id": "AS29518-1",
+      "target": "Valve AS32590",
+      "country": "SE",
+      "classification": "high_variance",
+      "scenario": "network_event_response",
+      "num_paths": 2,
+      "path_names": [
+        "AS29518",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          33.65,
+          16.56
+        ],
+        [
+          32.56,
+          7.5
+        ]
+      ]
+    },
+    "26": {
+      "group_id": "AS29518-2",
+      "target": "Valve AS32590",
+      "country": "SE",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS29518"
+      ],
+      "delays": [
+        [
+          37.4,
+          12.54
+        ],
+        [
+          30.22,
+          14.82
+        ]
+      ]
+    },
+    "27": {
+      "group_id": "AS5378-1",
+      "target": "Valve AS32590",
+      "country": "GB",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS12956",
+        "AS3320"
+      ],
+      "delays": [
+        [
+          20.05,
+          2.56
+        ],
+        [
+          19.39,
+          6.18
+        ]
+      ]
+    },
+    "28": {
+      "group_id": "AS5378-2",
+      "target": "Valve AS32590",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6762",
+        "AS2914"
+      ],
+      "delays": [
+        [
+          27.9,
+          2.03
+        ],
+        [
+          26.32,
+          0.5
+        ]
+      ]
+    },
+    "29": {
+      "group_id": "AS20845-1",
+      "target": "Valve AS32590",
+      "country": "HU",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS9002",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          19.73,
+          2.87
+        ],
+        [
+          16.69,
+          0.5
+        ]
+      ]
+    },
+    "30": {
+      "group_id": "AS29695-1",
+      "target": "Valve AS32590",
+      "country": "NO",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS29695",
+        "AS2914"
+      ],
+      "delays": [
+        [
+          32.1,
+          1.31
+        ],
+        [
+          26.26,
+          0.5
+        ]
+      ]
+    },
+    "31": {
+      "group_id": "AS3209-1",
+      "target": "Valve AS32590",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3209",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          14.66,
+          2.06
+        ],
+        [
+          14.2,
+          3.33
+        ]
+      ]
+    },
+    "32": {
+      "group_id": "AS3209-2",
+      "target": "Valve AS32590",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS3209"
+      ],
+      "delays": [
+        [
+          16.59,
+          3.09
+        ],
+        [
+          15.55,
+          0.51
+        ]
+      ]
+    },
+    "33": {
+      "group_id": "AS3209-4",
+      "target": "Valve AS32590",
+      "country": "DE",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3209",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          17.52,
+          1.19
+        ],
+        [
+          17.05,
+          5.58
+        ]
+      ]
+    },
+    "34": {
+      "group_id": "AS207790-1",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          11.1,
+          0.5
+        ],
+        [
+          9.53,
+          0.5
+        ]
+      ]
+    },
+    "35": {
+      "group_id": "AS62336-1",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          21.65,
+          4.43
+        ],
+        [
+          16.19,
+          1.59
+        ]
+      ]
+    },
+    "36": {
+      "group_id": "AS34984-1",
+      "target": "Blizzard AS57976",
+      "country": "TR",
+      "classification": "high_variance",
+      "scenario": "high_variability_handling",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS6762"
+      ],
+      "delays": [
+        [
+          67.37,
+          1.35
+        ],
+        [
+          59.66,
+          19.87
+        ]
+      ]
+    },
+    "37": {
+      "group_id": "AS20712-1",
+      "target": "Blizzard AS57976",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS34984",
+        "AS20712"
+      ],
+      "delays": [
+        [
+          14.53,
+          0.73
+        ],
+        [
+          10.79,
+          0.5
+        ]
+      ]
+    },
+    "38": {
+      "group_id": "AS15704-1",
+      "target": "Blizzard AS57976",
+      "country": "ES",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 3,
+      "path_names": [
+        "AS5511",
+        "AS1299",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          36.86,
+          4.06
+        ],
+        [
+          34.25,
+          5.16
+        ],
+        [
+          33.93,
+          3.04
+        ]
+      ]
+    },
+    "39": {
+      "group_id": "AS30764-1",
+      "target": "Blizzard AS57976",
+      "country": "CZ",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          29.98,
+          0.5
+        ],
+        [
+          26.11,
+          1.61
+        ]
+      ]
+    },
+    "40": {
+      "group_id": "AS29518-1",
+      "target": "Blizzard AS57976",
+      "country": "SE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS12552",
+        "AS29518"
+      ],
+      "delays": [
+        [
+          42.4,
+          0.5
+        ],
+        [
+          40.01,
+          0.5
+        ]
+      ]
+    },
+    "41": {
+      "group_id": "AS2119-1",
+      "target": "Blizzard AS57976",
+      "country": "SE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS2119",
+        "AS12552"
+      ],
+      "delays": [
+        [
+          28.36,
+          0.5
+        ],
+        [
+          26.09,
+          0.5
+        ]
+      ]
+    },
+    "42": {
+      "group_id": "AS3352-1",
+      "target": "Blizzard AS57976",
+      "country": "ES",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          39.11,
+          1.54
+        ],
+        [
+          33.88,
+          1.74
+        ]
+      ]
+    },
+    "43": {
+      "group_id": "AS3352-2",
+      "target": "Blizzard AS57976",
+      "country": "ES",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS1299",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          49.59,
+          2.67
+        ],
+        [
+          43.41,
+          2.52
+        ]
+      ]
+    },
+    "44": {
+      "group_id": "AS5089-1",
+      "target": "Blizzard AS57976",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS5089"
+      ],
+      "delays": [
+        [
+          25.33,
+          2.84
+        ],
+        [
+          22.8,
+          2.17
+        ]
+      ]
+    },
+    "45": {
+      "group_id": "AS5089-2",
+      "target": "Blizzard AS57976",
+      "country": "GB",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          26.88,
+          0.79
+        ],
+        [
+          24.55,
+          1.62
+        ]
+      ]
+    },
+    "46": {
+      "group_id": "AS9125-1",
+      "target": "Blizzard AS57976",
+      "country": "RS",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3356",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          37.34,
+          9.37
+        ],
+        [
+          34.32,
+          1.42
+        ]
+      ]
+    },
+    "47": {
+      "group_id": "AS28685-1",
+      "target": "Blizzard AS57976",
+      "country": "NL",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS28685",
+        "AS8455"
+      ],
+      "delays": [
+        [
+          6.73,
+          0.5
+        ],
+        [
+          2.03,
+          0.5
+        ]
+      ]
+    },
+    "48": {
+      "group_id": "AS13045-1",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS3320",
+        "AS3356"
+      ],
+      "delays": [
+        [
+          13.52,
+          0.98
+        ],
+        [
+          11.29,
+          0.99
+        ]
+      ]
+    },
+    "49": {
+      "group_id": "AS29695-1",
+      "target": "Blizzard AS57976",
+      "country": "NO",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 3,
+      "path_names": [
+        "AS29695",
+        "AS3356",
+        "AS1299"
+      ],
+      "delays": [
+        [
+          27.56,
+          1.02
+        ],
+        [
+          25.5,
+          0.5
+        ],
+        [
+          23.74,
+          4.34
+        ]
+      ]
+    },
+    "50": {
+      "group_id": "AS3209-1",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_testing",
+      "num_paths": 3,
+      "path_names": [
+        "AS9498",
+        "AS3209",
+        "AS6830"
+      ],
+      "delays": [
+        [
+          20.38,
+          3.61
+        ],
+        [
+          19.37,
+          1.39
+        ],
+        [
+          19.04,
+          1.2
+        ]
+      ]
+    },
+    "51": {
+      "group_id": "AS3209-2",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "medium_variance",
+      "scenario": "threshold_crossing",
+      "num_paths": 3,
+      "path_names": [
+        "AS6830",
+        "AS3209",
+        "AS9498"
+      ],
+      "delays": [
+        [
+          22.19,
+          1.57
+        ],
+        [
+          18.8,
+          1.72
+        ],
+        [
+          17.34,
+          6.38
+        ]
+      ]
+    },
+    "52": {
+      "group_id": "AS3209-3",
+      "target": "Blizzard AS57976",
+      "country": "DE",
+      "classification": "low_variance",
+      "scenario": "stable_path_testing",
+      "num_paths": 2,
+      "path_names": [
+        "AS6830",
+        "AS9498"
+      ],
+      "delays": [
+        [
+          21.17,
+          2.93
+        ],
+        [
+          19.99,
+          1.81
+        ]
+      ]
+    }
+  },
+  "METADATA": {
+    "total_ases": 52,
+    "generated_from": "detailed_results.json with time series analysis",
+    "as_details": {
+      "1": {
+        "group_id": "AS3320-1",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 3,
+        "delays": [
+          [
+            23.37,
+            1.47
+          ],
+          [
+            16.68,
+            0.5
+          ],
+          [
+            15.95,
+            2.04
+          ]
+        ]
+      },
+      "2": {
+        "group_id": "AS3320-3",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            29.38,
+            0.99
+          ],
+          [
+            23.78,
+            0.56
+          ]
+        ]
+      },
+      "3": {
+        "group_id": "AS3320-4",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 3,
+        "delays": [
+          [
+            42.05,
+            1.26
+          ],
+          [
+            24.72,
+            12.83
+          ],
+          [
+            18.46,
+            0.97
+          ]
+        ]
+      },
+      "4": {
+        "group_id": "AS34984-1",
+        "country": "TR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            56.62,
+            20.28
+          ],
+          [
+            53.22,
+            1.24
+          ]
+        ]
+      },
+      "5": {
+        "group_id": "AS47524-1",
+        "country": "TR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            59.96,
+            5.72
+          ],
+          [
+            47.91,
+            5.38
+          ]
+        ]
+      },
+      "6": {
+        "group_id": "AS3215-1",
+        "country": "FR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 3,
+        "delays": [
+          [
+            22.55,
+            3.18
+          ],
+          [
+            18.28,
+            1.63
+          ],
+          [
+            13.13,
+            0.5
+          ]
+        ]
+      },
+      "7": {
+        "group_id": "AS3215-2",
+        "country": "FR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            22.44,
+            0.83
+          ],
+          [
+            18.44,
+            0.57
+          ]
+        ]
+      },
+      "8": {
+        "group_id": "AS3215-3",
+        "country": "FR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            20.46,
+            3.28
+          ],
+          [
+            15.95,
+            0.5
+          ]
+        ]
+      },
+      "9": {
+        "group_id": "AS3215-5",
+        "country": "FR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            31.31,
+            13.57
+          ],
+          [
+            29.32,
+            8.55
+          ]
+        ]
+      },
+      "10": {
+        "group_id": "AS3215-8",
+        "country": "FR",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            29.39,
+            61.9
+          ],
+          [
+            18.82,
+            0.5
+          ]
+        ]
+      },
+      "11": {
+        "group_id": "AS6730-1",
+        "country": "CH",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            29.87,
+            2.51
+          ],
+          [
+            22.23,
+            2.21
+          ]
+        ]
+      },
+      "12": {
+        "group_id": "AS5089-1",
+        "country": "GB",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            28.83,
+            0.77
+          ],
+          [
+            25.98,
+            1.52
+          ]
+        ]
+      },
+      "13": {
+        "group_id": "AS28854-1",
+        "country": "SE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            19.51,
+            0.5
+          ],
+          [
+            19.3,
+            0.5
+          ]
+        ]
+      },
+      "14": {
+        "group_id": "AS3209-1",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            25.28,
+            1.28
+          ],
+          [
+            24.25,
+            54.19
+          ]
+        ]
+      },
+      "15": {
+        "group_id": "AS3209-2",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            27.27,
+            3.66
+          ],
+          [
+            26.34,
+            2.66
+          ]
+        ]
+      },
+      "16": {
+        "group_id": "AS3209-4",
+        "country": "DE",
+        "target": "Ubisoft AS49544",
+        "num_paths": 2,
+        "delays": [
+          [
+            28.51,
+            25.66
+          ],
+          [
+            27.63,
+            10.2
+          ]
+        ]
+      },
+      "17": {
+        "group_id": "AS204471-1",
+        "country": "IT",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            40.81,
+            7.09
+          ],
+          [
+            21.75,
+            4.15
+          ]
+        ]
+      },
+      "18": {
+        "group_id": "AS2860-1",
+        "country": "PT",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            62.29,
+            1.34
+          ],
+          [
+            62.16,
+            0.5
+          ]
+        ]
+      },
+      "19": {
+        "group_id": "AS33915-1",
+        "country": "NL",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            20.82,
+            3.34
+          ],
+          [
+            17.65,
+            0.78
+          ]
+        ]
+      },
+      "20": {
+        "group_id": "AS34984-1",
+        "country": "TR",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            46.65,
+            23.22
+          ],
+          [
+            46.37,
+            4.41
+          ]
+        ]
+      },
+      "21": {
+        "group_id": "AS1257-1",
+        "country": "SE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            39.89,
+            3.02
+          ],
+          [
+            27.42,
+            0.5
+          ]
+        ]
+      },
+      "22": {
+        "group_id": "AS20712-1",
+        "country": "GB",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            22.36,
+            2.02
+          ],
+          [
+            19.48,
+            0.59
+          ]
+        ]
+      },
+      "23": {
+        "group_id": "AS20712-2",
+        "country": "GB",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            26.25,
+            1.86
+          ],
+          [
+            22.08,
+            0.55
+          ]
+        ]
+      },
+      "24": {
+        "group_id": "AS15502-1",
+        "country": "IE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            29.47,
+            1.2
+          ],
+          [
+            27.9,
+            1.53
+          ]
+        ]
+      },
+      "25": {
+        "group_id": "AS29518-1",
+        "country": "SE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            33.65,
+            16.56
+          ],
+          [
+            32.56,
+            7.5
+          ]
+        ]
+      },
+      "26": {
+        "group_id": "AS29518-2",
+        "country": "SE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            37.4,
+            12.54
+          ],
+          [
+            30.22,
+            14.82
+          ]
+        ]
+      },
+      "27": {
+        "group_id": "AS5378-1",
+        "country": "GB",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            20.05,
+            2.56
+          ],
+          [
+            19.39,
+            6.18
+          ]
+        ]
+      },
+      "28": {
+        "group_id": "AS5378-2",
+        "country": "GB",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            27.9,
+            2.03
+          ],
+          [
+            26.32,
+            0.5
+          ]
+        ]
+      },
+      "29": {
+        "group_id": "AS20845-1",
+        "country": "HU",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            19.73,
+            2.87
+          ],
+          [
+            16.69,
+            0.5
+          ]
+        ]
+      },
+      "30": {
+        "group_id": "AS29695-1",
+        "country": "NO",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            32.1,
+            1.31
+          ],
+          [
+            26.26,
+            0.5
+          ]
+        ]
+      },
+      "31": {
+        "group_id": "AS3209-1",
+        "country": "DE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            14.66,
+            2.06
+          ],
+          [
+            14.2,
+            3.33
+          ]
+        ]
+      },
+      "32": {
+        "group_id": "AS3209-2",
+        "country": "DE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            16.59,
+            3.09
+          ],
+          [
+            15.55,
+            0.51
+          ]
+        ]
+      },
+      "33": {
+        "group_id": "AS3209-4",
+        "country": "DE",
+        "target": "Valve AS32590",
+        "num_paths": 2,
+        "delays": [
+          [
+            17.52,
+            1.19
+          ],
+          [
+            17.05,
+            5.58
+          ]
+        ]
+      },
+      "34": {
+        "group_id": "AS207790-1",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            11.1,
+            0.5
+          ],
+          [
+            9.53,
+            0.5
+          ]
+        ]
+      },
+      "35": {
+        "group_id": "AS62336-1",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            21.65,
+            4.43
+          ],
+          [
+            16.19,
+            1.59
+          ]
+        ]
+      },
+      "36": {
+        "group_id": "AS34984-1",
+        "country": "TR",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            67.37,
+            1.35
+          ],
+          [
+            59.66,
+            19.87
+          ]
+        ]
+      },
+      "37": {
+        "group_id": "AS20712-1",
+        "country": "GB",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            14.53,
+            0.73
+          ],
+          [
+            10.79,
+            0.5
+          ]
+        ]
+      },
+      "38": {
+        "group_id": "AS15704-1",
+        "country": "ES",
+        "target": "Blizzard AS57976",
+        "num_paths": 3,
+        "delays": [
+          [
+            36.86,
+            4.06
+          ],
+          [
+            34.25,
+            5.16
+          ],
+          [
+            33.93,
+            3.04
+          ]
+        ]
+      },
+      "39": {
+        "group_id": "AS30764-1",
+        "country": "CZ",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            29.98,
+            0.5
+          ],
+          [
+            26.11,
+            1.61
+          ]
+        ]
+      },
+      "40": {
+        "group_id": "AS29518-1",
+        "country": "SE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            42.4,
+            0.5
+          ],
+          [
+            40.01,
+            0.5
+          ]
+        ]
+      },
+      "41": {
+        "group_id": "AS2119-1",
+        "country": "SE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            28.36,
+            0.5
+          ],
+          [
+            26.09,
+            0.5
+          ]
+        ]
+      },
+      "42": {
+        "group_id": "AS3352-1",
+        "country": "ES",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            39.11,
+            1.54
+          ],
+          [
+            33.88,
+            1.74
+          ]
+        ]
+      },
+      "43": {
+        "group_id": "AS3352-2",
+        "country": "ES",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            49.59,
+            2.67
+          ],
+          [
+            43.41,
+            2.52
+          ]
+        ]
+      },
+      "44": {
+        "group_id": "AS5089-1",
+        "country": "GB",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            25.33,
+            2.84
+          ],
+          [
+            22.8,
+            2.17
+          ]
+        ]
+      },
+      "45": {
+        "group_id": "AS5089-2",
+        "country": "GB",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            26.88,
+            0.79
+          ],
+          [
+            24.55,
+            1.62
+          ]
+        ]
+      },
+      "46": {
+        "group_id": "AS9125-1",
+        "country": "RS",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            37.34,
+            9.37
+          ],
+          [
+            34.32,
+            1.42
+          ]
+        ]
+      },
+      "47": {
+        "group_id": "AS28685-1",
+        "country": "NL",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            6.73,
+            0.5
+          ],
+          [
+            2.03,
+            0.5
+          ]
+        ]
+      },
+      "48": {
+        "group_id": "AS13045-1",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            13.52,
+            0.98
+          ],
+          [
+            11.29,
+            0.99
+          ]
+        ]
+      },
+      "49": {
+        "group_id": "AS29695-1",
+        "country": "NO",
+        "target": "Blizzard AS57976",
+        "num_paths": 3,
+        "delays": [
+          [
+            27.56,
+            1.02
+          ],
+          [
+            25.5,
+            0.5
+          ],
+          [
+            23.74,
+            4.34
+          ]
+        ]
+      },
+      "50": {
+        "group_id": "AS3209-1",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 3,
+        "delays": [
+          [
+            20.38,
+            3.61
+          ],
+          [
+            19.37,
+            1.39
+          ],
+          [
+            19.04,
+            1.2
+          ]
+        ]
+      },
+      "51": {
+        "group_id": "AS3209-2",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 3,
+        "delays": [
+          [
+            22.19,
+            1.57
+          ],
+          [
+            18.8,
+            1.72
+          ],
+          [
+            17.34,
+            6.38
+          ]
+        ]
+      },
+      "52": {
+        "group_id": "AS3209-3",
+        "country": "DE",
+        "target": "Blizzard AS57976",
+        "num_paths": 2,
+        "delays": [
+          [
+            21.17,
+            2.93
+          ],
+          [
+            19.99,
+            1.81
+          ]
+        ]
+      }
+    }
+  }
+}

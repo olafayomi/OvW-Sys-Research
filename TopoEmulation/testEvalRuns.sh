@@ -38,6 +38,7 @@ cleanup()
   rm  -rf /home/ubuntu/path1.sock
   rm  -rf /home/ubuntu/path2.sock
   rm  -rf /home/ubuntu/path3.sock
+  rm  -rf /home/ubuntu/path4.sock
   echo "Done!!!, Sock files deleted"
 
   echo "Delete links"
@@ -50,9 +51,12 @@ cleanup()
   /sbin/ip link del dev Sw1Tp1
   /sbin/ip link del dev Sw2Tp2
   /sbin/ip link del dev Sw2Tp3
-  for i in {1..32}
+  for j in {1..52}
   do
-     /sbin/ip link del Sw1AS$i
+     /sbin/ip link del Sw1AS$j
+     /sbin/ip link del Sw2AS$j
+     /sbin/ip link del Sw3AS$j
+     /sbin/ip link del Sw4AS$j
   done
 
   echo "Done!!!, Links deleted"
@@ -120,10 +124,12 @@ for i in $(seq 1 $num_run); do
   mv /home/ubuntu/Tp5ASr1-pref-change.log  $dplane_dir/
   cleanup
   source /home/ubuntu/PAR-EMULATOR/bin/activate
-  /home/ubuntu/PAR-EMULATOR/bin/python process-multi-hosts.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-${base_dir}-$DATE-$i
+  /home/ubuntu/PAR-EMULATOR/bin/python process-game-msm.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-${base_dir}-$DATE-$i
+
+  #/home/ubuntu/PAR-EMULATOR/bin/python process-multi-hosts.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-${base_dir}-$DATE-$i
   deactivate
   cleanup
-  sleep 30
+  sleep 60
 done
   #sleep 60
 

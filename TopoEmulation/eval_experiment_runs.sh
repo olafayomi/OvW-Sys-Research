@@ -4,13 +4,12 @@ DATE=`date "+%Y%m%d"`
 helpFunction()
 {
   echo ""
-  echo "Usage: $0 -s script -n num_run -b basedir -r routing-period(s) -m measurement-period(s) -p hosts"
+  echo "Usage: $0 -s script -n num_run -b basedir -r routing-period(s) -m measurement-period(s)"
   echo -e "\t-s IPMininet topology script to run"
   echo -e "\t-n Number of times to run the IPMininet script for an experiment"
   echo -e "\t-b Base directory to store experiment data"
   echo -e "\t-r routing period(s) for experiment"
   echo -e "\t-m measurement period(s) for experiment"
-  echo -e "\t-p Number of hosts in each network"
   exit 1 # Exit script after printing help 
 }
 
@@ -56,12 +55,9 @@ cleanup()
   /sbin/ip link del dev Sw3Tp3
   /sbin/ip link del dev Sw3Tp5
 
-  for j in {1..52}
+  for j in {1..32}
   do
      /sbin/ip link del Sw1AS$j
-     /sbin/ip link del Sw2AS$j
-     /sbin/ip link del Sw3AS$j
-     /sbin/ip link del Sw4AS$j
   done
   echo "Done!!!, Links deleted"
 
@@ -70,7 +66,7 @@ cleanup()
   echo "Done !!!, clients.txt deleted"
 }
 
-while getopts "s:n:b:r:m:p:" opt
+while getopts "s:n:b:r:m:" opt
 do
    case "$opt" in 
       s ) script="$OPTARG" ;;
@@ -78,13 +74,12 @@ do
       b ) base_dir="$OPTARG" ;;
       r ) routing_period="$OPTARG" ;;
       m ) msm_period="$OPTARG" ;;
-      p ) hosts="$OPTARG" ;;
       ? ) helpFunction ;;
    esac
 done
 
 # Print helpFunction in case parameters are empty
-if [ -z "$script" ] || [ -z "$num_run" ] || [ -z "$routing_period" ] || [ -z "$msm_period" ] || [ -z "$base_dir" ] || [ -z "$hosts" ]
+if [ -z "$script" ] || [ -z "$num_run" ] || [ -z "$routing_period" ] || [ -z "$msm_period" ] || [ -z "$base_dir" ]
 then
    echo "Some or all of the parameters are empty";
    helpFunction
@@ -94,11 +89,6 @@ re='^[0-9]+$'
 
 if ! [[ $num_run =~ $re ]] ; then 
    echo "ERROR: Number of run supplied is not a number"  >&2;  exit 1
-fi
-
-
-if ! [[ $hosts =~ $re ]] ; then 
-   echo "ERROR: Number of hosts supplied is not a number"  >&2;  exit 1
 fi
 
 # Validate routing_period
@@ -141,25 +131,25 @@ for i in $(seq 1 $num_run); do
       else
         echo "Directory already exists: $dplane_dir"
       fi
-      /usr/bin/python $script -d $DATE -i $i -r $r_period -m $m_period -b $base_dir -n $hosts
+
+      /usr/bin/python $script -d $DATE -i $i -r $r_period -m $m_period -b $base_dir
+      #mv /home/ubuntu/Ovw-Eval-Results/AS34410/msmModule/msmtiming /home/ubuntu/Ovw-Eval-Results/AS34410/msmModule/msmtiming-$base_dir-rp-${r_period}-seconds-mp-${m_period}-seconds-$DATE-$i
       mv /home/ubuntu/Ovw-Eval-Results/AS34410/msmModule/msmvalue /home/ubuntu/Ovw-Eval-Results/AS34410/msmModule/msmvalue-$base_dir-rp-${r_period}-seconds-mp-${m_period}-seconds-$DATE-$i
       /bin/tar -cjvf $dplane_dir/controller-rp-${r_period}-seconds-mp-${m_period}-seconds-$DATE-$i.log.bz2 controller.log
       /bin/tar -cjvf $dplane_dir/MeasurementOrchestrator-rp-${r_period}-seconds-mp-${m_period}-seconds-$DATE-$i.log.bz2 MeasurementOrchestrator.log
+      #mv /home/ubuntu/controller.log $dplane_dir/controller-rp-${r_period}-seconds-mp-${m_period}-seconds-$DATE-$i.log
       mv /home/ubuntu/Tp1ASr2-pref-change.log  $dplane_dir/
       mv /home/ubuntu/Tp3ASr1-pref-change.log  $dplane_dir/
       mv /home/ubuntu/Tp5ASr1-pref-change.log  $dplane_dir/
       cleanup
       source /home/ubuntu/PAR-EMULATOR/bin/activate
-      /home/ubuntu/PAR-EMULATOR/bin/python process-game-msm.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-025-${base_dir}-$DATE-$i
+      /home/ubuntu/PAR-EMULATOR/bin/python process-game-msm.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-0125-${base_dir}-$DATE-$i
+      #/home/ubuntu/PAR-EMULATOR/bin/python process-game-msm-short.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-0125-${base_dir}-$DATE-$i
+      #/home/ubuntu/PAR-EMULATOR/bin/python process-game-msm-short.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-0125-$DATE-$i
 
-      #/home/ubuntu/PAR-EMULATOR/bin/python process-game-msm-45s.py -i $client_dir -p 90 -o ~/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-025-${base_dir}-$DATE-$i
-
-      /home/ubuntu/PAR-EMULATOR/bin/python process-multi-hosts.py -i $client_dir -p 90 -o /home/ubuntu/Ovw-Eval-Results/AS34410/Sensitivity-Analysis/BGP-Preference-Change/expt-summary-rp-${r_period}-seconds-mp-${m_period}-seconds-alpha-0125-${base_dir}-${DATE}-${i}
       deactivate
       cleanup
       sleep 60
-      echo "Run $i on $DATE done"
-
     done
   done
 done
